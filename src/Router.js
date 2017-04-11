@@ -9,6 +9,7 @@ import AllContactsScreen from './AllContactsScreen';
 
 // Welcome
 import WelcomeScreen from './WelcomeScreen';
+import WelcomeRegisterViaEmailScreen from './WelcomeRegisterViaEmailScreen';
 
 // Home Tab
 import HomeList from './List';
@@ -36,5 +37,6 @@ export const WelcomeScreenNavigator = StackNavigator({
 // SNAP
 export const SNAPWelcomeNavigator = StackNavigator({
   Welcome: { screen: WelcomeScreen },
+  RegisterEmail: { screen: WelcomeRegisterViaEmailScreen },
   Chat: {screen: AllContactsScreen },
 });

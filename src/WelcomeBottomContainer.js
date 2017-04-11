@@ -8,14 +8,27 @@ import {
   StyleSheet,
   TouchableHighlight
 } from 'react-native';
-import { TabViewAnimated, TabBar } from 'react-native-tab-view';
+import {
+  TabViewAnimated,
+  TabBar
+} from 'react-native-tab-view';
+import FBSDK from 'react-native-fbsdk';
 
-import Images from './Images';
-import Color from './Color';
-import Size from './Size';
-import Strings from './Strings';
+import IMAGES from './Images';
+import COLOR from './Color';
+import SIZE from './Size';
+import STRINGS from './Strings';
+import PROPERTIES from './Properties';
+
+const {
+  LoginManager,
+} = FBSDK;
 
 export default class WelcomeBottomContainer extends Component {
+  static propTypes = {
+    navigation: React.PropTypes.object.isRequired,
+  }
+
   state = {
     index: 0,
     routes: [
@@ -79,6 +92,14 @@ class WelcomeTextInput extends Component {
 }
 
 class SocialContainer extends Component {
+  static propTypes = {
+    backgroundColor: React.PropTypes.string.isRequired,
+    text: React.PropTypes.string.isRequired,
+    icon: React.PropTypes.number.isRequired,
+    fontSize: React.PropTypes.number.isRequired,
+    socialHeight: React.PropTypes.number.isRequired,
+  }
+
   render() {
     return (
       <TouchableHighlight
@@ -113,26 +134,31 @@ class SocialContainer extends Component {
   }
 }
 
-SocialContainer.propTypes = {
-  backgroundColor: React.PropTypes.string,
-  text: React.PropTypes.string,
-  fontSize: React.PropTypes.number,
-  socialHeight: React.PropTypes.number,
-};
-
 class LoginTab extends Component {
   constructor(props) {
     super(props);
+
+    // Check buildType
+    let tempEmailAddress = '';
+    let tempPassword = '';
+    switch (PROPERTIES.BUILD) {
+      case PROPERTIES.BUILD_TYPE.DEVELOPMENT_DUMMY:
+        tempEmailAddress = 'mikefla10@gmail.com';
+        tempPassword = 'password$1';
+        break;
+      default:
+        break;
+    }
+
     this.state = {
-      emailAddress: 'mikefla10@gmail.com',
-      emailAddressBorder: 'transparent',
-      password: 'password$1',
-      passwordBorder: 'transparent',
+        emailAddress: tempEmailAddress,
+        emailAddressBorder: 'transparent',
+        password: tempPassword,
+        passwordBorder: 'transparent',
     };
   }
 
   _onLoginPressed() {
-    // console.log('Login is pressed.');
     const { navigate } = this.props.navigation;
     navigate('Chat');
   }
@@ -152,7 +178,7 @@ class LoginTab extends Component {
           <WelcomeTextInput
             onChangeText={(text) => this.setState({ emailAddress: text })}
             value={ this.state.emailAddress }
-            placeholder={ Strings.placeHolderEmailAddress }
+            placeholder={ STRINGS.placeHolderEmailAddress }
             keyboardType='email-address'
             returnKeyType='next'
           />
@@ -160,7 +186,7 @@ class LoginTab extends Component {
           <WelcomeTextInput
             onChangeText={(text) => this.setState({ password: text })}
             value={ this.state.password }
-            placeholder={ Strings.placeHolderPassword }
+            placeholder={ STRINGS.placeHolderPassword }
             secureTextEntry={ true }
             returnKeyType='done'
           />
@@ -170,13 +196,13 @@ class LoginTab extends Component {
             onPress={ this._onLoginPressed.bind(this) }>
             <Text
               style={ styles.welcomeActionButtonText }>
-              { Strings.LOGIN }
+              { STRINGS.LOGIN }
             </Text>
           </TouchableHighlight>
         </View>
 
         <View style={{ alignItems: 'center' }}>
-          <Text style={{ color: Color.WELCOME_TEXT_TINT_COLOR }}>
+          <Text style={{ color: COLOR.WELCOME_TEXT_TINT_COLOR }}>
             or login using
           </Text>
 
@@ -189,20 +215,20 @@ class LoginTab extends Component {
 
             <SocialContainer
               onPress={ this._onFacebookPressed }
-              backgroundColor={ Color.WELCOME_FACEBOOK_BACKGROUND_COLOR }
-              text={ Strings.FACEBOOK }
-              icon={ Images.ICON_FACEBOOK }
-              socialHeight={ Size.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT }
+              backgroundColor={ COLOR.WELCOME_FACEBOOK_BACKGROUND_COLOR }
+              text={ STRINGS.FACEBOOK }
+              icon={ IMAGES.ICON_FACEBOOK }
+              socialHeight={ SIZE.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT }
               fontSize={ 14 }/>
 
             <View style={{ width: 20 }}/>
 
             <SocialContainer
               onPress={ this._onTwitterPressed }
-              backgroundColor={ Color.WELCOME_TWITTER_BACKGROUND_COLOR }
-              text={ Strings.TWITTER }
-              icon={ Images.ICON_TWITTER }
-              socialHeight={ Size.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT }
+              backgroundColor={ COLOR.WELCOME_TWITTER_BACKGROUND_COLOR }
+              text={ STRINGS.TWITTER }
+              icon={ IMAGES.ICON_TWITTER }
+              socialHeight={ SIZE.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT }
               fontSize={ 14 } />
 
           </View>
@@ -215,11 +241,27 @@ class LoginTab extends Component {
 
 class RegisterTab extends Component {
   _onEmailPressed() {
-    console.log("Email is pressed.");
+    const { navigate } = this.props.navigation;
+    navigate('RegisterEmail');
   }
 
   _onFacebookPressed() {
     console.log("Facebook is pressed.");
+
+    // Attempt a login using the Facebook login dialog asking for default permissions.
+    LoginManager.logInWithReadPermissions(['public_profile']).then(
+      function(result) {
+        if (result.isCancelled) {
+          alert('Login cancelled');
+        } else {
+          alert('Login success with permissions: '
+            +result.grantedPermissions.toString());
+        }
+      },
+      function(error) {
+        alert('Login fail with error: ' + error);
+      }
+    );
   }
 
   _onTwitterPressed() {
@@ -233,26 +275,26 @@ class RegisterTab extends Component {
           <View style={{ flexDirection: 'row' }}>
             <SocialContainer
               onPress={ this._onFacebookPressed }
-              backgroundColor={ Color.WELCOME_FACEBOOK_BACKGROUND_COLOR }
-              text={ Strings.REGISTER_VIA_FACEBOOK }
-              icon={ Images.ICON_FACEBOOK }
-              socialHeight={ Size.WELCOME_BUTTON_HEIGHT }
+              backgroundColor={ COLOR.WELCOME_FACEBOOK_BACKGROUND_COLOR }
+              text={ STRINGS.REGISTER_VIA_FACEBOOK }
+              icon={ IMAGES.ICON_FACEBOOK }
+              socialHeight={ SIZE.WELCOME_BUTTON_HEIGHT }
               fontSize={ 18 } />
           </View>
           <View style={ styles.space }/>
           <View style={{ flexDirection: 'row' }}>
             <SocialContainer
               onPress={ this._onTwitterPressed }
-              backgroundColor={ Color.WELCOME_TWITTER_BACKGROUND_COLOR }
-              text={ Strings.REGISTER_VIA_TWITTER }
-              icon={ Images.ICON_TWITTER }
-              socialHeight={ Size.WELCOME_BUTTON_HEIGHT }
+              backgroundColor={ COLOR.WELCOME_TWITTER_BACKGROUND_COLOR }
+              text={ STRINGS.REGISTER_VIA_TWITTER }
+              icon={ IMAGES.ICON_TWITTER }
+              socialHeight={ SIZE.WELCOME_BUTTON_HEIGHT }
               fontSize={ 18 } />
           </View>
         </View>
 
         <View style={{ alignItems: 'center' }}>
-          <Text style={{ color: Color.WELCOME_TEXT_TINT_COLOR }}>
+          <Text style={{ color: COLOR.WELCOME_TEXT_TINT_COLOR }}>
             or sign up using
           </Text>
 
@@ -261,7 +303,7 @@ class RegisterTab extends Component {
           <TouchableHighlight
             onPress={ this._onEmailPressed.bind(this) }>
             <Text style={{
-              color: Color.GREEN,
+              color: COLOR.GREEN,
               fontSize: 18,
               fontWeight: 'bold' }}>
               Email
@@ -287,7 +329,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   indicator: {
-    backgroundColor: Color.GREEN,
+    backgroundColor: COLOR.GREEN,
   },
   label: {
     color: 'white',
@@ -304,28 +346,28 @@ const styles = StyleSheet.create({
   },
   containerButtonTwitter: {
     flex: 1,
-    backgroundColor: Color.WELCOME_TWITTER_BACKGROUND_COLOR,
+    backgroundColor: COLOR.WELCOME_TWITTER_BACKGROUND_COLOR,
     justifyContent: 'center',
     alignItems: 'center'
   },
   containerButtonFacebook: {
     flex: 1,
-    backgroundColor: Color.WELCOME_FACEBOOK_BACKGROUND_COLOR,
+    backgroundColor: COLOR.WELCOME_FACEBOOK_BACKGROUND_COLOR,
     justifyContent: 'center',
     alignItems: 'center'
   },
   welcomeTextInput: {
-    height: Size.WELCOME_BUTTON_HEIGHT,
+    height: SIZE.WELCOME_BUTTON_HEIGHT,
     backgroundColor: 'white'
   },
   welcomeActionButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Color.GREEN,
-    height: Size.WELCOME_BUTTON_HEIGHT,
+    backgroundColor: COLOR.GREEN,
+    height: SIZE.WELCOME_BUTTON_HEIGHT,
   },
   welcomeActionButtonText: {
-    color: Color.WELCOME_BUTTON_TINT_COLOR,
+    color: COLOR.WELCOME_BUTTON_TINT_COLOR,
     fontSize: 22,
   },
 });
