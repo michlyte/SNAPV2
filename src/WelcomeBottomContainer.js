@@ -82,7 +82,11 @@ class SocialContainer extends Component {
   render() {
     return (
       <TouchableHighlight
-        style={ styles.touchableContainerButtonSocial }
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          height: this.props.socialHeight }}
         onPress={ this.props.onPress }>
         <View style={{
           flex: 1,
@@ -92,14 +96,14 @@ class SocialContainer extends Component {
           alignItems: 'center' }}>
           <Image
             style={{
-              width: Size.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT,
-              height: Size.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT }}
+              width: this.props.socialHeight,
+              height: this.props.socialHeight }}
             source={ this.props.icon }/>
           <View style={{ flex: 1, alignItems: 'center' }}>
             <Text
               style={{
                 color: 'white',
-                fontSize: 14, }}>
+                fontSize: this.props.fontSize }}>
               { this.props.text }
             </Text>
           </View>
@@ -108,6 +112,13 @@ class SocialContainer extends Component {
     );
   }
 }
+
+SocialContainer.propTypes = {
+  backgroundColor: React.PropTypes.string,
+  text: React.PropTypes.string,
+  fontSize: React.PropTypes.number,
+  socialHeight: React.PropTypes.number,
+};
 
 class LoginTab extends Component {
   constructor(props) {
@@ -180,7 +191,9 @@ class LoginTab extends Component {
               onPress={ this._onFacebookPressed }
               backgroundColor={ Color.WELCOME_FACEBOOK_BACKGROUND_COLOR }
               text={ Strings.FACEBOOK }
-              icon={ Images.ICON_FACEBOOK }/>
+              icon={ Images.ICON_FACEBOOK }
+              socialHeight={ Size.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT }
+              fontSize={ 14 }/>
 
             <View style={{ width: 20 }}/>
 
@@ -188,7 +201,9 @@ class LoginTab extends Component {
               onPress={ this._onTwitterPressed }
               backgroundColor={ Color.WELCOME_TWITTER_BACKGROUND_COLOR }
               text={ Strings.TWITTER }
-              icon={ Images.ICON_TWITTER }/>
+              icon={ Images.ICON_TWITTER }
+              socialHeight={ Size.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT }
+              fontSize={ 14 } />
 
           </View>
           <View style={ styles.space }/>
@@ -220,7 +235,9 @@ class RegisterTab extends Component {
               onPress={ this._onFacebookPressed }
               backgroundColor={ Color.WELCOME_FACEBOOK_BACKGROUND_COLOR }
               text={ Strings.REGISTER_VIA_FACEBOOK }
-              icon={ Images.ICON_FACEBOOK }/>
+              icon={ Images.ICON_FACEBOOK }
+              socialHeight={ Size.WELCOME_BUTTON_HEIGHT }
+              fontSize={ 18 } />
           </View>
           <View style={ styles.space }/>
           <View style={{ flexDirection: 'row' }}>
@@ -228,7 +245,9 @@ class RegisterTab extends Component {
               onPress={ this._onTwitterPressed }
               backgroundColor={ Color.WELCOME_TWITTER_BACKGROUND_COLOR }
               text={ Strings.REGISTER_VIA_TWITTER }
-              icon={ Images.ICON_TWITTER }/>
+              icon={ Images.ICON_TWITTER }
+              socialHeight={ Size.WELCOME_BUTTON_HEIGHT }
+              fontSize={ 18 } />
           </View>
         </View>
 
@@ -294,12 +313,6 @@ const styles = StyleSheet.create({
     backgroundColor: Color.WELCOME_FACEBOOK_BACKGROUND_COLOR,
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  touchableContainerButtonSocial: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    height: Size.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT
   },
   welcomeTextInput: {
     height: Size.WELCOME_BUTTON_HEIGHT,
