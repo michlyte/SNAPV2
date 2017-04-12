@@ -124,6 +124,58 @@ class SocialContainer extends Component {
   }
 }
 
+// Facebook SDK
+function facebookPressed() {
+    console.log('facebookPressed')
+    // Attempt a login using the Facebook login dialog asking for default permissions.
+    LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
+        function(result) {
+            if (result.isCancelled) {
+                console.log('Login cancelled');
+            } else {
+                console.log('Login success with permissions: '
+                    +result.grantedPermissions.toString());
+
+                AccessToken.getCurrentAccessToken().then(
+                    (data) => {
+                        // Fetching facebook data
+                        let accessToken = data.accessToken
+                        console.log(accessToken.toString())
+
+                        const responseInfoCallback = (error, result) => {
+                            if (error) {
+                                console.log('Error fetching data: ' + error.toString())
+                            } else {
+                                console.log('Success fetching data: ')
+                                console.log(result)
+                            }
+                        }
+
+                        const infoRequest = new GraphRequest(
+                            '/me',
+                            {
+                                accessToken: accessToken,
+                                parameters: {
+                                    fields: {
+                                        string: 'email,name,first_name,middle_name,last_name'
+                                    }
+                                }
+                            },
+                            responseInfoCallback
+                        );
+
+                        // Start the graph request.
+                        new GraphRequestManager().addRequest(infoRequest).start()
+                    }
+                )
+            }
+        },
+        function(error) {
+            console.log('Login fail with error: ' + error);
+        }
+    );
+}
+
 class LoginTab extends Component {
   constructor(props) {
     super(props);
@@ -151,10 +203,6 @@ class LoginTab extends Component {
   _onLoginPressed() {
     const { navigate } = this.props.navigation;
     navigate('Chat');
-  }
-
-  _onFacebookPressed() {
-    console.log('Facebook is pressed.');
   }
 
   _onTwitterPressed() {
@@ -204,7 +252,7 @@ class LoginTab extends Component {
             alignItems: 'center' }}>
 
             <SocialContainer
-              onPress={ this._onFacebookPressed }
+              onPress={ facebookPressed.bind(this) }
               backgroundColor={ COLOR.WELCOME_FACEBOOK_BACKGROUND_COLOR }
               text={ STRINGS.FACEBOOK }
               icon={ IMAGES.ICON_FACEBOOK }
@@ -214,7 +262,7 @@ class LoginTab extends Component {
             <View style={{ width: 20 }}/>
 
             <SocialContainer
-              onPress={ this._onTwitterPressed }
+              onPress={ this._onTwitterPressed.bind(this) }
               backgroundColor={ COLOR.WELCOME_TWITTER_BACKGROUND_COLOR }
               text={ STRINGS.TWITTER }
               icon={ IMAGES.ICON_TWITTER }
@@ -235,61 +283,6 @@ class RegisterTab extends Component {
     navigate('RegisterEmail');
   }
 
-  _onFacebookPressed() {
-    console.log("Facebook is pressed.");
-
-    // Attempt a login using the Facebook login dialog asking for default permissions.
-    LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
-      function(result) {
-        if (result.isCancelled) {
-          console.log('Login cancelled');
-        } else {
-          console.log('Login success with permissions: '
-            +result.grantedPermissions.toString());
-
-            AccessToken.getCurrentAccessToken().then(
-                (data) => {
-                    // console.log(data.accessToken.toString())
-
-                    // Fetching facebook data
-                    let accessToken = data.accessToken
-                    console.log(accessToken.toString())
-
-                    const responseInfoCallback = (error, result) => {
-                        if (error) {
-                            console.log(error)
-                            // alert('Error fetching data: ' + error.toString());
-                        } else {
-                            console.log(result)
-                            // alert('Success fetching data: ' + result.toString());
-                        }
-                    }
-
-                    const infoRequest = new GraphRequest(
-                        '/me',
-                        {
-                            accessToken: accessToken,
-                            parameters: {
-                                fields: {
-                                    string: 'email,name,first_name,middle_name,last_name'
-                                }
-                            }
-                        },
-                        responseInfoCallback
-                    );
-
-                    // Start the graph request.
-                    new GraphRequestManager().addRequest(infoRequest).start()
-                }
-            )
-        }
-      },
-      function(error) {
-        console.log('Login fail with error: ' + error);
-      }
-    );
-  }
-
   _onTwitterPressed() {
     console.log("Twitter is pressed.");
   }
@@ -300,7 +293,7 @@ class RegisterTab extends Component {
         <View>
           <View style={{ flexDirection: 'row' }}>
             <SocialContainer
-              onPress={ this._onFacebookPressed }
+              onPress={ facebookPressed.bind(this) }
               backgroundColor={ COLOR.WELCOME_FACEBOOK_BACKGROUND_COLOR }
               text={ STRINGS.REGISTER_VIA_FACEBOOK }
               icon={ IMAGES.ICON_FACEBOOK }
@@ -310,7 +303,7 @@ class RegisterTab extends Component {
           <View style={ styles.space }/>
           <View style={{ flexDirection: 'row' }}>
             <SocialContainer
-              onPress={ this._onTwitterPressed }
+              onPress={ this._onTwitterPressed.bind(this) }
               backgroundColor={ COLOR.WELCOME_TWITTER_BACKGROUND_COLOR }
               text={ STRINGS.REGISTER_VIA_TWITTER }
               icon={ IMAGES.ICON_TWITTER }
