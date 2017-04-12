@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Image,
-  Button,
   TextInput,
   StyleSheet,
   TouchableHighlight
@@ -22,13 +21,12 @@ import PROPERTIES from './Properties';
 
 const {
   LoginManager,
+  AccessToken,
+  GraphRequest,
+  GraphRequestManager,
 } = FBSDK;
 
 export default class WelcomeBottomContainer extends Component {
-  static propTypes = {
-    navigation: React.PropTypes.object.isRequired,
-  }
-
   state = {
     index: 0,
     routes: [
@@ -92,14 +90,6 @@ class WelcomeTextInput extends Component {
 }
 
 class SocialContainer extends Component {
-  static propTypes = {
-    backgroundColor: React.PropTypes.string.isRequired,
-    text: React.PropTypes.string.isRequired,
-    icon: React.PropTypes.number.isRequired,
-    fontSize: React.PropTypes.number.isRequired,
-    socialHeight: React.PropTypes.number.isRequired,
-  }
-
   render() {
     return (
       <TouchableHighlight
@@ -249,17 +239,53 @@ class RegisterTab extends Component {
     console.log("Facebook is pressed.");
 
     // Attempt a login using the Facebook login dialog asking for default permissions.
-    LoginManager.logInWithReadPermissions(['public_profile']).then(
+    LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
       function(result) {
         if (result.isCancelled) {
-          alert('Login cancelled');
+          console.log('Login cancelled');
         } else {
-          alert('Login success with permissions: '
+          console.log('Login success with permissions: '
             +result.grantedPermissions.toString());
+
+            AccessToken.getCurrentAccessToken().then(
+                (data) => {
+                    // console.log(data.accessToken.toString())
+
+                    // Fetching facebook data
+                    let accessToken = data.accessToken
+                    console.log(accessToken.toString())
+
+                    const responseInfoCallback = (error, result) => {
+                        if (error) {
+                            console.log(error)
+                            // alert('Error fetching data: ' + error.toString());
+                        } else {
+                            console.log(result)
+                            // alert('Success fetching data: ' + result.toString());
+                        }
+                    }
+
+                    const infoRequest = new GraphRequest(
+                        '/me',
+                        {
+                            accessToken: accessToken,
+                            parameters: {
+                                fields: {
+                                    string: 'email,name,first_name,middle_name,last_name'
+                                }
+                            }
+                        },
+                        responseInfoCallback
+                    );
+
+                    // Start the graph request.
+                    new GraphRequestManager().addRequest(infoRequest).start()
+                }
+            )
         }
       },
       function(error) {
-        alert('Login fail with error: ' + error);
+        console.log('Login fail with error: ' + error);
       }
     );
   }
