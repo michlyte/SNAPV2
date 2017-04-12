@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
+import React, {
+    Component,
+} from 'react';
 import {
-  View,
-  Text,
-  Image,
-  TextInput,
-  StyleSheet,
-  TouchableHighlight
+    View,
+    Text,
+    Image,
+    TextInput,
+    StyleSheet,
+    TouchableHighlight,
+    NativeModules,
 } from 'react-native';
 import {
-  TabViewAnimated,
-  TabBar
+    TabViewAnimated,
+    TabBar
 } from 'react-native-tab-view';
 import FBSDK from 'react-native-fbsdk';
 
@@ -18,6 +21,8 @@ import COLOR from './Color';
 import SIZE from './Size';
 import STRINGS from './Strings';
 import PROPERTIES from './Properties';
+
+const { TwitterSignin } = NativeModules;
 
 const {
   LoginManager,
@@ -176,6 +181,18 @@ function facebookPressed() {
     );
 }
 
+// Twitter SDK
+function onTwitterPressed() {
+    TwitterSignin.logIn(PROPERTIES.TWITTER_CONSUMER_KEY, PROPERTIES.TWITTER_CONSUMER_SECRET, (error, loginData) => {
+        if (!error) {
+            console.log('Success fetching data: ');
+            console.log(loginData);
+        } else {
+            console.log('Invalid login', 'Unable to login');
+        }
+    });
+}
+
 class LoginTab extends Component {
   constructor(props) {
     super(props);
@@ -203,10 +220,6 @@ class LoginTab extends Component {
   _onLoginPressed() {
     const { navigate } = this.props.navigation;
     navigate('Chat');
-  }
-
-  _onTwitterPressed() {
-    console.log('Twitter is pressed.');
   }
 
   render() {
@@ -262,7 +275,7 @@ class LoginTab extends Component {
             <View style={{ width: 20 }}/>
 
             <SocialContainer
-              onPress={ this._onTwitterPressed.bind(this) }
+              onPress={ onTwitterPressed.bind(this) }
               backgroundColor={ COLOR.WELCOME_TWITTER_BACKGROUND_COLOR }
               text={ STRINGS.TWITTER }
               icon={ IMAGES.ICON_TWITTER }
@@ -283,10 +296,6 @@ class RegisterTab extends Component {
     navigate('RegisterEmail');
   }
 
-  _onTwitterPressed() {
-    console.log("Twitter is pressed.");
-  }
-
   render() {
     return (
       <View style={ styles.page }>
@@ -303,7 +312,7 @@ class RegisterTab extends Component {
           <View style={ styles.space }/>
           <View style={{ flexDirection: 'row' }}>
             <SocialContainer
-              onPress={ this._onTwitterPressed.bind(this) }
+              onPress={ onTwitterPressed.bind(this) }
               backgroundColor={ COLOR.WELCOME_TWITTER_BACKGROUND_COLOR }
               text={ STRINGS.REGISTER_VIA_TWITTER }
               icon={ IMAGES.ICON_TWITTER }
