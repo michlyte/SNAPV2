@@ -5,7 +5,6 @@ import {
     View,
     Text,
     Image,
-    TextInput,
     StyleSheet,
     TouchableHighlight,
     NativeModules,
@@ -15,12 +14,13 @@ import {
     TabBar
 } from 'react-native-tab-view';
 import FBSDK from 'react-native-fbsdk';
-
 import IMAGES from './Images';
 import COLOR from './Color';
 import SIZE from './Size';
 import STRINGS from './Strings';
 import PROPERTIES from './Properties';
+import SCREEN from './Screen';
+import WelcomeTextInput from './ecq/WelcomeTextInput';
 
 const { TwitterSignin } = NativeModules;
 
@@ -70,25 +70,6 @@ export default class WelcomeBottomContainer extends Component {
         renderScene={this._renderScene}
         renderHeader={this._renderHeader}
         onRequestChangeTab={this._handleChangeTab}
-      />
-    );
-  }
-}
-
-class WelcomeTextInput extends Component {
-  render() {
-    return (
-      <TextInput
-        style={ styles.welcomeTextInput }
-        onChangeText={ this.props.onChangeText }
-        value={ this.props.value }
-        placeholder={ this.props.placeholder }
-        keyboardType={ this.props.keyboardType }
-        secureTextEntry={ this.props.secureTextEntry }
-        clearButtonMode='while-editing'
-        underlineColorAndroid='transparent'
-        onSubmitEditing={ this.props.onSubmitEditing }
-        returnKeyType={ this.props.returnKeyType }
       />
     );
   }
@@ -211,9 +192,7 @@ class LoginTab extends Component {
 
     this.state = {
         emailAddress: tempEmailAddress,
-        emailAddressBorder: 'transparent',
         password: tempPassword,
-        passwordBorder: 'transparent',
     };
   }
 
@@ -293,7 +272,7 @@ class LoginTab extends Component {
 class RegisterTab extends Component {
   _onEmailPressed() {
     const { navigate } = this.props.navigation;
-    navigate('RegisterEmail');
+    navigate(SCREEN.REGISTER_EMAIL);
   }
 
   render() {
@@ -350,7 +329,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'stretch',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: COLOR.WELCOME_BACKGROUND_BOTTOM_CONTAINER,
     padding: 20,
   },
   tabBar: {
@@ -363,7 +342,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   space: {
-    height: 10,
+    height: SIZE.WELCOME_HEIGHT_SPACE,
   },
   containerSocial: {
     flex: 1,
@@ -383,10 +362,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.WELCOME_FACEBOOK_BACKGROUND_COLOR,
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  welcomeTextInput: {
-    height: SIZE.WELCOME_BUTTON_HEIGHT,
-    backgroundColor: 'white'
   },
   welcomeActionButton: {
     justifyContent: 'center',

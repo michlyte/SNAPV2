@@ -3,7 +3,6 @@ import {
   TabNavigator
 } from 'react-navigation';
 
-import HomeScreen from './HomeScreen';
 import ChatScreen from './ChatScreen';
 import AllContactsScreen from './AllContactsScreen';
 
@@ -34,7 +33,7 @@ export const WelcomeScreenNavigator = StackNavigator({
   Welcome: { screen: WelcomeScreen },
 });
 
-// SNAP
+// SNAP : If you change any screen name please do the same in the Screen.js file.
 export const SNAPWelcomeNavigator = StackNavigator({
   Welcome: { screen: WelcomeScreen },
   RegisterEmail: { screen: WelcomeRegisterViaEmailScreen },
