@@ -25,6 +25,9 @@ const STYLE = StyleSheet.create({
     space: {
         height: SIZE.WELCOME_HEIGHT_SPACE,
     },
+    divider: {
+        width: 5,
+    }
 });
 
 module.exports = STYLE;

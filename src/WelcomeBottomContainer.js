@@ -20,7 +20,10 @@ import SIZE from './util/Size';
 import STRINGS from './util/Strings';
 import PROPERTIES from './util/Properties';
 import SCREEN from './util/Screen';
+import STYLE from './util/Style';
 import WelcomeTextInput from './ecq/WelcomeTextInput';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const { TwitterSignin } = NativeModules;
 
@@ -322,12 +325,17 @@ class RegisterTab extends Component {
 
           <TouchableHighlight
             onPress={ this._onEmailPressed.bind(this) }>
-            <Text style={{
-              color: COLOR.GREEN,
-              fontSize: 18,
-              fontWeight: 'bold' }}>
-              Email
-            </Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={{
+                    color: COLOR.GREEN,
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    paddingLeft: 10 }}>
+                  Email
+                </Text>
+                <View style={STYLE.divider}/>
+                <Icon name="check" size={20} color={COLOR.GREEN} />
+              </View>
           </TouchableHighlight>
 
           <View style={ styles.space }/>
