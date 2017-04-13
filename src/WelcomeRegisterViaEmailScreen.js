@@ -4,7 +4,6 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
 } from 'react-native';
 
@@ -26,9 +25,12 @@ export default class WelcomeRegisterViaEmailScreen extends Component {
     render() {
         const navigation = this.props.navigation;
         return (
-            <WelcomeContainer bottomContainer={
-              <WelcomeRegisterViaEmailBottomContainer
-                navigation={navigation}/> }/>
+            <WelcomeContainer
+                bottomContainer={
+                    <WelcomeRegisterViaEmailBottomContainer navigation={navigation}/> }
+                navigation={navigation}
+                isBackButtonShowed={ true }
+            />
         );
     }
 }

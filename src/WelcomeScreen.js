@@ -17,9 +17,12 @@ export default class WelcomeScreen extends Component {
   render() {
     const navigation = this.props.navigation;
     return (
-      <WelcomeContainer bottomContainer={ <WelcomeBottomContainer
-          styleContainerBottom={styles.containerBottom}
-          navigation={navigation}/> }/>
+      <WelcomeContainer
+          bottomContainer={
+              <WelcomeBottomContainer
+                  styleContainerBottom={styles.containerBottom}
+                  navigation={navigation}/> }
+      />
     );
   }
 }

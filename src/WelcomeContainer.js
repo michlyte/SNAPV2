@@ -6,17 +6,42 @@ import {
     View,
     Image,
     StyleSheet,
+    TouchableHighlight,
 } from 'react-native';
 
+import COLOR from './util/Color';
 import Images from './Images';
 
-export default class WelcomeScreen extends Component {
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+export default class WelcomeContainer extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    _onBackPressed() {
+        this.props.navigation.goBack();
+    }
+
     render() {
+        const isBackButtonShowed = this.props.isBackButtonShowed;
+        let backButton = null;
+        if (isBackButtonShowed) {
+            backButton = <TouchableHighlight
+                style={{ marginTop: 10, marginLeft: 20, position: 'absolute' }}
+                onPress={this._onBackPressed.bind(this)}>
+                <Icon name="angle-left" size={50} color={COLOR.GREEN} />
+            </TouchableHighlight>;
+        }
+
         return (
             <View style={{ flex: 1 }}>
                 <Image
                     source={Images.SNAP_BACKGROUND}
                     style={styles.backgroundImage}>
+
+                    {/* BackButton */}
+                    {backButton}
 
                     {/* Top Container */}
                     <View style={styles.containerTop}>
@@ -36,6 +61,11 @@ export default class WelcomeScreen extends Component {
         );
     }
 }
+
+WelcomeContainer.propTypes = {
+    navigation: React.PropTypes.object,
+    isBackButtonShowed: React.PropTypes.bool,
+};
 
 const styles = StyleSheet.create({
     backgroundImage: {
