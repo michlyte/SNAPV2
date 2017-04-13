@@ -8,8 +8,7 @@ import {
 } from 'react-native';
 
 import SCREEN from './util/Screen';
-import COLOR from './util/Color';
-import SIZE from './util/Size';
+import STYLE from './util/Style';
 import STRINGS from './util/Strings';
 import WelcomeContainer from './WelcomeContainer';
 import WelcomeTextInput from './ecq/WelcomeTextInput';
@@ -52,8 +51,8 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
   render() {
     const navigation = this.props.navigation;
     return (
-        <View style={styles.containerBottom}>
-          <View style={styles.page}>
+        <View style={STYLE.containerBottom}>
+          <View style={STYLE.page}>
             <WelcomeTextInput
                 onChangeText={(text) => this.setState({ emailAddress: text })}
                 value={ this.state.emailAddress }
@@ -61,7 +60,7 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
                 keyboardType='email-address'
                 returnKeyType='next'
             />
-            <View style={styles.space}/>
+            <View style={STYLE.space}/>
             <WelcomeTextInput
                 onChangeText={(text) => this.setState({ password: text })}
                 value={ this.state.password }
@@ -69,7 +68,7 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
                 secureTextEntry={ true }
                 returnKeyType='next'
             />
-            <View style={styles.space}/>
+            <View style={STYLE.space}/>
             <WelcomeTextInput
                 onChangeText={(text) => this.setState({ confirmPassword: text })}
                 value={ this.state.confirmPassword }
@@ -77,7 +76,7 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
                 secureTextEntry={ true }
                 returnKeyType='done'
             />
-            <View style={styles.space}/>
+            <View style={STYLE.space}/>
             <WelcomeButton
                 onPress={this._onRegisterPressed.bind(this)}
                 text={STRINGS.REGISTER}/>
@@ -86,21 +85,3 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-    containerBottom: {
-        flex: 3.5,
-        backgroundColor: 'transparent',
-    },
-    page: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'stretch',
-        backgroundColor: COLOR.WELCOME_BACKGROUND_BOTTOM_CONTAINER,
-        marginTop: SIZE.WELCOME_TABBAR_HEIGHT,
-        padding: 20,
-    },
-    space: {
-        height: SIZE.WELCOME_HEIGHT_SPACE,
-    },
-});

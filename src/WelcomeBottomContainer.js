@@ -203,6 +203,8 @@ class LoginTab extends Component {
 
   _onForgotPressed() {
       console.log('_onForgotPressed');
+      const { navigate } = this.props.navigation;
+      navigate(SCREEN.FORGOT);
   }
 
   render() {
