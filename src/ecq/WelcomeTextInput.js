@@ -8,7 +8,7 @@ import {
     TextInput,
     StyleSheet,
 } from 'react-native';
-import SIZE from '../Size';
+import SIZE from '../util/Size';
 
 export default class WelcomeTextInput extends Component {
     render() {

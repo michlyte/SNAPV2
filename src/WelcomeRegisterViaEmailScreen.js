@@ -8,10 +8,10 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import SCREEN from './Screen';
-import COLOR from './Color';
-import SIZE from './Size';
-import STRINGS from './Strings';
+import SCREEN from './util/Screen';
+import COLOR from './util/Color';
+import SIZE from './util/Size';
+import STRINGS from './util/Strings';
 import WelcomeContainer from './WelcomeContainer';
 import WelcomeTextInput from './ecq/WelcomeTextInput';
 import WelcomeButton from './ecq/WelcomeButton';

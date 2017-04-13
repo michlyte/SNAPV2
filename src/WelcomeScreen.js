@@ -3,7 +3,7 @@ import {
     StyleSheet,
 } from 'react-native';
 
-import SCREEN from './Screen';
+import SCREEN from './util/Screen';
 import WelcomeContainer from './WelcomeContainer';
 import WelcomeBottomContainer from './WelcomeBottomContainer';
 

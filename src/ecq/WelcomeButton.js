@@ -9,8 +9,8 @@ import {
     TouchableHighlight,
     StyleSheet,
 } from 'react-native';
-import COLOR from '../Color';
-import SIZE from '../Size';
+import COLOR from '../util/Color';
+import SIZE from '../util/Size';
 
 export default class WelcomeButton extends Component {
     render() {

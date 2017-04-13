@@ -15,11 +15,11 @@ import {
 } from 'react-native-tab-view';
 import FBSDK from 'react-native-fbsdk';
 import IMAGES from './Images';
-import COLOR from './Color';
-import SIZE from './Size';
-import STRINGS from './Strings';
-import PROPERTIES from './Properties';
-import SCREEN from './Screen';
+import COLOR from './util/Color';
+import SIZE from './util/Size';
+import STRINGS from './util/Strings';
+import PROPERTIES from './util/Properties';
+import SCREEN from './util/Screen';
 import WelcomeTextInput from './ecq/WelcomeTextInput';
 
 const { TwitterSignin } = NativeModules;
