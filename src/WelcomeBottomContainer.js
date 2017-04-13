@@ -330,7 +330,7 @@ class RegisterTab extends Component {
                     color: COLOR.GREEN,
                     fontSize: 18,
                     fontWeight: 'bold',
-                    paddingLeft: 10 }}>
+                    marginLeft: 10 }}>
                   Email
                 </Text>
                 <View style={STYLE.divider}/>
