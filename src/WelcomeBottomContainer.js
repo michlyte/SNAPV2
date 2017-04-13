@@ -201,6 +201,10 @@ class LoginTab extends Component {
     navigate('Chat');
   }
 
+  _onForgotPressed() {
+      console.log('_onForgotPressed');
+  }
+
   render() {
     return (
       <View style={ styles.page }>
@@ -229,6 +233,13 @@ class LoginTab extends Component {
               { STRINGS.LOGIN }
             </Text>
           </TouchableHighlight>
+            <View style={ styles.space }/>
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <Text style={{ color: 'white' }}>{STRINGS.forgotYourLoginDetails} </Text>
+                <TouchableHighlight onPress={this._onForgotPressed.bind(this)}>
+                    <Text style={{ color: 'white', fontWeight: 'bold' }}>{STRINGS.getHelpSigningIn}</Text>
+                </TouchableHighlight>
+            </View>
         </View>
 
         <View style={{ alignItems: 'center' }}>

@@ -10,6 +10,9 @@ export default class Strings {
   static FACEBOOK = 'FACEBOOK';
   static TWITTER = 'TWITTER';
   static REGISTER = 'REGISTER';
+
+  static forgotYourLoginDetails = 'Forgot your login details?';
+  static getHelpSigningIn = 'Get help signing in.';
   
   static REGISTER_VIA_FACEBOOK = 'Register via Facebook';
   static REGISTER_VIA_TWITTER = 'Register via Twitter';
