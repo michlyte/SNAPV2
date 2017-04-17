@@ -1,3 +1,5 @@
+import Config from './Config';
+
 export default class Strings {
   static placeHolderEmailAddress = 'Email address';
   static placeHolderPassword = 'Password';
@@ -14,11 +16,13 @@ export default class Strings {
   static RESEND = 'RESEND';
   static VERIFY = 'VERIFY';
   static FORGOT = 'FORGOT';
+  static NEXT = 'NEXT';
 
   static forgotYourLoginDetails = 'Forgot your login details?';
   static getHelpSigningIn = 'Get help signing in.';
-  static verificationCodeHasBeenSent = 'The verification code has been sent to your registered Email Address: abc@abc.com';
+  static verificationCodeHasBeenSent = 'The verification code has been sent to your registered Email Address: @email';
   static pleaseTypeVerficationCode = 'Please type in the code to proceed.';
+  static verificationAcknowledgment = 'Congratulations! You have successfully registered to '+Config.appName+'. You can submit a new case.';
   
   static REGISTER_VIA_FACEBOOK = 'Register via Facebook';
   static REGISTER_VIA_TWITTER = 'Register via Twitter';

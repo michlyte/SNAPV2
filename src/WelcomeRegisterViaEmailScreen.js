@@ -6,6 +6,7 @@ import {
   View,
 } from 'react-native';
 
+import PROPERTIES from './util/Properties';
 import SCREEN from './util/Screen';
 import STYLE from './util/Style';
 import STRINGS from './util/Strings';
@@ -36,16 +37,31 @@ export default class WelcomeRegisterViaEmailScreen extends Component {
 class WelcomeRegisterViaEmailBottomContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      emailAddress: '',
-      password: '',
-      confirmPassword:'',
-    }
+
+      // Check buildType
+      let tempEmailAddress = '';
+      let tempPassword = '';
+      let tempConfirmPassword = '';
+      switch (PROPERTIES.BUILD) {
+          case PROPERTIES.BUILD_TYPE.DEVELOPMENT_DUMMY:
+              tempEmailAddress = 'mikefla10@gmail.com';
+              tempPassword = 'password$1';
+              tempConfirmPassword = tempPassword;
+              break;
+          default:
+              break;
+      }
+
+      this.state = {
+          emailAddress: tempEmailAddress,
+          password: tempPassword,
+          confirmPassword: tempConfirmPassword,
+      };
   }
 
   _onRegisterPressed() {
       const { navigate } = this.props.navigation;
-      navigate(SCREEN.VERIFICATION_CODE);
+      navigate(SCREEN.VERIFICATION_CODE, { email: this.state.emailAddress });
   }
 
   render() {

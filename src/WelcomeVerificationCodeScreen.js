@@ -14,6 +14,8 @@ import WelcomeContainer from './WelcomeContainer';
 import WelcomeTextInput from './ecq/WelcomeTextInput';
 import WelcomeButton from './ecq/WelcomeButton';
 
+const reactStringReplace = require('react-string-replace');
+
 export default class WelcomeVerificationCodeScreen extends Component {
     static navigationOptions = {
         title: SCREEN.VERIFICATION_CODE,
@@ -24,10 +26,13 @@ export default class WelcomeVerificationCodeScreen extends Component {
 
     render() {
         const navigation = this.props.navigation;
+        const { params } = this.props.navigation.state;
         return(
             <WelcomeContainer
                 bottomContainer={
-                    <WelcomeVerificationCodeBottomContainer navigation={navigation}/> }
+                    <WelcomeVerificationCodeBottomContainer
+                        navigation={navigation}
+                        email={params.email}/> }
                 navigation={navigation}
                 isBackButtonShowed={ true }
             />
@@ -45,19 +50,22 @@ class WelcomeVerificationCodeBottomContainer extends Component {
     }
 
     _onResendPressed() {
-
+        console.log('_onResendPressed');
     }
 
     _onVerifyPressed() {
-
+        console.log('_onVerifyPressed');
+        const { navigate } = this.props.navigation;
+        navigate(SCREEN.ACKNOWLEDGEMENT, { email: this.props.email });
     }
 
     render() {
+        let verificationCodeMessage = reactStringReplace(STRINGS.verificationCodeHasBeenSent, /(@email)/g, () => this.props.email);
         return (
             <View style={STYLE.containerBottom}>
                 <View style={STYLE.page}>
                     <Text style={STYLE.text}>
-                        { STRINGS.verificationCodeHasBeenSent }
+                        { verificationCodeMessage }
                     </Text>
 
                     <Text style={STYLE.text}>
