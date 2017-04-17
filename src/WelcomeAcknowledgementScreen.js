@@ -34,7 +34,6 @@ export default class WelcomeAcknowledgementScreen extends Component {
     }
 
     componentWillUnmount() {
-        console.log('componentWillUnmount');
         BackAndroid.removeEventListener('hardwareBackPress', this._onNavigateToRootView);
     }
 
