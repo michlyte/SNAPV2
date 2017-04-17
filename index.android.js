@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
 } from 'react-native';
-import { SNAPWelcomeNavigator } from './src/Router';
+import { SNAPWelcomeNavigator, SNAPExampleNavigator } from './src/Router';
 
 export default class SampleApp extends Component {
   render() {

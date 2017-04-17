@@ -30,7 +30,7 @@ export default class WelcomeButton extends Component {
 WelcomeButton.propTypes = {
     onPress: React.PropTypes.func,
     text: React.PropTypes.string,
-}
+};
 
 const styles = StyleSheet.create({
     welcomeActionButton: {

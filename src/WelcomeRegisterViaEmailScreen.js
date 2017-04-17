@@ -44,11 +44,11 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
   }
 
   _onRegisterPressed() {
-    console.log('_onRegisterPressed')
+      const { navigate } = this.props.navigation;
+      navigate(SCREEN.VERIFICATION_CODE);
   }
 
   render() {
-    const navigation = this.props.navigation;
     return (
         <View style={STYLE.containerBottom}>
           <View style={STYLE.page}>

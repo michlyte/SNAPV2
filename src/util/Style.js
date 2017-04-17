@@ -23,10 +23,15 @@ const STYLE = StyleSheet.create({
         padding: 20,
     },
     space: {
+        width: SIZE.WELCOME_WIDTH_SPACE,
         height: SIZE.WELCOME_HEIGHT_SPACE,
     },
     divider: {
         width: 5,
+    },
+    text: {
+        color: 'white',
+        fontSize: 18,
     }
 });
 
