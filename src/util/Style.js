@@ -8,7 +8,7 @@ import {
 import SIZE from './Size';
 import COLOR from './Color';
 
-const STYLE = StyleSheet.create({
+export default STYLE = StyleSheet.create({
 //    Welcome
     containerBottom: {
         flex: 3.5,

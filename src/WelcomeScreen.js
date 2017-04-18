@@ -43,7 +43,6 @@ export default class WelcomeScreen extends Component {
             <WelcomeContainer
                 bottomContainer={
                     <WelcomeBottomContainer
-                        styleContainerBottom={styles.containerBottom}
                         navigation={navigation}/> }
             />
         );
@@ -51,13 +50,17 @@ export default class WelcomeScreen extends Component {
 }
 
 class WelcomeBottomContainer extends Component {
-    state = {
-        index: 0,
-        routes: [
-            {key: '1', title: 'Register'},
-            {key: '2', title: 'Login'},
-        ],
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            index: 0,
+            routes: [
+                {key: '1', title: 'Register'},
+                {key: '2', title: 'Login'},
+            ],
+        };
+    }
 
     _handleChangeTab = (index) => {
         this.setState({index});
@@ -73,9 +76,9 @@ class WelcomeBottomContainer extends Component {
     _renderScene = ({route}) => {
         switch (route.key) {
             case '1':
-                return <RegisterTab navigation={this.props.navigation}/>
+                return <RegisterTab navigation={this.props.navigation}/>;
             case '2':
-                return <LoginTab navigation={this.props.navigation}/>
+                return <LoginTab navigation={this.props.navigation}/>;
             default:
                 return null;
         }
@@ -84,7 +87,7 @@ class WelcomeBottomContainer extends Component {
     render() {
         return (
             <TabViewAnimated
-                style={this.props.styleContainerBottom}
+                style={styles.containerBottom}
                 navigationState={this.state}
                 renderScene={this._renderScene}
                 renderHeader={this._renderHeader}
@@ -135,7 +138,7 @@ class SocialContainer extends Component {
 
 // Facebook SDK
 function facebookPressed() {
-    console.log('facebookPressed')
+    console.log('facebookPressed');
     // Attempt a login using the Facebook login dialog asking for default permissions.
     LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
         function (result) {
@@ -148,17 +151,17 @@ function facebookPressed() {
                 AccessToken.getCurrentAccessToken().then(
                     (data) => {
                         // Fetching facebook data
-                        let accessToken = data.accessToken
-                        console.log(accessToken.toString())
+                        let accessToken = data.accessToken;
+                        console.log(accessToken.toString());
 
                         const responseInfoCallback = (error, result) => {
                             if (error) {
                                 console.log('Error fetching data: ' + error.toString())
                             } else {
-                                console.log('Success fetching data: ')
+                                console.log('Success fetching data: ');
                                 console.log(result)
                             }
-                        }
+                        };
 
                         const infoRequest = new GraphRequest(
                             '/me',
