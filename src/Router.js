@@ -19,6 +19,7 @@ import HomeGrid from './Grid';
 
 // Example
 import WebViewExample from './example/WebViewExample';
+import CarouselExample from './example/carousel/CarouselExample';
 
 export const MainScreenNavigator = TabNavigator({
   List: { screen: HomeList },
@@ -26,7 +27,8 @@ export const MainScreenNavigator = TabNavigator({
 });
 
 export const SNAPExampleNavigator = StackNavigator({
-   WebView: { screen: WebViewExample },
+    Carousel: { screen: CarouselExample },
+    WebView: { screen: WebViewExample },
 });
 
 // SNAP : If you change any screen name please do the same in the Screen.js file.
