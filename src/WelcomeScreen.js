@@ -13,6 +13,7 @@ import {
     TabViewAnimated,
     TabBar
 } from 'react-native-tab-view';
+import {NavigationActions} from 'react-navigation'
 import FBSDK from 'react-native-fbsdk';
 import IMAGES from './Images';
 import COLOR from './util/Color';
@@ -26,7 +27,7 @@ import WelcomeContainer from './WelcomeContainer';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const { TwitterSignin } = NativeModules;
+const {TwitterSignin} = NativeModules;
 
 const {
     LoginManager,
@@ -36,51 +37,45 @@ const {
 } = FBSDK;
 
 export default class WelcomeScreen extends Component {
-  static navigationOptions = {
-    title: SCREEN.WELCOME,
-    header: {
-      visible: false
+    render() {
+        const navigation = this.props.navigation;
+        return (
+            <WelcomeContainer
+                bottomContainer={
+                    <WelcomeBottomContainer
+                        styleContainerBottom={styles.containerBottom}
+                        navigation={navigation}/> }
+            />
+        );
     }
-  };
-  render() {
-    const navigation = this.props.navigation;
-    return (
-      <WelcomeContainer
-          bottomContainer={
-              <WelcomeBottomContainer
-                  styleContainerBottom={styles.containerBottom}
-                  navigation={navigation}/> }
-      />
-    );
-  }
 }
 
 class WelcomeBottomContainer extends Component {
     state = {
         index: 0,
         routes: [
-            { key: '1', title: 'Register' },
-            { key: '2', title: 'Login' },
+            {key: '1', title: 'Register'},
+            {key: '2', title: 'Login'},
         ],
     };
 
     _handleChangeTab = (index) => {
-        this.setState({ index });
+        this.setState({index});
     };
 
     _renderHeader = (props) => {
         return <TabBar {...props}
                        indicatorStyle={ styles.indicator }
                        labelStyle={ styles.label }
-                       style={ styles.tabBar } />
+                       style={ styles.tabBar }/>
     };
 
-    _renderScene = ({ route }) => {
+    _renderScene = ({route}) => {
         switch (route.key) {
             case '1':
-                return <RegisterTab navigation={this.props.navigation} />
+                return <RegisterTab navigation={this.props.navigation}/>
             case '2':
-                return <LoginTab navigation={this.props.navigation} />
+                return <LoginTab navigation={this.props.navigation}/>
             default:
                 return null;
         }
@@ -107,24 +102,28 @@ class SocialContainer extends Component {
                     flex: 1,
                     flexDirection: 'row',
                     justifyContent: 'center',
-                    height: this.props.socialHeight }}
+                    height: this.props.socialHeight
+                }}
                 onPress={ this.props.onPress }>
                 <View style={{
                     flex: 1,
                     flexDirection: 'row',
                     backgroundColor: this.props.backgroundColor,
                     justifyContent: 'center',
-                    alignItems: 'center' }}>
+                    alignItems: 'center'
+                }}>
                     <Image
                         style={{
                             width: this.props.socialHeight,
-                            height: this.props.socialHeight }}
+                            height: this.props.socialHeight
+                        }}
                         source={ this.props.icon }/>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={{flex: 1, alignItems: 'center'}}>
                         <Text
                             style={{
                                 color: 'white',
-                                fontSize: this.props.fontSize }}>
+                                fontSize: this.props.fontSize
+                            }}>
                             { this.props.text }
                         </Text>
                     </View>
@@ -139,12 +138,12 @@ function facebookPressed() {
     console.log('facebookPressed')
     // Attempt a login using the Facebook login dialog asking for default permissions.
     LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
-        function(result) {
+        function (result) {
             if (result.isCancelled) {
                 console.log('Login cancelled');
             } else {
                 console.log('Login success with permissions: '
-                    +result.grantedPermissions.toString());
+                    + result.grantedPermissions.toString());
 
                 AccessToken.getCurrentAccessToken().then(
                     (data) => {
@@ -180,7 +179,7 @@ function facebookPressed() {
                 )
             }
         },
-        function(error) {
+        function (error) {
             console.log('Login fail with error: ' + error);
         }
     );
@@ -221,13 +220,18 @@ class LoginTab extends Component {
     }
 
     _onLoginPressed() {
-        const { navigate } = this.props.navigation;
-        navigate('Chat');
+        const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({routeName: SCREEN.MAIN})
+            ]
+        });
+        this.props.navigation.dispatch(resetAction)
     }
 
     _onForgotPressed() {
         console.log('_onForgotPressed');
-        const { navigate } = this.props.navigation;
+        const {navigate} = this.props.navigation;
         navigate(SCREEN.FORGOT);
     }
 
@@ -236,7 +240,7 @@ class LoginTab extends Component {
             <View style={ styles.page }>
                 <View>
                     <WelcomeTextInput
-                        onChangeText={(text) => this.setState({ emailAddress: text })}
+                        onChangeText={(text) => this.setState({emailAddress: text})}
                         value={ this.state.emailAddress }
                         placeholder={ STRINGS.placeHolderEmailAddress }
                         keyboardType='email-address'
@@ -244,7 +248,7 @@ class LoginTab extends Component {
                     />
                     <View style={ styles.space }/>
                     <WelcomeTextInput
-                        onChangeText={(text) => this.setState({ password: text })}
+                        onChangeText={(text) => this.setState({password: text})}
                         value={ this.state.password }
                         placeholder={ STRINGS.placeHolderPassword }
                         secureTextEntry={ true }
@@ -260,25 +264,26 @@ class LoginTab extends Component {
                         </Text>
                     </TouchableHighlight>
                     <View style={ styles.space }/>
-                    <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                        <Text style={{ color: 'white' }}>{STRINGS.forgotYourLoginDetails} </Text>
+                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                        <Text style={{color: 'white'}}>{STRINGS.forgotYourLoginDetails} </Text>
                         <TouchableHighlight onPress={this._onForgotPressed.bind(this)}>
-                            <Text style={{ color: 'white', fontWeight: 'bold' }}>{STRINGS.getHelpSigningIn}</Text>
+                            <Text style={{color: 'white', fontWeight: 'bold'}}>{STRINGS.getHelpSigningIn}</Text>
                         </TouchableHighlight>
                     </View>
                 </View>
 
-                <View style={{ alignItems: 'center' }}>
-                    <Text style={{ color: COLOR.WELCOME_TEXT_TINT_COLOR }}>
+                <View style={{alignItems: 'center'}}>
+                    <Text style={{color: COLOR.WELCOME_TEXT_TINT_COLOR}}>
                         or login using
                     </Text>
 
-                    <View style={{ height: 20 }}/>
+                    <View style={{height: 20}}/>
 
                     <View style={{
                         flexDirection: 'row',
                         justifyContent: 'center',
-                        alignItems: 'center' }}>
+                        alignItems: 'center'
+                    }}>
 
                         <SocialContainer
                             onPress={ facebookPressed.bind(this) }
@@ -288,7 +293,7 @@ class LoginTab extends Component {
                             socialHeight={ SIZE.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT }
                             fontSize={ 14 }/>
 
-                        <View style={{ width: 20 }}/>
+                        <View style={{width: 20}}/>
 
                         <SocialContainer
                             onPress={ onTwitterPressed.bind(this) }
@@ -296,7 +301,7 @@ class LoginTab extends Component {
                             text={ STRINGS.TWITTER }
                             icon={ IMAGES.ICON_TWITTER }
                             socialHeight={ SIZE.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT }
-                            fontSize={ 14 } />
+                            fontSize={ 14 }/>
 
                     </View>
                     <View style={ styles.space }/>
@@ -308,7 +313,7 @@ class LoginTab extends Component {
 
 class RegisterTab extends Component {
     _onEmailPressed() {
-        const { navigate } = this.props.navigation;
+        const {navigate} = this.props.navigation;
         navigate(SCREEN.REGISTER_EMAIL);
     }
 
@@ -316,46 +321,47 @@ class RegisterTab extends Component {
         return (
             <View style={ styles.page }>
                 <View>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{flexDirection: 'row'}}>
                         <SocialContainer
                             onPress={ facebookPressed.bind(this) }
                             backgroundColor={ COLOR.WELCOME_FACEBOOK_BACKGROUND_COLOR }
                             text={ STRINGS.REGISTER_VIA_FACEBOOK }
                             icon={ IMAGES.ICON_FACEBOOK }
                             socialHeight={ SIZE.WELCOME_BUTTON_HEIGHT }
-                            fontSize={ 18 } />
+                            fontSize={ 18 }/>
                     </View>
                     <View style={ styles.space }/>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{flexDirection: 'row'}}>
                         <SocialContainer
                             onPress={ onTwitterPressed.bind(this) }
                             backgroundColor={ COLOR.WELCOME_TWITTER_BACKGROUND_COLOR }
                             text={ STRINGS.REGISTER_VIA_TWITTER }
                             icon={ IMAGES.ICON_TWITTER }
                             socialHeight={ SIZE.WELCOME_BUTTON_HEIGHT }
-                            fontSize={ 18 } />
+                            fontSize={ 18 }/>
                     </View>
                 </View>
 
-                <View style={{ alignItems: 'center' }}>
-                    <Text style={{ color: COLOR.WELCOME_TEXT_TINT_COLOR }}>
+                <View style={{alignItems: 'center'}}>
+                    <Text style={{color: COLOR.WELCOME_TEXT_TINT_COLOR}}>
                         or sign up using
                     </Text>
 
-                    <View style={{ height: 20 }}/>
+                    <View style={{height: 20}}/>
 
                     <TouchableHighlight
                         onPress={ this._onEmailPressed.bind(this) }>
-                        <View style={{ flexDirection: 'row' }}>
+                        <View style={{flexDirection: 'row'}}>
                             <Text style={{
                                 color: COLOR.GREEN,
                                 fontSize: 18,
                                 fontWeight: 'bold',
-                                marginLeft: 10 }}>
+                                marginLeft: 10
+                            }}>
                                 Email
                             </Text>
                             <View style={STYLE.divider}/>
-                            <Icon name="check" size={20} color={COLOR.GREEN} />
+                            <Icon name="check" size={20} color={COLOR.GREEN}/>
                         </View>
                     </TouchableHighlight>
 

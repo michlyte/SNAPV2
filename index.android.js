@@ -13,7 +13,7 @@ import { SNAPWelcomeNavigator, SNAPExampleNavigator } from './src/Router';
 export default class SampleApp extends Component {
   render() {
     return (
-      <SNAPExampleNavigator />
+      <SNAPWelcomeNavigator />
     );
   }
 }

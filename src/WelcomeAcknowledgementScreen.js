@@ -17,13 +17,6 @@ import WelcomeButton from './ecq/WelcomeButton';
 import { NavigationActions } from 'react-navigation';
 
 export default class WelcomeAcknowledgementScreen extends Component {
-    static navigationOptions = {
-        title: SCREEN.ACKNOWLEDGEMENT,
-        header: {
-            visible: false
-        }
-    };
-
     constructor(props) {
         super(props);
         this._onNavigateToRootView = this._onNavigateToRootView.bind(this);

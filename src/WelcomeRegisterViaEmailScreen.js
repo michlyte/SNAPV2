@@ -15,12 +15,6 @@ import WelcomeTextInput from './ecq/WelcomeTextInput';
 import WelcomeButton from './ecq/WelcomeButton';
 
 export default class WelcomeRegisterViaEmailScreen extends Component {
-    static navigationOptions = {
-        title: SCREEN.REGISTER_EMAIL,
-        header: {
-            visible: false
-        }
-    };
     render() {
         const navigation = this.props.navigation;
         return (

@@ -7,4 +7,6 @@ export default class Screen {
     static VERIFICATION_CODE = 'VerificationCode';
     static ACKNOWLEDGEMENT = 'Acknowledgement';
     static FORGOT = 'Forgot';
+
+    static MAIN = 'Main';
 }

@@ -17,13 +17,6 @@ import WelcomeButton from './ecq/WelcomeButton';
 const reactStringReplace = require('react-string-replace');
 
 export default class WelcomeVerificationCodeScreen extends Component {
-    static navigationOptions = {
-        title: SCREEN.VERIFICATION_CODE,
-        header: {
-            visible: false
-        }
-    };
-
     render() {
         const navigation = this.props.navigation;
         const { params } = this.props.navigation.state;
