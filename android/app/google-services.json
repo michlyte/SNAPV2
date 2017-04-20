@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "849545884984",
+    "firebase_url": "https://reacttraining-e9e2d.firebaseio.com",
+    "project_id": "reacttraining-e9e2d",
+    "storage_bucket": "reacttraining-e9e2d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849545884984:android:f8e9dbae3a0895bb",
+        "android_client_info": {
+          "package_name": "com.sampleapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "849545884984-tcfaofu480npb682qlhtk0h1ngn1t4tf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeCnynXLg_FJWefyxNhwdTuQD7R6aPX6c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,6 +10,7 @@
     "react": "^15.4.2",
     "react-native": "0.42.0",
     "react-native-fbsdk": "^0.5.0",
+    "react-native-fcm": "^6.2.3",
     "react-native-snap-carousel": "^2.1.1",
     "react-native-tab-view": "0.0.58",
     "react-native-twitter-signin": "0.0.1",
