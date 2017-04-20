@@ -5,7 +5,7 @@ import {
   Button
 } from 'react-native';
 
-export default class HomeGrid extends React.Component {
+export default class HomeGrid extends Component {
   render() {
     return (
       <View>

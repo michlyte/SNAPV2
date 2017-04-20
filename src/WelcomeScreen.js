@@ -22,6 +22,7 @@ import STRINGS from './util/Strings';
 import PROPERTIES from './util/Properties';
 import SCREEN from './util/Screen';
 import STYLE from './util/Style';
+import CONFIG from './util/Config';
 import WelcomeTextInput from './ecq/WelcomeTextInput';
 import WelcomeContainer from './WelcomeContainer';
 
@@ -37,6 +38,18 @@ const {
 } = FBSDK;
 
 export default class WelcomeScreen extends Component {
+    componentWillMount() {
+        if (CONFIG.isLoggedIn) {
+            const resetAction = NavigationActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({routeName: SCREEN.MAIN})
+                ]
+            });
+            this.props.navigation.dispatch(resetAction)
+        }
+    }
+
     render() {
         const navigation = this.props.navigation;
         return (
@@ -139,7 +152,7 @@ class SocialContainer extends Component {
 // Facebook SDK
 function facebookPressed() {
     console.log('facebookPressed');
-    // Attempt a login using the Facebook login dialog asking for default permissions.
+    // Attempt login using the Facebook login dialog asking for default permissions.
     LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
         function (result) {
             if (result.isCancelled) {
