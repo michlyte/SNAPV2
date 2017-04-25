@@ -4,18 +4,18 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-  AppRegistry,
+    AppRegistry,
 } from 'react-native';
-import { SNAPWelcomeNavigator, SNAPExampleNavigator } from './src/Router';
+import App from './src/App';
 
 export default class SampleApp extends Component {
-  render() {
-    return (
-      <SNAPWelcomeNavigator />
-    );
-  }
+    render() {
+        return (
+            <App />
+        );
+    }
 }
 
 AppRegistry.registerComponent('SampleApp', () => SampleApp);
