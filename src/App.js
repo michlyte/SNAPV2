@@ -46,13 +46,13 @@ export default class SampleApp extends Component {
                 //notif._notificationType is available for iOS platfrom
                 switch(notif._notificationType){
                     case NotificationType.Remote:
-                        notif.finish(RemoteNotificationResult.NewData) //other types available: RemoteNotificationResult.NewData, RemoteNotificationResult.ResultFailed
+                        notif.finish(RemoteNotificationResult.NewData); //other types available: RemoteNotificationResult.NewData, RemoteNotificationResult.ResultFailed
                         break;
                     case NotificationType.NotificationResponse:
                         notif.finish();
                         break;
                     case NotificationType.WillPresent:
-                        notif.finish(WillPresentNotificationResult.All) //other types available: WillPresentNotificationResult.None
+                        notif.finish(WillPresentNotificationResult.All); //other types available: WillPresentNotificationResult.None
                         break;
                 }
             }
