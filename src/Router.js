@@ -4,6 +4,7 @@ import {
     TabNavigator
 } from 'react-navigation';
 import SCREEN from './util/Screen';
+import THEME from './util/Theme';
 
 // Welcome
 import WelcomeScreen from './WelcomeScreen';
@@ -23,6 +24,13 @@ import CarouselExample from './example/carousel/CarouselExample';
 export const MainScreenNavigator = TabNavigator({
     List: {screen: HomeList},
     Grid: {screen: HomeGrid},
+}, {
+    tabBarOptions: {
+        style: {
+          backgroundColor: THEME.tabBar_backgroundColor,
+        },
+        activeTintColor: THEME.tabBar_tintColor,
+    },
 });
 
 export const SNAPExampleNavigator = StackNavigator({

@@ -5,8 +5,7 @@ import {
     View,
     TouchableHighlight,
 } from 'react-native';
-
-import COLOR from './util/Color';
+import THEME from './util/Theme';
 import CONFIG from './util/Config';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -15,9 +14,13 @@ export default class HomeList extends Component {
     static navigationOptions = {
         header: {
             title: CONFIG.appName,
+            style: {
+              backgroundColor: THEME.navBar_backgroundColor,
+            },
+            tintColor: THEME.navBar_tintColor,
             right: <View style={{marginRight: 15}}>
                 <TouchableHighlight onPress={() => console.log('Add Pressed.')}>
-                    <Icon name="plus" size={20} color={COLOR.GREEN}/>
+                    <Icon name="plus" size={20} color={THEME.navBar_tintColor}/>
                 </TouchableHighlight>
             </View>
         },
