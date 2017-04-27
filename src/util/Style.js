@@ -7,6 +7,7 @@ import {
 
 import SIZE from './Size';
 import COLOR from './Color';
+import THEME from './Theme';
 
 export default STYLE = StyleSheet.create({
 //    Welcome
@@ -30,7 +31,7 @@ export default STYLE = StyleSheet.create({
         width: 5,
     },
     text: {
-        color: 'white',
+        color: THEME.text_welcome_tintColor,
         fontSize: 18,
     }
 });

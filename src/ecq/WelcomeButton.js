@@ -9,7 +9,7 @@ import {
     TouchableHighlight,
     StyleSheet,
 } from 'react-native';
-import COLOR from '../util/Color';
+import THEME from '../util/Theme';
 import SIZE from '../util/Size';
 
 export default class WelcomeButton extends Component {
@@ -36,11 +36,11 @@ const styles = StyleSheet.create({
     welcomeActionButton: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: COLOR.GREEN,
+        backgroundColor: THEME.button_welcome_backgroundColor,
         height: SIZE.WELCOME_BUTTON_HEIGHT,
     },
     welcomeActionButtonText: {
-        color: COLOR.WELCOME_BUTTON_TINT_COLOR,
+        color: THEME.button_welcome_tintColor,
         fontSize: 22,
     },
 });

@@ -4,6 +4,18 @@
 import COLOR from './Color';
 
 export default class Theme {
+    // Welcome
+    static tabBar_welcome_backgroundColor = 'transparent';
+    static tabBar_welcome_tintColor = 'white';
+    static tabBar_welcome_indicatorColor = COLOR.GREEN;
+
+    static button_welcome_backgroundColor = COLOR.GREEN;
+    static button_text_welcome_tintColor = COLOR.GREEN;
+    static button_welcome_tintColor = 'white';
+
+    static text_welcome_tintColor = 'white';
+
+    // Main
     static navBar_backgroundColor = COLOR.BLUE;
     static navBar_tintColor = 'white';
 

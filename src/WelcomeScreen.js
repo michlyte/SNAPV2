@@ -17,6 +17,7 @@ import {NavigationActions} from 'react-navigation'
 import FBSDK from 'react-native-fbsdk';
 import IMAGES from './Images';
 import COLOR from './util/Color';
+import THEME from './util/Theme';
 import SIZE from './util/Size';
 import STRINGS from './util/Strings';
 import PROPERTIES from './util/Properties';
@@ -25,6 +26,7 @@ import STYLE from './util/Style';
 import CONFIG from './util/Config';
 import WelcomeTextInput from './ecq/WelcomeTextInput';
 import WelcomeContainer from './WelcomeContainer';
+import WelcomeButton from './ecq/WelcomeButton';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -81,9 +83,9 @@ class WelcomeBottomContainer extends Component {
 
     _renderHeader = (props) => {
         return <TabBar {...props}
-                       indicatorStyle={ styles.indicator }
-                       labelStyle={ styles.label }
-                       style={ styles.tabBar }/>
+                       indicatorStyle={{backgroundColor: THEME.tabBar_welcome_indicatorColor}}
+                       labelStyle={{color: THEME.tabBar_welcome_tintColor}}
+                       style={{backgroundColor: THEME.tabBar_welcome_backgroundColor}}/>
     };
 
     _renderScene = ({route}) => {
@@ -271,14 +273,9 @@ class LoginTab extends Component {
                         returnKeyType='done'
                     />
                     <View style={ styles.space }/>
-                    <TouchableHighlight
-                        style={ styles.welcomeActionButton }
-                        onPress={ this._onLoginPressed.bind(this) }>
-                        <Text
-                            style={ styles.welcomeActionButtonText }>
-                            { STRINGS.LOGIN }
-                        </Text>
-                    </TouchableHighlight>
+                    <WelcomeButton
+                        onPress={this._onLoginPressed.bind(this)}
+                        text={STRINGS.LOGIN}/>
                     <View style={ styles.space }/>
                     <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                         <Text style={{color: 'white'}}>{STRINGS.forgotYourLoginDetails} </Text>
@@ -289,7 +286,7 @@ class LoginTab extends Component {
                 </View>
 
                 <View style={{alignItems: 'center'}}>
-                    <Text style={{color: COLOR.WELCOME_TEXT_TINT_COLOR}}>
+                    <Text style={{color: THEME.text_welcome_tintColor}}>
                         or login using
                     </Text>
 
@@ -359,7 +356,7 @@ class RegisterTab extends Component {
                 </View>
 
                 <View style={{alignItems: 'center'}}>
-                    <Text style={{color: COLOR.WELCOME_TEXT_TINT_COLOR}}>
+                    <Text style={{color: THEME.text_welcome_tintColor}}>
                         or sign up using
                     </Text>
 
@@ -377,7 +374,7 @@ class RegisterTab extends Component {
                                 Email
                             </Text>
                             <View style={STYLE.divider}/>
-                            <Icon name="check" size={20} color={COLOR.GREEN}/>
+                            <Icon name="check" size={20} color={THEME.button_text_welcome_tintColor}/>
                         </View>
                     </TouchableHighlight>
 
@@ -400,45 +397,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLOR.WELCOME_BACKGROUND_BOTTOM_CONTAINER,
         padding: 20,
     },
-    tabBar: {
-        backgroundColor: 'transparent',
-    },
-    indicator: {
-        backgroundColor: COLOR.GREEN,
-    },
-    label: {
-        color: 'white',
-    },
     space: {
         height: SIZE.WELCOME_HEIGHT_SPACE,
-    },
-    containerSocial: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'gray',
-    },
-    containerButtonTwitter: {
-        flex: 1,
-        backgroundColor: COLOR.WELCOME_TWITTER_BACKGROUND_COLOR,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    containerButtonFacebook: {
-        flex: 1,
-        backgroundColor: COLOR.WELCOME_FACEBOOK_BACKGROUND_COLOR,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    welcomeActionButton: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: COLOR.GREEN,
-        height: SIZE.WELCOME_BUTTON_HEIGHT,
-    },
-    welcomeActionButtonText: {
-        color: COLOR.WELCOME_BUTTON_TINT_COLOR,
-        fontSize: 22,
     },
 });
