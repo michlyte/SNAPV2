@@ -4,9 +4,6 @@ import {
     TabNavigator
 } from 'react-navigation';
 import SCREEN from './util/Screen';
-import COLOR from './util/Color';
-
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 // Welcome
 import WelcomeScreen from './WelcomeScreen';
@@ -24,13 +21,7 @@ import WebViewExample from './example/WebViewExample';
 import CarouselExample from './example/carousel/CarouselExample';
 
 export const MainScreenNavigator = TabNavigator({
-    List: {
-        screen: HomeList,
-        navigationOptions: {
-            title: 'List',
-            headerRight: <Icon name="plus" size={20} color={COLOR.GREEN}/>,
-        },
-    },
+    List: {screen: HomeList},
     Grid: {screen: HomeGrid},
 });
 
