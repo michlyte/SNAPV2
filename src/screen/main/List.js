@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
     ListView,
+    FlatList,
     Text,
     View,
     TouchableHighlight,
@@ -31,20 +32,26 @@ export default class HomeList extends Component {
 // Initialize the hardcoded data
     constructor(props) {
         super(props);
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.state = {
-            dataSource: ds.cloneWithRows([
-                'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin'
-            ])
-        };
+        // const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        // this.state = {
+        //     dataSource: ds.cloneWithRows([
+        //         'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin'
+        //     ])
+        // };
     }
+
+    _renderItem = ({item}) => {
+        return (
+            <Text>{item.title}</Text>
+        );
+    };
 
     render() {
         return (
             <View style={{flex: 1, paddingTop: 22}}>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={(rowData) => <Text>{rowData}</Text>}
+                <FlatList
+                    data={[{key: 'a', title: 'a title'}, {key: 'b', title: 'b title'}]}
+                    renderItem={this._renderItem}
                 />
             </View>
         );
