@@ -9,8 +9,8 @@ import {
     TouchableHighlight,
 } from 'react-native';
 
-import COLOR from './util/Color';
-import Images from './Images';
+import COLOR from '../../util/Color';
+import Images from '../../Images';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 

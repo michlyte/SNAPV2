@@ -8,11 +8,11 @@ import {
     BackAndroid,
 } from 'react-native';
 
-import SCREEN from './util/Screen';
-import STYLE from './util/Style';
-import STRINGS from './util/Strings';
+import SCREEN from '../../util/Screen';
+import STYLE from '../../util/Style';
+import STRINGS from '../../util/Strings';
 import WelcomeContainer from './WelcomeContainer';
-import WelcomeButton from './ecq/WelcomeButton';
+import WelcomeButton from '../../ecq/WelcomeButton';
 
 import { NavigationActions } from 'react-navigation';
 

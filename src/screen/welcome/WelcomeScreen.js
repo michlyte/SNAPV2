@@ -15,18 +15,18 @@ import {
 } from 'react-native-tab-view';
 import {NavigationActions} from 'react-navigation'
 import FBSDK from 'react-native-fbsdk';
-import IMAGES from './Images';
-import COLOR from './util/Color';
-import THEME from './util/Theme';
-import SIZE from './util/Size';
-import STRINGS from './util/Strings';
-import PROPERTIES from './util/Properties';
-import SCREEN from './util/Screen';
-import STYLE from './util/Style';
-import CONFIG from './util/Config';
-import WelcomeTextInput from './ecq/WelcomeTextInput';
+import IMAGES from '../../Images';
+import COLOR from '../../util/Color';
+import THEME from '../../util/Theme';
+import SIZE from '../../util/Size';
+import STRINGS from '../../util/Strings';
+import PROPERTIES from '../../util/Properties';
+import SCREEN from '../../util/Screen';
+import STYLE from '../../util/Style';
+import CONFIG from '../../util/Config';
+import WelcomeTextInput from '../../ecq/WelcomeTextInput';
 import WelcomeContainer from './WelcomeContainer';
-import WelcomeButton from './ecq/WelcomeButton';
+import WelcomeButton from '../../ecq/WelcomeButton';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 

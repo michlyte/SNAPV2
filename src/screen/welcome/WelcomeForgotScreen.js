@@ -6,12 +6,12 @@ import {
     View,
 } from 'react-native';
 
-import SCREEN from './util/Screen';
-import STYLE from './util/Style';
-import STRINGS from './util/Strings';
+import SCREEN from '../../util/Screen';
+import STYLE from '../../util/Style';
+import STRINGS from '../../util/Strings';
 import WelcomeContainer from './WelcomeContainer';
-import WelcomeTextInput from './ecq/WelcomeTextInput';
-import WelcomeButton from './ecq/WelcomeButton';
+import WelcomeTextInput from '../../ecq/WelcomeTextInput';
+import WelcomeButton from '../../ecq/WelcomeButton';
 
 export default class WelcomeForgotScreen extends Component {
     render() {

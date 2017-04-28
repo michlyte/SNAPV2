@@ -7,11 +7,11 @@ import SCREEN from './util/Screen';
 import THEME from './util/Theme';
 
 // Welcome
-import WelcomeScreen from './WelcomeScreen';
-import WelcomeRegisterViaEmailScreen from './WelcomeRegisterViaEmailScreen';
-import WelcomeVerificationCodeScreen from './WelcomeVerificationCodeScreen';
-import WelcomeAcknowledgementScreen from './WelcomeAcknowledgementScreen';
-import WelcomeForgotScreen from './WelcomeForgotScreen';
+import WelcomeScreen from './screen/welcome/WelcomeScreen';
+import WelcomeRegisterViaEmailScreen from './screen/welcome/WelcomeRegisterViaEmailScreen';
+import WelcomeVerificationCodeScreen from './screen/welcome/WelcomeVerificationCodeScreen';
+import WelcomeAcknowledgementScreen from './screen/welcome/WelcomeAcknowledgementScreen';
+import WelcomeForgotScreen from './screen/welcome/WelcomeForgotScreen';
 
 // Home Tab
 import HomeList from './List';
@@ -44,45 +44,35 @@ export const SNAPWelcomeNavigator = StackNavigator({
         screen: WelcomeScreen,
         navigationOptions: {
             title: SCREEN.WELCOME,
-            header: {
-                visible: false
-            }
+            header: null,
         },
     },
     RegisterEmail: {
         screen: WelcomeRegisterViaEmailScreen,
         navigationOptions: {
             title: SCREEN.REGISTER_EMAIL,
-            header: {
-                visible: false
-            }
+            header: null,
         },
     },
     VerificationCode: {
         screen: WelcomeVerificationCodeScreen,
         navigationOptions: {
             title: SCREEN.VERIFICATION_CODE,
-            header: {
-                visible: false
-            }
+            header: null,
         },
     },
     Acknowledgement: {
         screen: WelcomeAcknowledgementScreen,
         navigationOptions: {
             title: SCREEN.ACKNOWLEDGEMENT,
-            header: {
-                visible: false
-            }
+            header: null,
         },
     },
     Forgot: {
         screen: WelcomeForgotScreen,
         navigationOptions: {
             title: SCREEN.FORGOT,
-            header: {
-                visible: false
-            }
+            header: null,
         },
     },
 
