@@ -15,7 +15,7 @@
     "react-native-tab-view": "0.0.58",
     "react-native-twitter-signin": "0.0.1",
     "react-native-vector-icons": "^4.0.1",
-    "react-navigation": "^1.0.0-beta.7",
+    "react-navigation": "^1.0.0-beta.9",
     "react-string-replace": "^0.4.0",
     "react-test-renderer": "^15.4.2"
   },

@@ -4,5 +4,5 @@
 export default class Config {
     static appName = 'SNAP';
 
-    static isLoggedIn = false;
+    static isLoggedIn = true;
 }

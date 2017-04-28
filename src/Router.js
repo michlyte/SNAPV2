@@ -14,8 +14,8 @@ import WelcomeAcknowledgementScreen from './screen/welcome/WelcomeAcknowledgemen
 import WelcomeForgotScreen from './screen/welcome/WelcomeForgotScreen';
 
 // Home Tab
-import HomeList from './List';
-import HomeGrid from './Grid';
+import HomeList from './screen/main/List';
+import HomeGrid from './screen/main/Grid';
 
 // Example
 import WebViewExample from './example/WebViewExample';
