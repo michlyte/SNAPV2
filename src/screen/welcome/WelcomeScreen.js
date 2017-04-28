@@ -302,7 +302,7 @@ class LoginTab extends Component {
                             onPress={ facebookPressed.bind(this) }
                             backgroundColor={ COLOR.WELCOME_FACEBOOK_BACKGROUND_COLOR }
                             text={ STRINGS.FACEBOOK }
-                            icon={ IMAGES.ICON_FACEBOOK }
+                            icon={ IMAGES.ic_facebook }
                             socialHeight={ SIZE.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT }
                             fontSize={ 14 }/>
 
@@ -312,7 +312,7 @@ class LoginTab extends Component {
                             onPress={ onTwitterPressed.bind(this) }
                             backgroundColor={ COLOR.WELCOME_TWITTER_BACKGROUND_COLOR }
                             text={ STRINGS.TWITTER }
-                            icon={ IMAGES.ICON_TWITTER }
+                            icon={ IMAGES.ic_twitter }
                             socialHeight={ SIZE.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT }
                             fontSize={ 14 }/>
 
@@ -339,7 +339,7 @@ class RegisterTab extends Component {
                             onPress={ facebookPressed.bind(this) }
                             backgroundColor={ COLOR.WELCOME_FACEBOOK_BACKGROUND_COLOR }
                             text={ STRINGS.REGISTER_VIA_FACEBOOK }
-                            icon={ IMAGES.ICON_FACEBOOK }
+                            icon={ IMAGES.ic_facebook }
                             socialHeight={ SIZE.WELCOME_BUTTON_HEIGHT }
                             fontSize={ 18 }/>
                     </View>
@@ -349,7 +349,7 @@ class RegisterTab extends Component {
                             onPress={ onTwitterPressed.bind(this) }
                             backgroundColor={ COLOR.WELCOME_TWITTER_BACKGROUND_COLOR }
                             text={ STRINGS.REGISTER_VIA_TWITTER }
-                            icon={ IMAGES.ICON_TWITTER }
+                            icon={ IMAGES.ic_twitter }
                             socialHeight={ SIZE.WELCOME_BUTTON_HEIGHT }
                             fontSize={ 18 }/>
                     </View>
