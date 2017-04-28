@@ -83,7 +83,7 @@ export default class CameraAndCameraRollScreen extends Component {
         if (this.state.camera.type === back) {
             icon = IMAGES.ic_camera_rear_white;
         } else if (this.state.camera.type === front) {
-            icon = IMAGES.ic_camera_front;
+            icon = IMAGES.ic_camera_front_white;
         }
 
         return icon;
