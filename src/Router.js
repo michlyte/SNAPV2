@@ -17,6 +17,9 @@ import WelcomeForgotScreen from './screen/welcome/WelcomeForgotScreen';
 import HomeList from './screen/main/List';
 import HomeGrid from './screen/main/Grid';
 
+// New Case
+import CameraAndCameraRoll from './screen/newcase/CameraAndCameraRollScreen';
+
 // Example
 import WebViewExample from './example/WebViewExample';
 import CarouselExample from './example/carousel/CarouselExample';
@@ -80,4 +83,7 @@ export const SNAPWelcomeNavigator = StackNavigator({
     Main: {
         screen: MainScreenNavigator,
     },
+    CameraAndCameraRoll: {
+        screen: CameraAndCameraRoll,
+    }
 });

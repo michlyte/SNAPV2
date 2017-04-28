@@ -9,4 +9,5 @@ export default class Screen {
     static FORGOT = 'Forgot';
 
     static MAIN = 'Main';
+    static CAMERA_AND_CAMERA_ROLL = 'CameraAndCameraRoll';
 }
