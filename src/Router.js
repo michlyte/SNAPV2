@@ -85,5 +85,8 @@ export const SNAPWelcomeNavigator = StackNavigator({
     },
     CameraAndCameraRoll: {
         screen: CameraAndCameraRoll,
+        navigationOptions: {
+          header: null,
+        },
     }
 });
