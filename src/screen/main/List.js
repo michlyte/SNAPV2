@@ -34,14 +34,14 @@ export default class HomeList extends Component {
                     title: 'a title',
                     description: 'Death Note, di Indonesia juga dikenal dengan judul Dunia Dewa Kematian, adalah judul sebuah serial manga Jepang yang ditulis oleh Tsugumi Ohba dan ilustrasi oleh Takeshi Obata. Manga ini menceritakan tentang Light Yagami, seorang siswa genius yang secara kebetulan menemukan Death Note milik shinigami (dewa kematian). Direalisasikan di majalah Shonen Jump dari Januari 2004 hingga Mei 2006 dengan total 108 bab. Versi tankoubonnya terbit sebanyak 12 jilid dan 1 jilid spesial yang berjudul How to Read 13 yang berisi tentang penjelasan dan profil tentang Death Note. Di Indonesia anime ini ditayangkan oleh SCTV dan Global TV.',
                     profilePictureUrl: 'http://assets0.prcdn.com/uk/people/default-profile.png?1406639312',
-                    imageUrl: 'https://www.snapchat.com/global/social-lg.jpg'
+                    imageUrl: 'http://cdn01.androidauthority.net/wp-content/uploads/2015/11/00-best-backgrounds-and-wallpaper-apps-for-android.jpg'
                 },
                 {
                     key: 'b',
                     title: 'b title',
                     description: 'Death Note, di Indonesia juga dikenal dengan judul Dunia Dewa Kematian, adalah judul sebuah serial manga Jepang yang ditulis oleh Tsugumi Ohba dan ilustrasi oleh Takeshi Obata. Manga ini menceritakan tentang Light Yagami, seorang siswa genius yang secara kebetulan menemukan Death Note milik shinigami (dewa kematian). Direalisasikan di majalah Shonen Jump dari Januari 2004 hingga Mei 2006 dengan total 108 bab. Versi tankoubonnya terbit sebanyak 12 jilid dan 1 jilid spesial yang berjudul How to Read 13 yang berisi tentang penjelasan dan profil tentang Death Note. Di Indonesia anime ini ditayangkan oleh SCTV dan Global TV.',
                     profilePictureUrl: 'http://www.anz.com/resources/5/1/51effbe1-70cb-4203-b8f2-c1555c306d46/4/profile.png?MOD=AJPERES&CACHEID=51effbe1-70cb-4203-b8f2-c1555c306d46/4',
-                    imageUrl: 'https://www.snapchat.com/global/social-lg.jpg'
+                    imageUrl: 'https://s-media-cache-ak0.pinimg.com/736x/80/91/f9/8091f9dceb2ea55fa7b57bb7295e1824.jpg'
                 }
             ]
         };

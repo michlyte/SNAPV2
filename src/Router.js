@@ -25,8 +25,8 @@ import WebViewExample from './example/WebViewExample';
 import CarouselExample from './example/carousel/CarouselExample';
 
 export const MainScreenNavigator = TabNavigator({
-    List: {screen: HomeList},
     Grid: {screen: HomeGrid},
+    List: {screen: HomeList},
 }, {
     tabBarOptions: {
         style: {
