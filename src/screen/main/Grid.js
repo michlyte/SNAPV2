@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View, StyleSheet, FlatList, Dimensions, TouchableHighlight, Image} from 'react-native';
 import THEME from "../../util/Theme";
 import CONFIG from "../../util/Config";
+import SCREEN from "../../util/Screen";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
