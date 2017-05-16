@@ -2,19 +2,20 @@ package com.sampleapp;
 
 import android.app.Application;
 
+import com.airbnb.android.react.maps.MapsPackage;
+import com.evollu.react.fcm.FIRMessagingPackage;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.react.ReactApplication;
-import com.lwansbrough.RCTCamera.RCTCameraPackage;
-import com.evollu.react.fcm.FIRMessagingPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.soloader.SoLoader;
 import com.goldenowl.twittersignin.TwitterSigninPackage;
+import com.lwansbrough.RCTCamera.RCTCameraPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,11 +38,12 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-            new RCTCameraPackage(),
-            new FIRMessagingPackage(),
-            new VectorIconsPackage(),
+                    new RCTCameraPackage(),
+                    new FIRMessagingPackage(),
+                    new VectorIconsPackage(),
                     new FBSDKPackage(mCallbackManager),
-                    new TwitterSigninPackage()
+                    new TwitterSigninPackage(),
+                    new MapsPackage()
             );
         }
     };

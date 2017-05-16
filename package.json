@@ -12,6 +12,7 @@
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-fbsdk": "^0.5.0",
     "react-native-fcm": "^6.2.3",
+    "react-native-maps": "^0.15.0",
     "react-native-snap-carousel": "^2.1.1",
     "react-native-tab-view": "0.0.58",
     "react-native-twitter-signin": "0.0.1",

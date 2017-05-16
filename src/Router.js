@@ -16,6 +16,8 @@ import WelcomeForgotScreen from './screen/welcome/WelcomeForgotScreen';
 // Home Tab
 import HomeList from './screen/main/List';
 import HomeGrid from './screen/main/Grid';
+import HomeMap from './screen/main/Map';
+import HomeNotif from './screen/main/Notif';
 
 // New Case
 import CameraAndCameraRoll from './screen/newcase/CameraAndCameraRollScreen';
@@ -25,8 +27,10 @@ import WebViewExample from './example/WebViewExample';
 import CarouselExample from './example/carousel/CarouselExample';
 
 export const MainScreenNavigator = TabNavigator({
+    Map: {screen: HomeMap},
     List: {screen: HomeList},
     Grid: {screen: HomeGrid},
+    Notif: {screen: HomeNotif},
 }, {
     tabBarOptions: {
         style: {

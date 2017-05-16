@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {FlatList, Image, Text, TouchableHighlight, View, StyleSheet} from "react-native";
+import {FlatList, Image, Text, TouchableHighlight, View, StyleSheet, Dimensions} from "react-native";
 import THEME from "../../util/Theme";
 import CONFIG from "../../util/Config";
 import SCREEN from "../../util/Screen";
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     image: {
-        height: 280,
+        height: Dimensions.get('window').width,
     },
     actionIcon: {
         width: 35,
