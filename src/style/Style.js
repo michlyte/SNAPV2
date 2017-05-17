@@ -5,7 +5,7 @@ import {
     StyleSheet
 } from 'react-native';
 
-import SIZE from './Size';
+import SIZE from '../util/Size';
 import COLOR from './Color';
 import THEME from './Theme';
 

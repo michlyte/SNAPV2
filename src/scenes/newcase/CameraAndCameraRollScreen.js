@@ -10,7 +10,7 @@ import {
     View,
 } from 'react-native';
 import Camera from 'react-native-camera';
-import IMAGES from '../../Images';
+import IMAGES from '../../util/Images';
 
 export default class CameraAndCameraRollScreen extends Component {
     constructor(props) {

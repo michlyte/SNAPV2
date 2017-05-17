@@ -1,4 +1,4 @@
-import Config from './Config';
+import Config from '../Constants';
 
 export default class Strings {
   static placeHolderEmailAddress = 'Email address';

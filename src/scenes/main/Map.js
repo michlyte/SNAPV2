@@ -3,8 +3,8 @@
  */
 import React, {Component} from "react";
 import {View, TouchableHighlight, Dimensions, StyleSheet} from 'react-native';
-import THEME from "../../util/Theme";
-import CONFIG from "../../util/Config";
+import THEME from "../../style/Theme";
+import CONFIG from "../../Constants";
 import SCREEN from "../../util/Screen";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
