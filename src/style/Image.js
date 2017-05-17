@@ -4,12 +4,12 @@
 import {StyleSheet} from "react-native";
 
 const StyImage = StyleSheet.create({
-    profilePictureNotif: {
+    friendPictureNotif: {
         width: 56,
         height: 56,
         borderRadius: 28,
     },
-    imageNotif: {
+    attachmentThumbNotif: {
         width: 60,
         height: 60,
     }

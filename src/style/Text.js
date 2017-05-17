@@ -4,6 +4,9 @@
 import {StyleSheet} from "react-native";
 
 const StyText = StyleSheet.create({
+    messageNotif: {
+        fontSize: 18,
+    },
     title: {
         fontSize: 18,
     },
