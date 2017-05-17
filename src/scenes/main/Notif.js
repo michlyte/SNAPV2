@@ -5,7 +5,9 @@ import React, {Component} from "react";
 import {FlatList, Image, Text, TouchableHighlight, View} from "react-native";
 import THEME from "../../style/Theme";
 import CONFIG from "../../Constants";
-import SCREEN from "../../utils/ScreenHelper";
+
+import SCREEN_HELPER from "../../utils/ScreenHelper";
+import ASSET_HELPER from "../../utils/AssetHelper";
 
 import StyImages from "../../style/Image";
 import StyText from "../../style/Text";
@@ -22,7 +24,7 @@ export default class HomeNotif extends Component {
             backgroundColor: THEME.navBar_backgroundColor,
         },
         headerRight: <View style={{marginRight: 15}}>
-            <TouchableHighlight onPress={() => navigation.navigate(SCREEN.CAMERA_AND_CAMERA_ROLL)}>
+            <TouchableHighlight onPress={() => navigation.navigate(SCREEN_HELPER.CAMERA_AND_CAMERA_ROLL)}>
                 <FontAwesome name="plus" size={20} color={THEME.navBar_tintColor}/>
             </TouchableHighlight>
         </View>,
@@ -76,8 +78,10 @@ export default class HomeNotif extends Component {
         }
     }
 
+    _onRefresh = () => alert('onRefresh: nothing to refresh :P');
+
     _renderItem = ({item, index}) => {
-        let fpUrl = (item.friendPictureUrl === null ? 'http://lifeinvistaprint.com/wp-content/uploads/2015/04/null.png' : item.friendPictureUrl);
+        let fpUrl = (item.friendPictureUrl ? {uri: item.friendPictureUrl} : ASSET_HELPER.img_no_profile_picture);
 
         let prefix = '';
         let suffix = '';
@@ -96,9 +100,9 @@ export default class HomeNotif extends Component {
         return (
             <View style={{flex: 1, marginBottom: 15}}>
                 <View style={{flexDirection: 'row'}}>
-                    {/* Profile Picture */}
+                    {/* Friend profile picture */}
                     <Image style={StyImages.friendPictureNotif}
-                           source={{uri: fpUrl}}/>
+                           source={fpUrl}/>
                     {/* Message */}
                     <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>
                         <Text style={StyText.messageNotif}>
@@ -120,6 +124,8 @@ export default class HomeNotif extends Component {
                 <FlatList
                     data={this.state.data}
                     renderItem={this._renderItem}
+                    onRefresh={() => this._onRefresh}
+                    refreshing={false}
                 />
             </View>
         );

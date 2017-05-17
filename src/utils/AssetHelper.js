@@ -2,6 +2,9 @@ export default class AssetsHelper {
     static SNAP_BACKGROUND = require('../assets/ecq_bg.png');
     static SNAP_LOGO = require('../assets/ecq_logo.png');
 
+    // Images
+    static img_no_profile_picture = require('../assets/img_no_profile_picture.png');
+
     // Icons
     static ic_facebook = require('../assets/facebook.png');
     static ic_twitter = require('../assets/twitter.png');
