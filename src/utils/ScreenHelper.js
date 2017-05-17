@@ -7,6 +7,7 @@ export default class ScreenHelper {
     static VERIFICATION_CODE = 'VerificationCode';
     static ACKNOWLEDGEMENT = 'Acknowledgement';
     static FORGOT = 'Forgot';
+    static FORGOT_ACKNOWLEDGMENT = 'ForgotAcknowledgment';
 
     static MAIN = 'Main';
     static CAMERA_AND_CAMERA_ROLL = 'CameraAndCameraRoll';

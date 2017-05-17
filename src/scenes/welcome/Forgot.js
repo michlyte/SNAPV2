@@ -7,8 +7,9 @@ import {View} from "react-native";
 import STYLE from "../../style/Style";
 
 import STRING_HELPER from "../../utils/StringHelper";
+import SCREEN_HELPER from "../../utils/ScreenHelper";
 
-import WelcomeContainer from "./WelcomeContainer";
+import WelcomeContainer from "../../components/WelcomeContainer";
 import WelcomeTextInput from "../../components/WelcomeTextInput";
 import WelcomeButton from "../../components/WelcomeButton";
 
@@ -29,13 +30,17 @@ export default class WelcomeForgotScreen extends Component {
 class WelcomeForgotBottomContainer extends Component {
     constructor(props) {
         super(props);
+
+        this.onForgotPressed = this._onForgotPressed.bind(this);
+
         this.state = {
             emailAddress: '',
         }
     }
 
     _onForgotPressed() {
-        console.log('_onForgotPressed')
+        const {navigate} = this.props.navigation;
+        navigate(SCREEN_HELPER.FORGOT_ACKNOWLEDGMENT);
     }
 
     render() {
@@ -52,7 +57,7 @@ class WelcomeForgotBottomContainer extends Component {
                     />
                     <View style={STYLE.space}/>
                     <WelcomeButton
-                        onPress={this._onForgotPressed.bind(this)}
+                        onPress={this.onForgotPressed}
                         text={STRING_HELPER.FORGOT}/>
                 </View>
             </View>

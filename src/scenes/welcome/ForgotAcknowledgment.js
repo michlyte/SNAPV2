@@ -1,5 +1,5 @@
 /**
- * Created by michael on 4/17/2017.
+ * Created by michael on 5/17/2017.
  */
 import React, {Component} from "react";
 import {BackAndroid, Text, View} from "react-native";
@@ -9,26 +9,27 @@ import STYLE from "../../style/Style";
 import STRING_HELPER from "../../utils/StringHelper";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 
-import WelcomeContainer from "./WelcomeContainer";
+import WelcomeContainer from "../../components/WelcomeContainer";
 import WelcomeButton from "../../components/WelcomeButton";
 
 import {NavigationActions} from "react-navigation";
 
-export default class WelcomeAcknowledgementScreen extends Component {
+export default class ForgotAcknowledgment extends Component {
     constructor(props) {
         super(props);
-        this._onNavigateToRootView = this._onNavigateToRootView.bind(this);
+        this.onNavigateToRootView = this._onNavigateToRootView.bind(this);
     }
 
     componentWillMount() {
-        BackAndroid.addEventListener('hardwareBackPress', this._onNavigateToRootView);
+        BackAndroid.addEventListener('hardwareBackPress', this.onNavigateToRootView);
     }
 
     componentWillUnmount() {
-        BackAndroid.removeEventListener('hardwareBackPress', this._onNavigateToRootView);
+        BackAndroid.removeEventListener('hardwareBackPress', this.onNavigateToRootView);
     }
 
     _onNavigateToRootView() {
+        console.log('_onNavigateToRootView');
         const resetAction = NavigationActions.reset({
             index: 0,
             actions: [
@@ -41,13 +42,11 @@ export default class WelcomeAcknowledgementScreen extends Component {
 
     render() {
         const navigation = this.props.navigation;
-        const {params} = this.props.navigation.state;
         return (
             <WelcomeContainer
                 bottomContainer={
-                    <WelcomeAcknowledgementBottomContainer
-                        navigation={navigation}
-                        email={params.email}/> }
+                    <ForgotAcknowledgementBottomContainer
+                        onDonePressed={this.onNavigateToRootView}/> }
                 navigation={navigation}
                 isBackButtonShowed={ false }
             />
@@ -55,18 +54,9 @@ export default class WelcomeAcknowledgementScreen extends Component {
     }
 }
 
-class WelcomeAcknowledgementBottomContainer extends Component {
+class ForgotAcknowledgementBottomContainer extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            verificationCode: '',
-        }
-    }
-
-    _onNextPressed() {
-        console.log('_onNextPressed');
-        console.log(this.props.email);
     }
 
     render() {
@@ -74,14 +64,14 @@ class WelcomeAcknowledgementBottomContainer extends Component {
             <View style={STYLE.containerBottom}>
                 <View style={STYLE.page}>
                     <Text style={STYLE.text}>
-                        { STRING_HELPER.verificationAcknowledgment }
+                        { STRING_HELPER.forgotAcknowledgment }
                     </Text>
 
                     <View style={STYLE.space}/>
 
                     <WelcomeButton
-                        onPress={this._onNextPressed.bind(this)}
-                        text={STRING_HELPER.NEXT}/>
+                        onPress={this.props.onDonePressed}
+                        text={STRING_HELPER.DONE}/>
                 </View>
             </View>
         );

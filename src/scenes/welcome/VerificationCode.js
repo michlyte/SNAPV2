@@ -1,7 +1,7 @@
 /**
  * Created by michael on 4/17/2017.
  */
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     View,
     Text,
@@ -10,7 +10,7 @@ import {
 import SCREEN from '../../utils/ScreenHelper';
 import STYLE from '../../style/Style';
 import STRINGS from '../../utils/StringHelper';
-import WelcomeContainer from './WelcomeContainer';
+import WelcomeContainer from '../../components/WelcomeContainer';
 import WelcomeTextInput from '../../components/WelcomeTextInput';
 import WelcomeButton from '../../components/WelcomeButton';
 
@@ -19,8 +19,8 @@ const reactStringReplace = require('react-string-replace');
 export default class WelcomeVerificationCodeScreen extends Component {
     render() {
         const navigation = this.props.navigation;
-        const { params } = this.props.navigation.state;
-        return(
+        const {params} = this.props.navigation.state;
+        return (
             <WelcomeContainer
                 bottomContainer={
                     <WelcomeVerificationCodeBottomContainer
@@ -37,7 +37,10 @@ class WelcomeVerificationCodeBottomContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.state =  {
+        this.onResendPressed = this._onResendPressed.bind(this);
+        this.onVerifyPressed = this._onVerifyPressed.bind(this);
+
+        this.state = {
             verificationCode: '',
         }
     }
@@ -48,8 +51,8 @@ class WelcomeVerificationCodeBottomContainer extends Component {
 
     _onVerifyPressed() {
         console.log('_onVerifyPressed');
-        const { navigate } = this.props.navigation;
-        navigate(SCREEN.ACKNOWLEDGEMENT, { email: this.props.email });
+        const {navigate} = this.props.navigation;
+        navigate(SCREEN.ACKNOWLEDGEMENT, {email: this.props.email});
     }
 
     render() {
@@ -72,7 +75,7 @@ class WelcomeVerificationCodeBottomContainer extends Component {
                     <View style={STYLE.space}/>
 
                     <WelcomeTextInput
-                        onChangeText={(text) => this.setState({ verificationCode: text })}
+                        onChangeText={(text) => this.setState({verificationCode: text})}
                         value={ this.state.verificationCode }
                         placeholder={ STRINGS.placeHolderVerificationCode }
                         keyboardType='phone-pad'
@@ -81,18 +84,18 @@ class WelcomeVerificationCodeBottomContainer extends Component {
 
                     <View style={STYLE.space}/>
 
-                    <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                        <View style={{ flex: 1 }}>
+                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                        <View style={{flex: 1}}>
                             <WelcomeButton
-                                onPress={this._onResendPressed.bind(this)}
+                                onPress={this.onResendPressed}
                                 text={STRINGS.RESEND}/>
                         </View>
 
                         <View style={STYLE.space}/>
 
-                        <View style={{ flex: 1 }}>
+                        <View style={{flex: 1}}>
                             <WelcomeButton
-                                onPress={this._onVerifyPressed.bind(this)}
+                                onPress={this.onVerifyPressed}
                                 text={STRINGS.VERIFY}/>
                         </View>
                     </View>

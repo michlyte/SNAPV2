@@ -10,7 +10,7 @@ import STYLE from "../../style/Style";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 import STRING_HELPER from "../../utils/StringHelper";
 
-import WelcomeContainer from "./WelcomeContainer";
+import WelcomeContainer from "../../components/WelcomeContainer";
 import WelcomeTextInput from "../../components/WelcomeTextInput";
 import WelcomeButton from "../../components/WelcomeButton";
 
@@ -31,6 +31,8 @@ export default class WelcomeRegisterViaEmailScreen extends Component {
 class WelcomeRegisterViaEmailBottomContainer extends Component {
     constructor(props) {
         super(props);
+
+        this.onRegisterPressed = this._onRegisterPressed.bind(this);
 
         // Check buildType
         let tempEmailAddress = '';
@@ -87,7 +89,7 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
                     />
                     <View style={STYLE.space}/>
                     <WelcomeButton
-                        onPress={this._onRegisterPressed.bind(this)}
+                        onPress={this.onRegisterPressed}
                         text={STRING_HELPER.REGISTER}/>
                 </View>
             </View>

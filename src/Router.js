@@ -1,30 +1,24 @@
-import React from 'react';
-import {
-    StackNavigator,
-    TabNavigator
-} from 'react-navigation';
-import SCREEN from './utils/ScreenHelper';
-import THEME from './style/Theme';
-
+import React from "react";
+import {StackNavigator, TabNavigator} from "react-navigation";
+import SCREEN_HELPER from "./utils/ScreenHelper";
+import THEME from "./style/Theme";
 // Welcome
-import WelcomeScreen from './scenes/welcome/WelcomeScreen';
-import WelcomeRegisterViaEmailScreen from './scenes/welcome/WelcomeRegisterViaEmailScreen';
-import WelcomeVerificationCodeScreen from './scenes/welcome/WelcomeVerificationCodeScreen';
-import WelcomeAcknowledgementScreen from './scenes/welcome/WelcomeAcknowledgementScreen';
-import WelcomeForgotScreen from './scenes/welcome/WelcomeForgotScreen';
-
+import WelcomeScreen from "./scenes/welcome/Welcome";
+import WelcomeRegisterViaEmailScreen from "./scenes/welcome/RegisterViaEmail";
+import WelcomeVerificationCodeScreen from "./scenes/welcome/VerificationCode";
+import WelcomeAcknowledgementScreen from "./scenes/welcome/Acknowledgement";
+import Forgot from "./scenes/welcome/Forgot";
+import ForgotAcknowledgment from "./scenes/welcome/ForgotAcknowledgment";
 // Home Tab
-import HomeList from './scenes/main/List';
-import HomeGrid from './scenes/main/Grid';
-import HomeMap from './scenes/main/Map';
-import HomeNotif from './scenes/main/Notif';
-
+import HomeList from "./scenes/main/List";
+import HomeGrid from "./scenes/main/Grid";
+import HomeMap from "./scenes/main/Map";
+import HomeNotif from "./scenes/main/Notif";
 // New Case
-import CameraAndCameraRoll from './scenes/newcase/CameraAndCameraRollScreen';
-
+import CameraAndCameraRoll from "./scenes/newcase/CameraAndCameraRollScreen";
 // Example
-import WebViewExample from './example/WebViewExample';
-import CarouselExample from './example/carousel/CarouselExample';
+import WebViewExample from "./example/WebViewExample";
+import CarouselExample from "./example/carousel/CarouselExample";
 
 export const MainScreenNavigator = TabNavigator({
     Notif: {screen: HomeNotif},
@@ -34,7 +28,7 @@ export const MainScreenNavigator = TabNavigator({
 }, {
     tabBarOptions: {
         style: {
-          backgroundColor: THEME.tabBar_backgroundColor,
+            backgroundColor: THEME.tabBar_backgroundColor,
         },
         activeTintColor: THEME.tabBar_tintColor,
     },
@@ -50,35 +44,42 @@ export const SNAPWelcomeNavigator = StackNavigator({
     Welcome: {
         screen: WelcomeScreen,
         navigationOptions: {
-            title: SCREEN.WELCOME,
+            title: SCREEN_HELPER.WELCOME,
             header: null,
         },
     },
     RegisterEmail: {
         screen: WelcomeRegisterViaEmailScreen,
         navigationOptions: {
-            title: SCREEN.REGISTER_EMAIL,
+            title: SCREEN_HELPER.REGISTER_EMAIL,
             header: null,
         },
     },
     VerificationCode: {
         screen: WelcomeVerificationCodeScreen,
         navigationOptions: {
-            title: SCREEN.VERIFICATION_CODE,
+            title: SCREEN_HELPER.VERIFICATION_CODE,
             header: null,
         },
     },
     Acknowledgement: {
         screen: WelcomeAcknowledgementScreen,
         navigationOptions: {
-            title: SCREEN.ACKNOWLEDGEMENT,
+            title: SCREEN_HELPER.ACKNOWLEDGEMENT,
             header: null,
         },
     },
     Forgot: {
-        screen: WelcomeForgotScreen,
+        screen: Forgot,
         navigationOptions: {
-            title: SCREEN.FORGOT,
+            title: SCREEN_HELPER.FORGOT,
+            header: null,
+        },
+    },
+    ForgotAcknowledgment: {
+        screen: ForgotAcknowledgment,
+        navigationOptions: {
+            title: SCREEN_HELPER.FORGOT_ACKNOWLEDGMENT,
             header: null,
         },
     },
@@ -90,7 +91,7 @@ export const SNAPWelcomeNavigator = StackNavigator({
     CameraAndCameraRoll: {
         screen: CameraAndCameraRoll,
         navigationOptions: {
-          header: null,
+            header: null,
         },
     }
 });

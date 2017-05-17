@@ -1,10 +1,10 @@
 Folder PATH listing for volume MICHAEL
-Volume serial number is 0000007C DA89:B857
+Volume serial number is 000000DE DA89:B857
 M:.
 |   App.js
 |   Constants.js
 |   Router.js
-|   tree.doc
+|   structure.doc
 |   
 +---assets
 |       ecq_bg.png
@@ -38,6 +38,7 @@ M:.
 |       
 +---components
 |       WelcomeButton.js
+|       WelcomeContainer.js
 |       WelcomeTextInput.js
 |       
 +---example
@@ -67,22 +68,21 @@ M:.
 |   |       CameraAndCameraRollScreen.js
 |   |       
 |   \---welcome
-|           WelcomeAcknowledgementScreen.js
-|           WelcomeContainer.js
-|           WelcomeForgotScreen.js
-|           WelcomeRegisterViaEmailScreen.js
-|           WelcomeScreen.js
-|           WelcomeVerificationCodeScreen.js
+|           Acknowledgement.js
+|           Forgot.js
+|           ForgotAcknowledgment.js
+|           RegisterViaEmail.js
+|           VerificationCode.js
+|           Welcome.js
 |           
 +---style
+|       Color.js
+|       Size.js
 |       Style.js
 |       Theme.js
 |       
-\---util
-        Color.js
-        Images.js
-        Properties.js
-        Screen.js
-        Size.js
-        Strings.js
+\---utils
+        AssetHelper.js
+        ScreenHelper.js
+        StringHelper.js
         

@@ -4,15 +4,17 @@
 import React, {Component} from "react";
 import {Image, StyleSheet, TouchableHighlight, View} from "react-native";
 
-import COLOR from "../../style/Color";
+import COLOR from "../style/Color";
 
-import ASSET_HELPER from "../../utils/AssetHelper";
+import ASSET_HELPER from "../utils/AssetHelper";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
 export default class WelcomeContainer extends Component {
     constructor(props) {
         super(props);
+
+        this.onBackPressed = this._onBackPressed.bind(this);
     }
 
     _onBackPressed() {
@@ -25,7 +27,7 @@ export default class WelcomeContainer extends Component {
         if (isBackButtonShowed) {
             backButton = <TouchableHighlight
                 style={{marginTop: 10, marginLeft: 20, position: 'absolute'}}
-                onPress={this._onBackPressed.bind(this)}>
+                onPress={this.onBackPressed}>
                 <Icon name="angle-left" size={50} color={COLOR.GREEN}/>
             </TouchableHighlight>;
         }

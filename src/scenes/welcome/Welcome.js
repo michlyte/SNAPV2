@@ -15,7 +15,7 @@ import STRING_HELPER from "../../utils/StringHelper";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 
 import WelcomeTextInput from "../../components/WelcomeTextInput";
-import WelcomeContainer from "./WelcomeContainer";
+import WelcomeContainer from "../../components/WelcomeContainer";
 import WelcomeButton from "../../components/WelcomeButton";
 
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -142,8 +142,8 @@ class SocialContainer extends Component {
 }
 
 // Facebook SDK
-function facebookPressed() {
-    console.log('facebookPressed');
+function onFacebookPressed() {
+    console.log('onFacebookPressed');
     // Attempt login using the Facebook login dialog asking for default permissions.
     LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
         function (result) {
@@ -209,6 +209,11 @@ class LoginTab extends Component {
     constructor(props) {
         super(props);
 
+        this.onLoginPressed = this._onLoginPressed.bind(this);
+        this.onForgotPressed = this._onForgotPressed.bind(this);
+        this.onFacebookPressed = onFacebookPressed.bind(this);
+        this.onTwitterPressed = onTwitterPressed.bind(this);
+
         // Check buildType
         let tempEmailAddress = '';
         let tempPassword = '';
@@ -238,7 +243,6 @@ class LoginTab extends Component {
     }
 
     _onForgotPressed() {
-        console.log('_onForgotPressed');
         const {navigate} = this.props.navigation;
         navigate(SCREEN_HELPER.FORGOT);
     }
@@ -264,12 +268,12 @@ class LoginTab extends Component {
                     />
                     <View style={ styles.space }/>
                     <WelcomeButton
-                        onPress={this._onLoginPressed.bind(this)}
+                        onPress={this.onLoginPressed}
                         text={STRING_HELPER.LOGIN}/>
                     <View style={ styles.space }/>
                     <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                         <Text style={{color: 'white'}}>{STRING_HELPER.forgotYourLoginDetails} </Text>
-                        <TouchableHighlight onPress={this._onForgotPressed.bind(this)}>
+                        <TouchableHighlight onPress={this.onForgotPressed}>
                             <Text style={{color: 'white', fontWeight: 'bold'}}>{STRING_HELPER.getHelpSigningIn}</Text>
                         </TouchableHighlight>
                     </View>
@@ -289,7 +293,7 @@ class LoginTab extends Component {
                     }}>
 
                         <SocialContainer
-                            onPress={ facebookPressed.bind(this) }
+                            onPress={ this.onFacebookPressed }
                             backgroundColor={ COLOR.WELCOME_FACEBOOK_BACKGROUND_COLOR }
                             text={ STRING_HELPER.FACEBOOK }
                             icon={ ASSET_HELPER.ic_facebook }
@@ -299,7 +303,7 @@ class LoginTab extends Component {
                         <View style={{width: 20}}/>
 
                         <SocialContainer
-                            onPress={ onTwitterPressed.bind(this) }
+                            onPress={ this.onTwitterPressed }
                             backgroundColor={ COLOR.WELCOME_TWITTER_BACKGROUND_COLOR }
                             text={ STRING_HELPER.TWITTER }
                             icon={ ASSET_HELPER.ic_twitter }
@@ -315,6 +319,14 @@ class LoginTab extends Component {
 }
 
 class RegisterTab extends Component {
+    constructor(props) {
+        super(props);
+
+        this.onEmailPressed = this._onEmailPressed.bind(this);
+        this.onFacebookPressed = onFacebookPressed.bind(this);
+        this.onTwitterPressed = onTwitterPressed.bind(this);
+    }
+
     _onEmailPressed() {
         const {navigate} = this.props.navigation;
         navigate(SCREEN_HELPER.REGISTER_EMAIL);
@@ -326,7 +338,7 @@ class RegisterTab extends Component {
                 <View>
                     <View style={{flexDirection: 'row'}}>
                         <SocialContainer
-                            onPress={ facebookPressed.bind(this) }
+                            onPress={ this.onFacebookPressed }
                             backgroundColor={ COLOR.WELCOME_FACEBOOK_BACKGROUND_COLOR }
                             text={ STRING_HELPER.REGISTER_VIA_FACEBOOK }
                             icon={ ASSET_HELPER.ic_facebook }
@@ -336,7 +348,7 @@ class RegisterTab extends Component {
                     <View style={ styles.space }/>
                     <View style={{flexDirection: 'row'}}>
                         <SocialContainer
-                            onPress={ onTwitterPressed.bind(this) }
+                            onPress={ this.onTwitterPressed }
                             backgroundColor={ COLOR.WELCOME_TWITTER_BACKGROUND_COLOR }
                             text={ STRING_HELPER.REGISTER_VIA_TWITTER }
                             icon={ ASSET_HELPER.ic_twitter }
@@ -353,7 +365,7 @@ class RegisterTab extends Component {
                     <View style={{height: 20}}/>
 
                     <TouchableHighlight
-                        onPress={ this._onEmailPressed.bind(this) }>
+                        onPress={ this.onEmailPressed }>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={{
                                 color: COLOR.GREEN,
