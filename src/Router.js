@@ -4,33 +4,33 @@ import {
     TabNavigator
 } from 'react-navigation';
 import SCREEN from './util/Screen';
-import THEME from './util/Theme';
+import THEME from './style/Theme';
 
 // Welcome
-import WelcomeScreen from './screen/welcome/WelcomeScreen';
-import WelcomeRegisterViaEmailScreen from './screen/welcome/WelcomeRegisterViaEmailScreen';
-import WelcomeVerificationCodeScreen from './screen/welcome/WelcomeVerificationCodeScreen';
-import WelcomeAcknowledgementScreen from './screen/welcome/WelcomeAcknowledgementScreen';
-import WelcomeForgotScreen from './screen/welcome/WelcomeForgotScreen';
+import WelcomeScreen from './scenes/welcome/WelcomeScreen';
+import WelcomeRegisterViaEmailScreen from './scenes/welcome/WelcomeRegisterViaEmailScreen';
+import WelcomeVerificationCodeScreen from './scenes/welcome/WelcomeVerificationCodeScreen';
+import WelcomeAcknowledgementScreen from './scenes/welcome/WelcomeAcknowledgementScreen';
+import WelcomeForgotScreen from './scenes/welcome/WelcomeForgotScreen';
 
 // Home Tab
-import HomeList from './screen/main/List';
-import HomeGrid from './screen/main/Grid';
-import HomeMap from './screen/main/Map';
-import HomeNotif from './screen/main/Notif';
+import HomeList from './scenes/main/List';
+import HomeGrid from './scenes/main/Grid';
+import HomeMap from './scenes/main/Map';
+import HomeNotif from './scenes/main/Notif';
 
 // New Case
-import CameraAndCameraRoll from './screen/newcase/CameraAndCameraRollScreen';
+import CameraAndCameraRoll from './scenes/newcase/CameraAndCameraRollScreen';
 
 // Example
 import WebViewExample from './example/WebViewExample';
 import CarouselExample from './example/carousel/CarouselExample';
 
 export const MainScreenNavigator = TabNavigator({
-    Map: {screen: HomeMap},
+    Notif: {screen: HomeNotif},
     List: {screen: HomeList},
     Grid: {screen: HomeGrid},
-    Notif: {screen: HomeNotif},
+    Map: {screen: HomeMap},
 }, {
     tabBarOptions: {
         style: {
