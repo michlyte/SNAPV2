@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {View, StyleSheet, FlatList, Dimensions, TouchableHighlight, Image} from 'react-native';
+import React, {Component} from "react";
+import {Dimensions, FlatList, Image, StyleSheet, TouchableHighlight, View} from "react-native";
 import THEME from "../../style/Theme";
-import CONFIG from "../../Constants";
-import SCREEN from "../../util/Screen";
+import CONSTANTS from "../../Constants";
+import SCREEN_HELPER from "../../utils/ScreenHelper";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
@@ -11,7 +11,7 @@ const gridItemSize = (Dimensions.get('window').width - 20) / gridNumOfColumns;
 
 export default class HomeGrid extends Component {
     static navigationOptions = ({navigation}) => ({
-        headerTitle: CONFIG.appName,
+        headerTitle: CONSTANTS.appName,
         headerTitleStyle: {
             color: THEME.navBar_tintColor,
         },
@@ -19,7 +19,7 @@ export default class HomeGrid extends Component {
             backgroundColor: THEME.navBar_backgroundColor,
         },
         headerRight: <View style={{marginRight: 15}}>
-            <TouchableHighlight onPress={() => navigation.navigate(SCREEN.CAMERA_AND_CAMERA_ROLL)}>
+            <TouchableHighlight onPress={() => navigation.navigate(SCREEN_HELPER.CAMERA_AND_CAMERA_ROLL)}>
                 <FontAwesome name="plus" size={20} color={THEME.navBar_tintColor}/>
             </TouchableHighlight>
         </View>,

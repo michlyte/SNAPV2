@@ -1,16 +1,10 @@
 /**
  * Created by michael on 4/28/2017.
  */
-import React, { Component } from 'react';
-import {
-    Image,
-    StatusBar,
-    StyleSheet,
-    TouchableOpacity,
-    View,
-} from 'react-native';
-import Camera from 'react-native-camera';
-import IMAGES from '../../util/Images';
+import React, {Component} from "react";
+import {Image, StatusBar, StyleSheet, TouchableOpacity, View} from "react-native";
+import Camera from "react-native-camera";
+import ASSET_HELPER from "../../utils/AssetHelper";
 
 export default class CameraAndCameraRollScreen extends Component {
     constructor(props) {
@@ -36,7 +30,7 @@ export default class CameraAndCameraRollScreen extends Component {
                 .then((data) => console.log(data))
                 .catch(err => console.error(err));
         }
-    }
+    };
 
     startRecording = () => {
         if (this.camera) {
@@ -47,7 +41,7 @@ export default class CameraAndCameraRollScreen extends Component {
                 isRecording: true
             });
         }
-    }
+    };
 
     stopRecording = () => {
         if (this.camera) {
@@ -56,11 +50,11 @@ export default class CameraAndCameraRollScreen extends Component {
                 isRecording: false
             });
         }
-    }
+    };
 
     switchType = () => {
         let newType;
-        const { back, front } = Camera.constants.Type;
+        const {back, front} = Camera.constants.Type;
 
         if (this.state.camera.type === back) {
             newType = front;
@@ -74,16 +68,16 @@ export default class CameraAndCameraRollScreen extends Component {
                 type: newType,
             },
         });
-    }
+    };
 
     get typeIcon() {
         let icon;
-        const { back, front } = Camera.constants.Type;
+        const {back, front} = Camera.constants.Type;
 
         if (this.state.camera.type === back) {
-            icon = IMAGES.ic_camera_rear_white;
+            icon = ASSET_HELPER.ic_camera_rear_white;
         } else if (this.state.camera.type === front) {
-            icon = IMAGES.ic_camera_front_white;
+            icon = ASSET_HELPER.ic_camera_front_white;
         }
 
         return icon;
@@ -91,7 +85,7 @@ export default class CameraAndCameraRollScreen extends Component {
 
     switchFlash = () => {
         let newFlashMode;
-        const { auto, on, off } = Camera.constants.FlashMode;
+        const {auto, on, off} = Camera.constants.FlashMode;
 
         if (this.state.camera.flashMode === auto) {
             newFlashMode = on;
@@ -107,18 +101,18 @@ export default class CameraAndCameraRollScreen extends Component {
                 flashMode: newFlashMode,
             },
         });
-    }
+    };
 
     get flashIcon() {
         let icon;
-        const { auto, on, off } = Camera.constants.FlashMode;
+        const {auto, on, off} = Camera.constants.FlashMode;
 
         if (this.state.camera.flashMode === auto) {
-            icon = IMAGES.ic_flash_auto_white;
+            icon = ASSET_HELPER.ic_flash_auto_white;
         } else if (this.state.camera.flashMode === on) {
-            icon = IMAGES.ic_flash_on_white;
+            icon = ASSET_HELPER.ic_flash_on_white;
         } else if (this.state.camera.flashMode === off) {
-            icon = IMAGES.ic_flash_off_white;
+            icon = ASSET_HELPER.ic_flash_off_white;
         }
 
         return icon;
@@ -140,8 +134,10 @@ export default class CameraAndCameraRollScreen extends Component {
                     captureTarget={this.state.camera.captureTarget}
                     type={this.state.camera.type}
                     flashMode={this.state.camera.flashMode}
-                    onFocusChanged={() => {}}
-                    onZoomChanged={() => {}}
+                    onFocusChanged={() => {
+                    }}
+                    onZoomChanged={() => {
+                    }}
                     defaultTouchToFocus
                     mirrorImage={false}
                 />
@@ -172,13 +168,13 @@ export default class CameraAndCameraRollScreen extends Component {
                             onPress={this.takePicture}
                         >
                             <Image
-                                source={IMAGES.ic_photo_camera}
+                                source={ASSET_HELPER.ic_photo_camera}
                             />
                         </TouchableOpacity>
                         ||
                         null
                     }
-                    <View style={styles.buttonsSpace} />
+                    <View style={styles.buttonsSpace}/>
                     {
                         !this.state.isRecording
                         &&
@@ -187,7 +183,7 @@ export default class CameraAndCameraRollScreen extends Component {
                             onPress={this.startRecording}
                         >
                             <Image
-                                source={IMAGES.ic_videocam}
+                                source={ASSET_HELPER.ic_videocam}
                             />
                         </TouchableOpacity>
                         ||
@@ -196,7 +192,7 @@ export default class CameraAndCameraRollScreen extends Component {
                             onPress={this.stopRecording}
                         >
                             <Image
-                                source={IMAGES.ic_stop}
+                                source={ASSET_HELPER.ic_stop}
                             />
                         </TouchableOpacity>
                     }

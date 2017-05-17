@@ -1,16 +1,10 @@
 /**
  * Created by michael on 4/13/2017.
  */
-import React, {
-    Component,
-} from 'react';
-import {
-    Text,
-    TouchableHighlight,
-    StyleSheet,
-} from 'react-native';
-import THEME from '../style/Theme';
-import SIZE from '../util/Size';
+import React, {Component} from "react";
+import {StyleSheet, Text, TouchableHighlight} from "react-native";
+import THEME from "../style/Theme";
+import SIZE from "../style/Size";
 
 export default class WelcomeButton extends Component {
     render() {

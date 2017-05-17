@@ -3,7 +3,7 @@ import {
     StackNavigator,
     TabNavigator
 } from 'react-navigation';
-import SCREEN from './util/Screen';
+import SCREEN from './utils/ScreenHelper';
 import THEME from './style/Theme';
 
 // Welcome
@@ -45,7 +45,7 @@ export const SNAPExampleNavigator = StackNavigator({
     WebView: {screen: WebViewExample},
 });
 
-// SNAP : If you change any screen name please do the same in the Screen.js file.
+// SNAP : If you change any screen name please do the same in the ScreenHelper.js file.
 export const SNAPWelcomeNavigator = StackNavigator({
     Welcome: {
         screen: WelcomeScreen,

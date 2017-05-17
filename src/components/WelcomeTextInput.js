@@ -1,14 +1,9 @@
 /**
  * Created by michael on 4/13/2017.
  */
-import React, {
-    Component,
-} from 'react';
-import {
-    TextInput,
-    StyleSheet,
-} from 'react-native';
-import SIZE from '../util/Size';
+import React, {Component} from "react";
+import {StyleSheet, TextInput} from "react-native";
+import SIZE from "../style/Size";
 
 export default class WelcomeTextInput extends Component {
     render() {
@@ -35,7 +30,7 @@ WelcomeTextInput.propTypes = {
     keyboardType: React.PropTypes.string,
     onSubmitEditing: React.PropTypes.func,
     returnKeyType: React.PropTypes.string,
-}
+};
 
 const styles = StyleSheet.create({
     welcomeTextInput: {

@@ -7,9 +7,9 @@ import {
     Text,
 } from 'react-native';
 
-import SCREEN from '../../util/Screen';
+import SCREEN from '../../utils/ScreenHelper';
 import STYLE from '../../style/Style';
-import STRINGS from '../../util/Strings';
+import STRINGS from '../../utils/StringHelper';
 import WelcomeContainer from './WelcomeContainer';
 import WelcomeTextInput from '../../components/WelcomeTextInput';
 import WelcomeButton from '../../components/WelcomeButton';

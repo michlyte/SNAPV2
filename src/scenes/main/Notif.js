@@ -5,7 +5,7 @@ import React, {Component} from "react";
 import {View, TouchableHighlight} from 'react-native';
 import THEME from "../../style/Theme";
 import CONFIG from "../../Constants";
-import SCREEN from "../../util/Screen";
+import SCREEN from "../../utils/ScreenHelper";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 

@@ -1,34 +1,24 @@
-import React, {
-    Component,
-} from 'react';
-import {
-    View,
-    Text,
-    Image,
-    StyleSheet,
-    TouchableHighlight,
-    NativeModules,
-} from 'react-native';
-import {
-    TabViewAnimated,
-    TabBar
-} from 'react-native-tab-view';
-import {NavigationActions} from 'react-navigation'
-import FBSDK from 'react-native-fbsdk';
-import IMAGES from '../../util/Images';
-import COLOR from '../../style/Color';
-import THEME from '../../style/Theme';
-import SIZE from '../../util/Size';
-import STRINGS from '../../util/Strings';
-import PROPERTIES from '../../util/Properties';
-import SCREEN from '../../util/Screen';
-import STYLE from '../../style/Style';
-import CONFIG from '../../Constants';
-import WelcomeTextInput from '../../components/WelcomeTextInput';
-import WelcomeContainer from './WelcomeContainer';
-import WelcomeButton from '../../components/WelcomeButton';
+import React, {Component} from "react";
+import {Image, NativeModules, StyleSheet, Text, TouchableHighlight, View} from "react-native";
+import {TabBar, TabViewAnimated} from "react-native-tab-view";
+import {NavigationActions} from "react-navigation";
+import FBSDK from "react-native-fbsdk";
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import CONSTANTS from "../../Constants";
+import COLOR from "../../style/Color";
+import THEME from "../../style/Theme";
+import SIZE from "../../style/Size";
+import STYLE from "../../style/Style";
+
+import ASSET_HELPER from "../../utils/AssetHelper";
+import STRING_HELPER from "../../utils/StringHelper";
+import SCREEN_HELPER from "../../utils/ScreenHelper";
+
+import WelcomeTextInput from "../../components/WelcomeTextInput";
+import WelcomeContainer from "./WelcomeContainer";
+import WelcomeButton from "../../components/WelcomeButton";
+
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const {TwitterSignin} = NativeModules;
 
@@ -41,11 +31,11 @@ const {
 
 export default class WelcomeScreen extends Component {
     componentWillMount() {
-        if (CONFIG.isLoggedIn) {
+        if (CONSTANTS.isLoggedIn) {
             const resetAction = NavigationActions.reset({
                 index: 0,
                 actions: [
-                    NavigationActions.navigate({routeName: SCREEN.MAIN})
+                    NavigationActions.navigate({routeName: SCREEN_HELPER.MAIN})
                 ]
             });
             this.props.navigation.dispatch(resetAction)
@@ -205,7 +195,7 @@ function facebookPressed() {
 
 // Twitter SDK
 function onTwitterPressed() {
-    TwitterSignin.logIn(PROPERTIES.TWITTER_CONSUMER_KEY, PROPERTIES.TWITTER_CONSUMER_SECRET, (error, loginData) => {
+    TwitterSignin.logIn(CONSTANTS.TWITTER_CONSUMER_KEY, CONSTANTS.TWITTER_CONSUMER_SECRET, (error, loginData) => {
         if (!error) {
             console.log('Success fetching data: ');
             console.log(loginData);
@@ -222,8 +212,8 @@ class LoginTab extends Component {
         // Check buildType
         let tempEmailAddress = '';
         let tempPassword = '';
-        switch (PROPERTIES.BUILD) {
-            case PROPERTIES.BUILD_TYPE.DEVELOPMENT_DUMMY:
+        switch (CONSTANTS.BUILD) {
+            case CONSTANTS.BUILD_TYPE.DEVELOPMENT_DUMMY:
                 tempEmailAddress = 'mikefla10@gmail.com';
                 tempPassword = 'password$1';
                 break;
@@ -241,7 +231,7 @@ class LoginTab extends Component {
         const resetAction = NavigationActions.reset({
             index: 0,
             actions: [
-                NavigationActions.navigate({routeName: SCREEN.MAIN})
+                NavigationActions.navigate({routeName: SCREEN_HELPER.MAIN})
             ]
         });
         this.props.navigation.dispatch(resetAction)
@@ -250,7 +240,7 @@ class LoginTab extends Component {
     _onForgotPressed() {
         console.log('_onForgotPressed');
         const {navigate} = this.props.navigation;
-        navigate(SCREEN.FORGOT);
+        navigate(SCREEN_HELPER.FORGOT);
     }
 
     render() {
@@ -260,7 +250,7 @@ class LoginTab extends Component {
                     <WelcomeTextInput
                         onChangeText={(text) => this.setState({emailAddress: text})}
                         value={ this.state.emailAddress }
-                        placeholder={ STRINGS.placeHolderEmailAddress }
+                        placeholder={ STRING_HELPER.placeHolderEmailAddress }
                         keyboardType='email-address'
                         returnKeyType='next'
                     />
@@ -268,19 +258,19 @@ class LoginTab extends Component {
                     <WelcomeTextInput
                         onChangeText={(text) => this.setState({password: text})}
                         value={ this.state.password }
-                        placeholder={ STRINGS.placeHolderPassword }
+                        placeholder={ STRING_HELPER.placeHolderPassword }
                         secureTextEntry={ true }
                         returnKeyType='done'
                     />
                     <View style={ styles.space }/>
                     <WelcomeButton
                         onPress={this._onLoginPressed.bind(this)}
-                        text={STRINGS.LOGIN}/>
+                        text={STRING_HELPER.LOGIN}/>
                     <View style={ styles.space }/>
                     <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                        <Text style={{color: 'white'}}>{STRINGS.forgotYourLoginDetails} </Text>
+                        <Text style={{color: 'white'}}>{STRING_HELPER.forgotYourLoginDetails} </Text>
                         <TouchableHighlight onPress={this._onForgotPressed.bind(this)}>
-                            <Text style={{color: 'white', fontWeight: 'bold'}}>{STRINGS.getHelpSigningIn}</Text>
+                            <Text style={{color: 'white', fontWeight: 'bold'}}>{STRING_HELPER.getHelpSigningIn}</Text>
                         </TouchableHighlight>
                     </View>
                 </View>
@@ -301,8 +291,8 @@ class LoginTab extends Component {
                         <SocialContainer
                             onPress={ facebookPressed.bind(this) }
                             backgroundColor={ COLOR.WELCOME_FACEBOOK_BACKGROUND_COLOR }
-                            text={ STRINGS.FACEBOOK }
-                            icon={ IMAGES.ic_facebook }
+                            text={ STRING_HELPER.FACEBOOK }
+                            icon={ ASSET_HELPER.ic_facebook }
                             socialHeight={ SIZE.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT }
                             fontSize={ 14 }/>
 
@@ -311,8 +301,8 @@ class LoginTab extends Component {
                         <SocialContainer
                             onPress={ onTwitterPressed.bind(this) }
                             backgroundColor={ COLOR.WELCOME_TWITTER_BACKGROUND_COLOR }
-                            text={ STRINGS.TWITTER }
-                            icon={ IMAGES.ic_twitter }
+                            text={ STRING_HELPER.TWITTER }
+                            icon={ ASSET_HELPER.ic_twitter }
                             socialHeight={ SIZE.WELCOME_BUTTON_CONTAINER_SOCIAL_HEIGHT }
                             fontSize={ 14 }/>
 
@@ -327,7 +317,7 @@ class LoginTab extends Component {
 class RegisterTab extends Component {
     _onEmailPressed() {
         const {navigate} = this.props.navigation;
-        navigate(SCREEN.REGISTER_EMAIL);
+        navigate(SCREEN_HELPER.REGISTER_EMAIL);
     }
 
     render() {
@@ -338,8 +328,8 @@ class RegisterTab extends Component {
                         <SocialContainer
                             onPress={ facebookPressed.bind(this) }
                             backgroundColor={ COLOR.WELCOME_FACEBOOK_BACKGROUND_COLOR }
-                            text={ STRINGS.REGISTER_VIA_FACEBOOK }
-                            icon={ IMAGES.ic_facebook }
+                            text={ STRING_HELPER.REGISTER_VIA_FACEBOOK }
+                            icon={ ASSET_HELPER.ic_facebook }
                             socialHeight={ SIZE.WELCOME_BUTTON_HEIGHT }
                             fontSize={ 18 }/>
                     </View>
@@ -348,8 +338,8 @@ class RegisterTab extends Component {
                         <SocialContainer
                             onPress={ onTwitterPressed.bind(this) }
                             backgroundColor={ COLOR.WELCOME_TWITTER_BACKGROUND_COLOR }
-                            text={ STRINGS.REGISTER_VIA_TWITTER }
-                            icon={ IMAGES.ic_twitter }
+                            text={ STRING_HELPER.REGISTER_VIA_TWITTER }
+                            icon={ ASSET_HELPER.ic_twitter }
                             socialHeight={ SIZE.WELCOME_BUTTON_HEIGHT }
                             fontSize={ 18 }/>
                     </View>

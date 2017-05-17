@@ -1,14 +1,14 @@
 import React, {Component} from "react";
-import {FlatList, Image, Text, TouchableHighlight, View, StyleSheet, Dimensions} from "react-native";
+import {Dimensions, FlatList, Image, StyleSheet, Text, TouchableHighlight, View} from "react-native";
 import THEME from "../../style/Theme";
-import CONFIG from "../../Constants";
-import SCREEN from "../../util/Screen";
+import CONSTANTS from "../../Constants";
+import SCREEN_HELPER from "../../utils/ScreenHelper";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default class HomeList extends Component {
     static navigationOptions = ({navigation}) => ({
-        headerTitle: CONFIG.appName,
+        headerTitle: CONSTANTS.appName,
         headerTitleStyle: {
             color: THEME.navBar_tintColor,
         },
@@ -16,7 +16,7 @@ export default class HomeList extends Component {
             backgroundColor: THEME.navBar_backgroundColor,
         },
         headerRight: <View style={{marginRight: 15}}>
-            <TouchableHighlight onPress={() => navigation.navigate(SCREEN.CAMERA_AND_CAMERA_ROLL)}>
+            <TouchableHighlight onPress={() => navigation.navigate(SCREEN_HELPER.CAMERA_AND_CAMERA_ROLL)}>
                 <FontAwesome name="plus" size={20} color={THEME.navBar_tintColor}/>
             </TouchableHighlight>
         </View>,

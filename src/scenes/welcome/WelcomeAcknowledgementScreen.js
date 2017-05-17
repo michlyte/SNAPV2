@@ -1,20 +1,18 @@
 /**
  * Created by michael on 4/17/2017.
  */
-import React, { Component } from 'react';
-import {
-    View,
-    Text,
-    BackAndroid,
-} from 'react-native';
+import React, {Component} from "react";
+import {BackAndroid, Text, View} from "react-native";
 
-import SCREEN from '../../util/Screen';
-import STYLE from '../../style/Style';
-import STRINGS from '../../util/Strings';
-import WelcomeContainer from './WelcomeContainer';
-import WelcomeButton from '../../components/WelcomeButton';
+import STYLE from "../../style/Style";
 
-import { NavigationActions } from 'react-navigation';
+import STRING_HELPER from "../../utils/StringHelper";
+import SCREEN_HELPER from "../../utils/ScreenHelper";
+
+import WelcomeContainer from "./WelcomeContainer";
+import WelcomeButton from "../../components/WelcomeButton";
+
+import {NavigationActions} from "react-navigation";
 
 export default class WelcomeAcknowledgementScreen extends Component {
     constructor(props) {
@@ -34,7 +32,7 @@ export default class WelcomeAcknowledgementScreen extends Component {
         const resetAction = NavigationActions.reset({
             index: 0,
             actions: [
-                NavigationActions.navigate({ routeName: SCREEN.WELCOME })
+                NavigationActions.navigate({routeName: SCREEN_HELPER.WELCOME})
             ]
         });
         this.props.navigation.dispatch(resetAction);
@@ -43,8 +41,8 @@ export default class WelcomeAcknowledgementScreen extends Component {
 
     render() {
         const navigation = this.props.navigation;
-        const { params } = this.props.navigation.state;
-        return(
+        const {params} = this.props.navigation.state;
+        return (
             <WelcomeContainer
                 bottomContainer={
                     <WelcomeAcknowledgementBottomContainer
@@ -61,7 +59,7 @@ class WelcomeAcknowledgementBottomContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.state =  {
+        this.state = {
             verificationCode: '',
         }
     }
@@ -76,14 +74,14 @@ class WelcomeAcknowledgementBottomContainer extends Component {
             <View style={STYLE.containerBottom}>
                 <View style={STYLE.page}>
                     <Text style={STYLE.text}>
-                        { STRINGS.verificationAcknowledgment }
+                        { STRING_HELPER.verificationAcknowledgment }
                     </Text>
 
                     <View style={STYLE.space}/>
 
                     <WelcomeButton
                         onPress={this._onNextPressed.bind(this)}
-                        text={STRINGS.NEXT}/>
+                        text={STRING_HELPER.NEXT}/>
                 </View>
             </View>
         );

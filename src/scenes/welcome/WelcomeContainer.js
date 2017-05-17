@@ -1,18 +1,14 @@
 /**
  * Created by michael on 4/13/2017.
  */
-import React, { Component } from 'react';
-import {
-    View,
-    Image,
-    StyleSheet,
-    TouchableHighlight,
-} from 'react-native';
+import React, {Component} from "react";
+import {Image, StyleSheet, TouchableHighlight, View} from "react-native";
 
-import COLOR from '../../style/Color';
-import Images from '../../util/Images';
+import COLOR from "../../style/Color";
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import ASSET_HELPER from "../../utils/AssetHelper";
+
+import Icon from "react-native-vector-icons/FontAwesome";
 
 export default class WelcomeContainer extends Component {
     constructor(props) {
@@ -28,16 +24,16 @@ export default class WelcomeContainer extends Component {
         let backButton = null;
         if (isBackButtonShowed) {
             backButton = <TouchableHighlight
-                style={{ marginTop: 10, marginLeft: 20, position: 'absolute' }}
+                style={{marginTop: 10, marginLeft: 20, position: 'absolute'}}
                 onPress={this._onBackPressed.bind(this)}>
-                <Icon name="angle-left" size={50} color={COLOR.GREEN} />
+                <Icon name="angle-left" size={50} color={COLOR.GREEN}/>
             </TouchableHighlight>;
         }
 
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
                 <Image
-                    source={Images.SNAP_BACKGROUND}
+                    source={ASSET_HELPER.SNAP_BACKGROUND}
                     style={styles.backgroundImage}>
 
                     {/* BackButton */}
@@ -47,7 +43,7 @@ export default class WelcomeContainer extends Component {
                     <View style={styles.containerTop}>
                         <View style={styles.logoSpace}/>
                         <Image
-                            source={Images.SNAP_LOGO}
+                            source={ASSET_HELPER.SNAP_LOGO}
                             style={styles.logo}>
                         </Image>
                         <View style={styles.logoSpace}/>
