@@ -1,7 +1,7 @@
 /**
  * Created by michael on 5/16/2017.
  */
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 import {ActivityIndicator, FlatList, Image, Text, TouchableHighlight, View} from "react-native";
 import THEME from "../../style/Theme";
 import CONSTANTS from "../../Constants";
@@ -14,7 +14,7 @@ import StyText from "../../style/Text";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default class HomeNotif extends Component {
+export default class HomeNotif extends PureComponent {
     static navigationOptions = ({navigation}) => ({
         headerTitle: CONSTANTS.appName,
         headerTitleStyle: {
@@ -40,6 +40,7 @@ export default class HomeNotif extends Component {
             page: 1,
             error: null,
             refreshing: false,
+            selected: (new Map(): Map<string, boolean>)
         }
     }
 
@@ -48,6 +49,7 @@ export default class HomeNotif extends Component {
     }
 
     _wsRequest() {
+        console.log("_wsRequest");
         /*
          *  STRUCTURE
          *  "notificationId":440,
@@ -62,6 +64,8 @@ export default class HomeNotif extends Component {
         switch (CONSTANTS.BUILD) {
             case CONSTANTS.BUILD_TYPE.DEVELOPMENT_DUMMY:
                 const {page} = this.state;
+                this.setState({loading: true});
+
                 let newData = [];
                 for (i = (page * 20); i <= ((page * 20) * 20); i++) {
                     if (i == 2) {
@@ -80,7 +84,7 @@ export default class HomeNotif extends Component {
 
                     newData.push({
                         notificationId: i,
-                        body: 'egp_ecquaria commented on your case : test title.',
+                        body: i + ' egp_ecquaria commented on your case : test title.',
                         caseTitle: 'test title',
                         caseId: i,
                         friendPictureUrl: 'http://cdn01.androidauthority.net/wp-content/uploads/2015/11/00-best-backgrounds-and-wallpaper-apps-for-android.jpg',
@@ -88,8 +92,11 @@ export default class HomeNotif extends Component {
                         notificationDate: '1460483504000',
                     });
                 }
+
                 this.setState({
                     data: page === 1 ? newData : [...this.state.data, ...newData],
+                    loading: false,
+                    refreshing: false,
                 });
                 break;
             case CONSTANTS.BUILD_TYPE.DEVELOPMENT:
@@ -120,6 +127,7 @@ export default class HomeNotif extends Component {
     _keyExtractor = (item, index) => item.notificationId;
 
     _onRefresh = () => {
+        console.log("_onRefresh");
         this.setState(
             {
                 page: 1,
@@ -131,7 +139,8 @@ export default class HomeNotif extends Component {
         );
     };
 
-    handleLoadMore = () => {
+    _handleLoadMore = () => {
+        console.log("handleLoadMore");
         this.setState(
             {
                 page: this.state.page + 1
@@ -142,7 +151,8 @@ export default class HomeNotif extends Component {
         );
     };
 
-    renderFooter = () => {
+    _renderFooter = () => {
+        console.log("renderFooter");
         if (!this.state.loading) return null;
 
         return (
@@ -158,45 +168,19 @@ export default class HomeNotif extends Component {
         );
     };
 
-    _onPressItem = (notificationId: string) => {
-
-    };
+    // _onPressItem = (notificationId: string) => {
+    //     // updater functions are preferred for transactional updates
+    //     this.setState((state) => {
+    //         // copy the map rather than modifying state.
+    //         const selected = new Map(state.selected);
+    //         selected.set(notificationId, !state.get(id)); // toggle
+    //         return {selected};
+    //     });
+    // };
 
     _renderItem = ({item, index}) => {
-        let fpUrl = (item.friendPictureUrl ? {uri: item.friendPictureUrl} : ASSET_HELPER.img_no_profile_picture);
-
-        let prefix = '';
-        let suffix = '';
-        if (item.body !== null) {
-            let n = item.body.search(item.caseTitle);
-
-            if (n > 0) {
-                prefix = item.body.substring(0, n);
-            }
-
-            if ((n + item.caseTitle.length) < (item.body.length)) {
-                suffix = item.body.substring((n + item.caseTitle.length), item.body.length);
-            }
-        }
-
         return (
-            <View style={{flex: 1, marginBottom: 15}}>
-                <View style={{flexDirection: 'row'}}>
-                    {/* Friend profile picture */}
-                    <Image style={StyImages.friendPictureNotif}
-                           source={fpUrl}/>
-                    {/* Message */}
-                    <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>
-                        <Text style={StyText.messageNotif}>
-                            <Text>{prefix}</Text>
-                            <Text style={{fontWeight: 'bold'}}>{item.caseTitle}</Text>
-                            <Text>{suffix}</Text>
-                        </Text>
-                    </View>
-                    {/* Image */}
-                    <Image style={StyImages.attachmentThumbNotif} source={{uri: item.attachmentUrlThumb}}/>
-                </View>
-            </View>
+            <NotifListItem item={item}/>
         );
     };
 
@@ -209,11 +193,83 @@ export default class HomeNotif extends Component {
                     keyExtractor={this._keyExtractor}
                     onRefresh={() => this._onRefresh}
                     refreshing={false}
-                    onEndReached={this.handleLoadMore}
-                    onEndReachedThreshold={20}
-                    ListFooterComponent={this.renderFooter}
+                    onEndReached={this._handleLoadMore}
+                    onEndReachedThreshold={50}
+                    ListFooterComponent={this._renderFooter}
                 />
             </View>
         );
+    }
+}
+
+class NotifListItem extends PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.fpUrl = (this.props.item.friendPictureUrl ? {uri: this.props.item.friendPictureUrl} : ASSET_HELPER.img_no_profile_picture);
+
+        this.prefix = '';
+        this.suffix = '';
+        if (this.props.item.body !== null) {
+            let n = this.props.item.body.search(this.props.item.caseTitle);
+
+            if (n > 0) {
+                this.prefix = this.props.item.body.substring(0, n);
+            }
+
+            if ((n + this.props.item.caseTitle.length) < (this.props.item.body.length)) {
+                this.suffix = this.props.item.body.substring((n + this.props.item.caseTitle.length), this.props.item.body.length);
+            }
+        }
+    }
+
+    // _onPress = () => {
+    //     this.props.onPressItem(this.props.id);
+    // };
+
+    render() {
+        return (
+            <View style={{flex: 1, marginBottom: 15}}>
+                <View style={{flexDirection: 'row'}}>
+                    {/* Friend profile picture */}
+                    <Image style={StyImages.friendPictureNotif}
+                           source={this.fpUrl}/>
+                    {/* Message */}
+                    <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>
+                        <Text style={StyText.messageNotif}>
+                            <Text>{this.prefix}</Text>
+                            <Text style={{fontWeight: 'bold'}}>{this.props.item.caseTitle}</Text>
+                            <Text>{this.suffix}</Text>
+                        </Text>
+                    </View>
+                    {/* Image */}
+                    <Image style={StyImages.attachmentThumbNotif}
+                           source={{uri: this.props.item.attachmentUrlThumb}}/>
+                </View>
+            </View>
+        );
+
+        // return (
+        //     <TouchableWithoutFeedback onPress={this._onPress}>
+        //         <View style={{flex: 1, marginBottom: 15}}>
+        //             <View style={{flexDirection: 'row'}}>
+        //                 {/* Friend profile picture */}
+        //                 <Image style={StyImages.friendPictureNotif}
+        //                        source={this.fpUrl}/>
+        //                 {/* Message */}
+        //                 <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>
+        //                     <Text style={StyText.messageNotif}>
+        //                         <Text>{this.prefix}</Text>
+        //                         <Text style={{fontWeight: 'bold'}}>{this.props.item.caseTitle}</Text>
+        //                         <Text>{this.suffix}</Text>
+        //                     </Text>
+        //                 </View>
+        //                 {/* Image */}
+        //                 <Image style={StyImages.attachmentThumbNotif}
+        //                        source={{uri: this.props.item.attachmentUrlThumb}}/>
+        //             </View>
+        //         </View>
+        //     </TouchableWithoutFeedback>
+        // );
     }
 }
