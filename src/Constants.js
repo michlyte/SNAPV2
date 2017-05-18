@@ -12,6 +12,6 @@ export default class Constants {
         DEVELOPMENT_DUMMY: 'devDummy',
         DEVELOPMENT: 'dev',
         PRODUCTION: 'prod',
-    }
+    };
     static BUILD = 'devDummy';
 }
