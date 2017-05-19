@@ -18,6 +18,8 @@ import HomeNotif from "./scenes/main/Notif";
 import HomeSetting from "./scenes/main/Setting";
 // New Case
 import CameraAndCameraRoll from "./scenes/newcase/CameraAndCameraRollScreen";
+// Setting
+import ProfileScreen from "./scenes/setting/Profile";
 // Example
 import WebViewExample from "./example/WebViewExample";
 import CarouselExample from "./example/carousel/CarouselExample";
@@ -98,5 +100,11 @@ export const SNAPWelcomeNavigator = StackNavigator({
         navigationOptions: {
             header: null,
         },
+    },
+    Profile: {
+        screen: ProfileScreen,
+        navigationOptions: {
+            title: SCREEN_HELPER.PROFILE,
+        }
     }
 });

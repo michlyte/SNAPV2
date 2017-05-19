@@ -5,6 +5,8 @@ import React, {Component} from "react";
 import {FlatList, Text, View, TouchableHighlight} from "react-native";
 import CONSTANTS from "../../Constants";
 
+import SCREEN_HELPER from "../../utils/ScreenHelper";
+
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default class HomeSetting extends Component {
@@ -57,13 +59,18 @@ export default class HomeSetting extends Component {
 
     _keyExtractor = (item, index) => item.id;
 
-    _onPress = () => {
-        console.log('onPress')
+    _onPress = ({item}) => {
+        const {navigate} = this.props.navigation;
+        switch (item.title) {
+            case 'Profile':
+                navigate(SCREEN_HELPER.PROFILE);
+                break;
+        }
     };
 
     _renderItem = ({item, index}) => {
         return (
-            <TouchableHighlight underlayColor={'lightgray'} onPress={this._onPress}>
+            <TouchableHighlight underlayColor={CONSTANTS.theme.underlayColor} onPress={() => this._onPress({item})}>
                 <View
                     style={{
                         flex: 1,

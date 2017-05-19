@@ -4,9 +4,11 @@
 import React, {Component} from "react";
 import {Text, View} from "react-native";
 
-import SCREEN from "../../utils/ScreenHelper";
 import STYLE from "../../style/Style";
-import STRINGS from "../../utils/StringHelper";
+
+import STRING_HELPER from "../../utils/StringHelper";
+import SCREEN_HELPER from "../../utils/ScreenHelper";
+
 import WelcomeContainer from "../../components/WelcomeContainer";
 import WelcomeTextInput from "../../components/WelcomeTextInput";
 import WelcomeButton from "../../components/WelcomeButton";
@@ -49,11 +51,11 @@ class WelcomeVerificationCodeBottomContainer extends Component {
     _onVerifyPressed() {
         console.log('_onVerifyPressed');
         const {navigate} = this.props.navigation;
-        navigate(SCREEN.ACKNOWLEDGEMENT, {email: this.props.email});
+        navigate(SCREEN_HELPER.ACKNOWLEDGEMENT, {email: this.props.email});
     }
 
     render() {
-        let verificationCodeMessage = reactStringReplace(STRINGS.verificationCodeHasBeenSent, /(@email)/g, () => this.props.email);
+        let verificationCodeMessage = reactStringReplace(STRING_HELPER.verificationCodeHasBeenSent, /(@email)/g, () => this.props.email);
         return (
             <View style={STYLE.containerBottom}>
                 <View style={STYLE.page}>
@@ -66,7 +68,7 @@ class WelcomeVerificationCodeBottomContainer extends Component {
                     </Text>
 
                     <Text style={STYLE.text}>
-                        { STRINGS.pleaseTypeVerficationCode }
+                        { STRING_HELPER.pleaseTypeVerficationCode }
                     </Text>
 
                     <View style={STYLE.space}/>
@@ -74,7 +76,7 @@ class WelcomeVerificationCodeBottomContainer extends Component {
                     <WelcomeTextInput
                         onChangeText={(text) => this.setState({verificationCode: text})}
                         value={ this.state.verificationCode }
-                        placeholder={ STRINGS.placeHolderVerificationCode }
+                        placeholder={ STRING_HELPER.placeHolderVerificationCode }
                         keyboardType='phone-pad'
                         returnKeyType='done'
                     />
@@ -85,7 +87,7 @@ class WelcomeVerificationCodeBottomContainer extends Component {
                         <View style={{flex: 1}}>
                             <WelcomeButton
                                 onPress={this.onResendPressed}
-                                text={STRINGS.RESEND}/>
+                                text={STRING_HELPER.RESEND}/>
                         </View>
 
                         <View style={STYLE.space}/>
@@ -93,7 +95,7 @@ class WelcomeVerificationCodeBottomContainer extends Component {
                         <View style={{flex: 1}}>
                             <WelcomeButton
                                 onPress={this.onVerifyPressed}
-                                text={STRINGS.VERIFY}/>
+                                text={STRING_HELPER.VERIFY}/>
                         </View>
                     </View>
                 </View>

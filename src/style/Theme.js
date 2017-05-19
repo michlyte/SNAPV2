@@ -23,4 +23,7 @@ export default class EcquariaTheme {
     static tabBar_tintColor = 'white';
 
     static text_setting_tintColor = COLOR.BLUE;
+
+    // TouchableHighlight
+    static underlayColor = 'lightgray';
 }
