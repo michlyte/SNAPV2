@@ -17,19 +17,17 @@ import {NavigationActions} from "react-navigation";
 export default class ForgotAcknowledgment extends Component {
     constructor(props) {
         super(props);
-        this.onNavigateToRootView = this._onNavigateToRootView.bind(this);
     }
 
     componentWillMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.onNavigateToRootView);
+        BackHandler.addEventListener('hardwareBackPress', this._onNavigateToRootView);
     }
 
     componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.onNavigateToRootView);
+        BackHandler.removeEventListener('hardwareBackPress', this._onNavigateToRootView);
     }
 
-    _onNavigateToRootView() {
-        console.log('_onNavigateToRootView');
+    _onNavigateToRootView = () => {
         const resetAction = NavigationActions.reset({
             index: 0,
             actions: [
@@ -38,7 +36,7 @@ export default class ForgotAcknowledgment extends Component {
         });
         this.props.navigation.dispatch(resetAction);
         return true;
-    }
+    };
 
     render() {
         const navigation = this.props.navigation;
@@ -46,7 +44,7 @@ export default class ForgotAcknowledgment extends Component {
             <WelcomeContainer
                 bottomContainer={
                     <ForgotAcknowledgementBottomContainer
-                        onDonePressed={this.onNavigateToRootView}/> }
+                        onDonePressed={this._onNavigateToRootView}/> }
                 navigation={navigation}
                 isBackButtonShowed={ false }
             />

@@ -208,8 +208,6 @@ class LoginTab extends Component {
     constructor(props) {
         super(props);
 
-        this.onLoginPressed = this._onLoginPressed.bind(this);
-        this.onForgotPressed = this._onForgotPressed.bind(this);
         this.onFacebookPressed = onFacebookPressed.bind(this);
         this.onTwitterPressed = onTwitterPressed.bind(this);
 
@@ -231,7 +229,7 @@ class LoginTab extends Component {
         };
     }
 
-    _onLoginPressed() {
+    _onLoginPressed = () => {
         const resetAction = NavigationActions.reset({
             index: 0,
             actions: [
@@ -239,12 +237,12 @@ class LoginTab extends Component {
             ]
         });
         this.props.navigation.dispatch(resetAction)
-    }
+    };
 
-    _onForgotPressed() {
+    _onForgotPressed = () => {
         const {navigate} = this.props.navigation;
         navigate(SCREEN_HELPER.FORGOT);
-    }
+    };
 
     render() {
         return (
@@ -267,12 +265,12 @@ class LoginTab extends Component {
                     />
                     <View style={ styles.space }/>
                     <WelcomeButton
-                        onPress={this.onLoginPressed}
+                        onPress={this._onLoginPressed}
                         text={STRING_HELPER.LOGIN}/>
                     <View style={ styles.space }/>
                     <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                         <Text style={{color: 'white'}}>{STRING_HELPER.forgotYourLoginDetails} </Text>
-                        <TouchableHighlight onPress={this.onForgotPressed}>
+                        <TouchableHighlight onPress={this._onForgotPressed}>
                             <Text style={{color: 'white', fontWeight: 'bold'}}>{STRING_HELPER.getHelpSigningIn}</Text>
                         </TouchableHighlight>
                     </View>
@@ -321,15 +319,14 @@ class RegisterTab extends Component {
     constructor(props) {
         super(props);
 
-        this.onEmailPressed = this._onEmailPressed.bind(this);
         this.onFacebookPressed = onFacebookPressed.bind(this);
         this.onTwitterPressed = onTwitterPressed.bind(this);
     }
 
-    _onEmailPressed() {
+    _onEmailPressed = () => {
         const {navigate} = this.props.navigation;
         navigate(SCREEN_HELPER.REGISTER_EMAIL);
-    }
+    };
 
     render() {
         return (
@@ -364,7 +361,7 @@ class RegisterTab extends Component {
                     <View style={{height: 20}}/>
 
                     <TouchableHighlight
-                        onPress={ this.onEmailPressed }>
+                        onPress={ this._onEmailPressed }>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={{
                                 color: COLOR.GREEN,

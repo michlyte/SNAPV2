@@ -36,23 +36,20 @@ class WelcomeVerificationCodeBottomContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.onResendPressed = this._onResendPressed.bind(this);
-        this.onVerifyPressed = this._onVerifyPressed.bind(this);
-
         this.state = {
             verificationCode: '',
         }
     }
 
-    _onResendPressed() {
+    _onResendPressed = () => {
         console.log('_onResendPressed');
-    }
+    };
 
-    _onVerifyPressed() {
+    _onVerifyPressed = () => {
         console.log('_onVerifyPressed');
         const {navigate} = this.props.navigation;
         navigate(SCREEN_HELPER.ACKNOWLEDGEMENT, {email: this.props.email});
-    }
+    };
 
     render() {
         let verificationCodeMessage = reactStringReplace(STRING_HELPER.verificationCodeHasBeenSent, /(@email)/g, () => this.props.email);
@@ -86,7 +83,7 @@ class WelcomeVerificationCodeBottomContainer extends Component {
                     <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                         <View style={{flex: 1}}>
                             <WelcomeButton
-                                onPress={this.onResendPressed}
+                                onPress={this._onResendPressed}
                                 text={STRING_HELPER.RESEND}/>
                         </View>
 
@@ -94,7 +91,7 @@ class WelcomeVerificationCodeBottomContainer extends Component {
 
                         <View style={{flex: 1}}>
                             <WelcomeButton
-                                onPress={this.onVerifyPressed}
+                                onPress={this._onVerifyPressed}
                                 text={STRING_HELPER.VERIFY}/>
                         </View>
                     </View>

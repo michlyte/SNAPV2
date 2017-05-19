@@ -17,7 +17,6 @@ import {NavigationActions} from "react-navigation";
 export default class WelcomeAcknowledgementScreen extends Component {
     constructor(props) {
         super(props);
-        this._onNavigateToRootView = this._onNavigateToRootView.bind(this);
     }
 
     componentWillMount() {
@@ -28,7 +27,7 @@ export default class WelcomeAcknowledgementScreen extends Component {
         BackHandler.removeEventListener('hardwareBackPress', this._onNavigateToRootView);
     }
 
-    _onNavigateToRootView() {
+    _onNavigateToRootView = () => {
         const resetAction = NavigationActions.reset({
             index: 0,
             actions: [
@@ -37,7 +36,7 @@ export default class WelcomeAcknowledgementScreen extends Component {
         });
         this.props.navigation.dispatch(resetAction);
         return true;
-    }
+    };
 
     render() {
         const navigation = this.props.navigation;
@@ -58,13 +57,11 @@ export default class WelcomeAcknowledgementScreen extends Component {
 class WelcomeAcknowledgementBottomContainer extends Component {
     constructor(props) {
         super(props);
-
-        this.onNextPressed = this._onNextPressed.bind(this);
     }
 
-    _onNextPressed() {
+    _onNextPressed = () => {
         console.log(this.props.email);
-    }
+    };
 
     render() {
         return (
@@ -77,7 +74,7 @@ class WelcomeAcknowledgementBottomContainer extends Component {
                     <View style={STYLE.space}/>
 
                     <WelcomeButton
-                        onPress={this.onNextPressed}
+                        onPress={this._onNextPressed}
                         text={STRING_HELPER.NEXT}/>
                 </View>
             </View>

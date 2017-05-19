@@ -32,8 +32,6 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.onRegisterPressed = this._onRegisterPressed.bind(this);
-
         // Check buildType
         let tempEmailAddress = '';
         let tempPassword = '';
@@ -55,10 +53,10 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
         };
     }
 
-    _onRegisterPressed() {
+    _onRegisterPressed = () => {
         const {navigate} = this.props.navigation;
         navigate(SCREEN_HELPER.VERIFICATION_CODE, {email: this.state.emailAddress});
-    }
+    };
 
     render() {
         return (
@@ -89,7 +87,7 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
                     />
                     <View style={STYLE.space}/>
                     <WelcomeButton
-                        onPress={this.onRegisterPressed}
+                        onPress={this._onRegisterPressed}
                         text={STRING_HELPER.REGISTER}/>
                 </View>
             </View>

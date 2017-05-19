@@ -31,17 +31,15 @@ class WelcomeForgotBottomContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.onForgotPressed = this._onForgotPressed.bind(this);
-
         this.state = {
             emailAddress: '',
         }
     }
 
-    _onForgotPressed() {
+    _onForgotPressed = () => {
         const {navigate} = this.props.navigation;
         navigate(SCREEN_HELPER.FORGOT_ACKNOWLEDGMENT);
-    }
+    };
 
     render() {
         const navigation = this.props.navigation;
@@ -57,7 +55,7 @@ class WelcomeForgotBottomContainer extends Component {
                     />
                     <View style={STYLE.space}/>
                     <WelcomeButton
-                        onPress={this.onForgotPressed}
+                        onPress={this._onForgotPressed}
                         text={STRING_HELPER.FORGOT}/>
                 </View>
             </View>
