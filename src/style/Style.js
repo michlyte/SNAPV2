@@ -5,9 +5,9 @@ import {
     StyleSheet
 } from 'react-native';
 
+import CONSTANTS from "../Constants";
 import SIZE from './Size';
 import COLOR from './Color';
-import THEME from './Theme';
 
 export default STYLE = StyleSheet.create({
 //    Welcome
@@ -31,7 +31,7 @@ export default STYLE = StyleSheet.create({
         width: 5,
     },
     text: {
-        color: THEME.text_welcome_tintColor,
+        color: CONSTANTS.theme.text_welcome_tintColor,
         fontSize: 18,
     }
 });

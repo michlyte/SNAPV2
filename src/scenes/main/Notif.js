@@ -3,7 +3,6 @@
  */
 import React, {PureComponent} from "react";
 import {ActivityIndicator, FlatList, Image, Text, TouchableHighlight, View} from "react-native";
-import THEME from "../../style/Theme";
 import CONSTANTS from "../../Constants";
 
 import SCREEN_HELPER from "../../utils/ScreenHelper";
@@ -18,17 +17,20 @@ export default class HomeNotif extends PureComponent {
     static navigationOptions = ({navigation}) => ({
         headerTitle: CONSTANTS.appName,
         headerTitleStyle: {
-            color: THEME.navBar_tintColor,
+            color: CONSTANTS.theme.navBar_tintColor,
         },
         headerStyle: {
-            backgroundColor: THEME.navBar_backgroundColor,
+            backgroundColor: CONSTANTS.theme.navBar_backgroundColor,
         },
         headerRight: <View style={{marginRight: 15}}>
             <TouchableHighlight onPress={() => navigation.navigate(SCREEN_HELPER.CAMERA_AND_CAMERA_ROLL)}>
-                <FontAwesome name="plus" size={20} color={THEME.navBar_tintColor}/>
+                <FontAwesome name="plus" size={20} color={CONSTANTS.theme.navBar_tintColor}/>
             </TouchableHighlight>
         </View>,
         tabBarLabel: 'Notif',
+        tabBarIcon: ({tintColor}) => (
+            <FontAwesome name="bell" size={20} color={tintColor}/>
+        ),
     });
 
     constructor(props) {

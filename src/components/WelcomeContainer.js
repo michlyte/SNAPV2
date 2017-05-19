@@ -4,7 +4,7 @@
 import React, {Component} from "react";
 import {Image, StyleSheet, TouchableHighlight, View} from "react-native";
 
-import COLOR from "../style/Color";
+import CONSTANTS from "../Constants";
 
 import ASSET_HELPER from "../utils/AssetHelper";
 
@@ -28,7 +28,7 @@ export default class WelcomeContainer extends Component {
             backButton = <TouchableHighlight
                 style={{marginTop: 10, marginLeft: 20, position: 'absolute'}}
                 onPress={this.onBackPressed}>
-                <Icon name="angle-left" size={50} color={COLOR.GREEN}/>
+                <Icon name="angle-left" size={50} color={CONSTANTS.theme.button_welcome_backgroundColor}/>
             </TouchableHighlight>;
         }
 

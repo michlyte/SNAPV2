@@ -6,7 +6,6 @@ import FBSDK from "react-native-fbsdk";
 
 import CONSTANTS from "../../Constants";
 import COLOR from "../../style/Color";
-import THEME from "../../style/Theme";
 import SIZE from "../../style/Size";
 import STYLE from "../../style/Style";
 
@@ -73,9 +72,9 @@ class WelcomeBottomContainer extends Component {
 
     _renderHeader = (props) => {
         return <TabBar {...props}
-                       indicatorStyle={{backgroundColor: THEME.tabBar_welcome_indicatorColor}}
-                       labelStyle={{color: THEME.tabBar_welcome_tintColor}}
-                       style={{backgroundColor: THEME.tabBar_welcome_backgroundColor}}/>
+                       indicatorStyle={{backgroundColor: CONSTANTS.theme.tabBar_welcome_indicatorColor}}
+                       labelStyle={{color: CONSTANTS.theme.tabBar_welcome_tintColor}}
+                       style={{backgroundColor: CONSTANTS.theme.tabBar_welcome_backgroundColor}}/>
     };
 
     _renderScene = ({route}) => {
@@ -280,7 +279,7 @@ class LoginTab extends Component {
                 </View>
 
                 <View style={{alignItems: 'center'}}>
-                    <Text style={{color: THEME.text_welcome_tintColor}}>
+                    <Text style={{color: CONSTANTS.theme.text_welcome_tintColor}}>
                         or login using
                     </Text>
 
@@ -358,7 +357,7 @@ class RegisterTab extends Component {
                 </View>
 
                 <View style={{alignItems: 'center'}}>
-                    <Text style={{color: THEME.text_welcome_tintColor}}>
+                    <Text style={{color: CONSTANTS.theme.text_welcome_tintColor}}>
                         or sign up using
                     </Text>
 
@@ -376,7 +375,7 @@ class RegisterTab extends Component {
                                 Email
                             </Text>
                             <View style={STYLE.divider}/>
-                            <Icon name="check" size={20} color={THEME.button_text_welcome_tintColor}/>
+                            <Icon name="check" size={20} color={CONSTANTS.theme.button_text_welcome_tintColor}/>
                         </View>
                     </TouchableHighlight>
 

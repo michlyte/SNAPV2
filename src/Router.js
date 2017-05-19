@@ -1,7 +1,8 @@
 import React from "react";
 import {StackNavigator, TabNavigator} from "react-navigation";
 import SCREEN_HELPER from "./utils/ScreenHelper";
-import THEME from "./style/Theme";
+import CONSTANTS from "./Constants";
+
 // Welcome
 import WelcomeScreen from "./scenes/welcome/Welcome";
 import WelcomeRegisterViaEmailScreen from "./scenes/welcome/RegisterViaEmail";
@@ -14,6 +15,7 @@ import HomeList from "./scenes/main/List";
 import HomeGrid from "./scenes/main/Grid";
 import HomeMap from "./scenes/main/Map";
 import HomeNotif from "./scenes/main/Notif";
+import HomeSetting from "./scenes/main/Setting";
 // New Case
 import CameraAndCameraRoll from "./scenes/newcase/CameraAndCameraRollScreen";
 // Example
@@ -21,16 +23,19 @@ import WebViewExample from "./example/WebViewExample";
 import CarouselExample from "./example/carousel/CarouselExample";
 
 export const MainScreenNavigator = TabNavigator({
-    Notif: {screen: HomeNotif},
+    Setting: {screen: HomeSetting},
     List: {screen: HomeList},
     Grid: {screen: HomeGrid},
     Map: {screen: HomeMap},
+    Notif: {screen: HomeNotif},
 }, {
     tabBarOptions: {
         style: {
-            backgroundColor: THEME.tabBar_backgroundColor,
+            backgroundColor: CONSTANTS.theme.tabBar_backgroundColor,
         },
-        activeTintColor: THEME.tabBar_tintColor,
+        showIcon: true,
+        showLabel: false,
+        activeTintColor: CONSTANTS.theme.tabBar_tintColor,
     },
 });
 

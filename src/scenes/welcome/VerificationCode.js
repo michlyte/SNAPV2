@@ -1,18 +1,15 @@
 /**
  * Created by michael on 4/17/2017.
  */
-import React, {Component} from 'react';
-import {
-    View,
-    Text,
-} from 'react-native';
+import React, {Component} from "react";
+import {Text, View} from "react-native";
 
-import SCREEN from '../../utils/ScreenHelper';
-import STYLE from '../../style/Style';
-import STRINGS from '../../utils/StringHelper';
-import WelcomeContainer from '../../components/WelcomeContainer';
-import WelcomeTextInput from '../../components/WelcomeTextInput';
-import WelcomeButton from '../../components/WelcomeButton';
+import SCREEN from "../../utils/ScreenHelper";
+import STYLE from "../../style/Style";
+import STRINGS from "../../utils/StringHelper";
+import WelcomeContainer from "../../components/WelcomeContainer";
+import WelcomeTextInput from "../../components/WelcomeTextInput";
+import WelcomeButton from "../../components/WelcomeButton";
 
 const reactStringReplace = require('react-string-replace');
 

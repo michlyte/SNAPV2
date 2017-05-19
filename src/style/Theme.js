@@ -3,7 +3,7 @@
  */
 import COLOR from './Color';
 
-export default class Theme {
+export default class EcquariaTheme {
     // Welcome
     static tabBar_welcome_backgroundColor = 'transparent';
     static tabBar_welcome_tintColor = 'white';

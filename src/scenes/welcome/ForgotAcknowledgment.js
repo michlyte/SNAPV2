@@ -2,7 +2,7 @@
  * Created by michael on 5/17/2017.
  */
 import React, {Component} from "react";
-import {BackAndroid, Text, View} from "react-native";
+import {BackHandler, Text, View} from "react-native";
 
 import STYLE from "../../style/Style";
 
@@ -21,11 +21,11 @@ export default class ForgotAcknowledgment extends Component {
     }
 
     componentWillMount() {
-        BackAndroid.addEventListener('hardwareBackPress', this.onNavigateToRootView);
+        BackHandler.addEventListener('hardwareBackPress', this.onNavigateToRootView);
     }
 
     componentWillUnmount() {
-        BackAndroid.removeEventListener('hardwareBackPress', this.onNavigateToRootView);
+        BackHandler.removeEventListener('hardwareBackPress', this.onNavigateToRootView);
     }
 
     _onNavigateToRootView() {

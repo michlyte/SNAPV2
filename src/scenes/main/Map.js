@@ -2,29 +2,31 @@
  * Created by michael on 5/16/2017.
  */
 import React, {Component} from "react";
-import {View, TouchableHighlight, Dimensions, StyleSheet} from 'react-native';
-import THEME from "../../style/Theme";
-import CONFIG from "../../Constants";
+import {StyleSheet, TouchableHighlight, View} from "react-native";
+import CONSTANTS from "../../Constants";
 import SCREEN from "../../utils/ScreenHelper";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import MapView from 'react-native-maps';
+import MapView from "react-native-maps";
 
 export default class HomeMap extends Component {
     static navigationOptions = ({navigation}) => ({
-        headerTitle: CONFIG.appName,
+        headerTitle: CONSTANTS.appName,
         headerTitleStyle: {
-            color: THEME.navBar_tintColor,
+            color: CONSTANTS.theme.navBar_tintColor,
         },
         headerStyle: {
-            backgroundColor: THEME.navBar_backgroundColor,
+            backgroundColor: CONSTANTS.theme.navBar_backgroundColor,
         },
         headerRight: <View style={{marginRight: 15}}>
             <TouchableHighlight onPress={() => navigation.navigate(SCREEN.CAMERA_AND_CAMERA_ROLL)}>
-                <FontAwesome name="plus" size={20} color={THEME.navBar_tintColor}/>
+                <FontAwesome name="plus" size={20} color={CONSTANTS.theme.navBar_tintColor}/>
             </TouchableHighlight>
         </View>,
         tabBarLabel: 'Map',
+        tabBarIcon: ({tintColor}) => (
+            <FontAwesome name="map" size={20} color={tintColor}/>
+        ),
     });
 
     render() {

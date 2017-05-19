@@ -2,7 +2,7 @@
  * Created by michael on 4/17/2017.
  */
 import React, {Component} from "react";
-import {BackAndroid, Text, View} from "react-native";
+import {BackHandler, Text, View} from "react-native";
 
 import STYLE from "../../style/Style";
 
@@ -21,11 +21,11 @@ export default class WelcomeAcknowledgementScreen extends Component {
     }
 
     componentWillMount() {
-        BackAndroid.addEventListener('hardwareBackPress', this._onNavigateToRootView);
+        BackHandler.addEventListener('hardwareBackPress', this._onNavigateToRootView);
     }
 
     componentWillUnmount() {
-        BackAndroid.removeEventListener('hardwareBackPress', this._onNavigateToRootView);
+        BackHandler.removeEventListener('hardwareBackPress', this._onNavigateToRootView);
     }
 
     _onNavigateToRootView() {
