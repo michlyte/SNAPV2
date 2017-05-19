@@ -24,10 +24,10 @@ import CarouselExample from "./example/carousel/CarouselExample";
 
 export const MainScreenNavigator = TabNavigator({
     Setting: {screen: HomeSetting},
-    List: {screen: HomeList},
-    Grid: {screen: HomeGrid},
-    Map: {screen: HomeMap},
-    Notif: {screen: HomeNotif},
+    // List: {screen: HomeList},
+    // Grid: {screen: HomeGrid},
+    // Map: {screen: HomeMap},
+    // Notif: {screen: HomeNotif},
 }, {
     tabBarOptions: {
         style: {

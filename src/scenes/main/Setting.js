@@ -2,7 +2,7 @@
  * Created by michael on 5/19/2017.
  */
 import React, {Component} from "react";
-import {FlatList, Text, View, Image} from "react-native";
+import {FlatList, Text, View, TouchableHighlight} from "react-native";
 import CONSTANTS from "../../Constants";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -29,6 +29,7 @@ export default class HomeSetting extends Component {
         super(props);
 
         this.state = {
+            titleTextColor: 'black',
             data: [
                 {
                     id: '1',
@@ -37,6 +38,16 @@ export default class HomeSetting extends Component {
                 },
                 {
                     id: '2',
+                    title: 'Notifications',
+                    iconName: 'bell',
+                },
+                {
+                    id: '3',
+                    title: 'Change Password',
+                    iconName: 'unlock-alt',
+                },
+                {
+                    id: '4',
                     title: 'Log Out',
                     iconName: 'sign-out',
                 }
@@ -46,31 +57,45 @@ export default class HomeSetting extends Component {
 
     _keyExtractor = (item, index) => item.id;
 
+    _onPress = () => {
+        console.log('onPress')
+    };
+
     _renderItem = ({item, index}) => {
         return (
-            <View
-                style={{flex: 1, height: 40, justifyContent: 'center', marginTop: 10, marginLeft: 10, marginRight: 10}}>
-                <View style={{flexDirection: 'row'}}>
-                    <View style={{width: 30, height: 30}}>
-                        <FontAwesome name={item.iconName} size={30} color={CONSTANTS.theme.text_setting_tintColor}/>
+            <TouchableHighlight underlayColor={'gray'} onPress={this._onPress}>
+                <View
+                    style={{
+                        flex: 1,
+                        height: 40,
+                        justifyContent: 'center',
+                        marginTop: 10,
+                        marginLeft: 20,
+                        marginRight: 20
+                    }}>
+
+                    <View style={{flexDirection: 'row'}}>
+                        <View style={{width: 30, height: 30, justifyContent: 'center', alignItems: 'center'}}>
+                            <FontAwesome name={item.iconName} size={30} color={CONSTANTS.theme.text_setting_tintColor}/>
+                        </View>
+
+                        <View style={{width: 10}}/>
+
+                        <Text style={{flex: 1, fontSize: 20, color: this.state.titleTextColor}}>{item.title}</Text>
                     </View>
-
-                    <View style={{width: 10}}/>
-
-                    <Text style={{fontSize: 20}}>{item.title}</Text>
                 </View>
-            </View>
+            </TouchableHighlight>
         );
     };
 
-    renderSeparator = () => {
+    _renderSeparator = () => {
         return (
             <View
                 style={{
                     height: 1,
-                    width: "88%",
+                    width: "86%",
                     backgroundColor: "#CED0CE",
-                    marginLeft: "12%"
+                    marginLeft: "14%"
                 }}
             />
         );
@@ -83,7 +108,8 @@ export default class HomeSetting extends Component {
                     keyExtractor={this._keyExtractor}
                     data={this.state.data}
                     renderItem={this._renderItem}
-                    ItemSeparatorComponent={this.renderSeparator}
+                    ItemSeparatorComponent={this._renderSeparator}
+                    removeClippedSubviews={false}
                 />
             </View>
         );

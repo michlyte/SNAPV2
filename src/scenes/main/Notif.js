@@ -51,7 +51,6 @@ export default class HomeNotif extends PureComponent {
     }
 
     _wsRequest() {
-        console.log("_wsRequest");
         /*
          *  STRUCTURE
          *  "notificationId":440,
@@ -129,7 +128,6 @@ export default class HomeNotif extends PureComponent {
     _keyExtractor = (item, index) => item.notificationId;
 
     _onRefresh = () => {
-        console.log("_onRefresh");
         this.setState(
             {
                 page: 1,
@@ -142,7 +140,6 @@ export default class HomeNotif extends PureComponent {
     };
 
     _handleLoadMore = () => {
-        console.log("handleLoadMore");
         this.setState(
             {
                 page: this.state.page + 1
@@ -154,7 +151,6 @@ export default class HomeNotif extends PureComponent {
     };
 
     _renderFooter = () => {
-        console.log("renderFooter");
         if (!this.state.loading) return null;
 
         return (
@@ -182,7 +178,17 @@ export default class HomeNotif extends PureComponent {
 
     _renderItem = ({item, index}) => {
         return (
-            <NotifListItem item={item}/>
+            <NotifListItem
+                item={item}
+                onPress={() => this.setState((oldState) => ({
+                    selected: { // New instance breaks `===`
+                        ...oldState.selected, // copy old data
+                        [item.key]: !oldState.selected[item.key], // toggle
+                    }
+                }))}
+                selected={
+                    !!this.state.selected[item.key] // renderItem depends on state
+                }/>
         );
     };
 
@@ -196,8 +202,9 @@ export default class HomeNotif extends PureComponent {
                     onRefresh={() => this._onRefresh}
                     refreshing={false}
                     onEndReached={this._handleLoadMore}
-                    onEndReachedThreshold={50}
+                    onEndReachedThreshold={5}
                     ListFooterComponent={this._renderFooter}
+                    removeClippedSubviews={false}
                 />
             </View>
         );
@@ -225,10 +232,6 @@ class NotifListItem extends PureComponent {
         }
     }
 
-    // _onPress = () => {
-    //     this.props.onPressItem(this.props.id);
-    // };
-
     render() {
         return (
             <View style={{flex: 1, marginBottom: 15}}>
@@ -250,28 +253,5 @@ class NotifListItem extends PureComponent {
                 </View>
             </View>
         );
-
-        // return (
-        //     <TouchableWithoutFeedback onPress={this._onPress}>
-        //         <View style={{flex: 1, marginBottom: 15}}>
-        //             <View style={{flexDirection: 'row'}}>
-        //                 {/* Friend profile picture */}
-        //                 <Image style={StyImages.friendPictureNotif}
-        //                        source={this.fpUrl}/>
-        //                 {/* Message */}
-        //                 <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>
-        //                     <Text style={StyText.messageNotif}>
-        //                         <Text>{this.prefix}</Text>
-        //                         <Text style={{fontWeight: 'bold'}}>{this.props.item.caseTitle}</Text>
-        //                         <Text>{this.suffix}</Text>
-        //                     </Text>
-        //                 </View>
-        //                 {/* Image */}
-        //                 <Image style={StyImages.attachmentThumbNotif}
-        //                        source={{uri: this.props.item.attachmentUrlThumb}}/>
-        //             </View>
-        //         </View>
-        //     </TouchableWithoutFeedback>
-        // );
     }
 }
