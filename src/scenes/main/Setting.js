@@ -63,7 +63,7 @@ export default class HomeSetting extends Component {
 
     _renderItem = ({item, index}) => {
         return (
-            <TouchableHighlight underlayColor={'gray'} onPress={this._onPress}>
+            <TouchableHighlight underlayColor={'lightgray'} onPress={this._onPress}>
                 <View
                     style={{
                         flex: 1,
