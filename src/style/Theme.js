@@ -26,4 +26,6 @@ export default class EcquariaTheme {
 
     // TouchableHighlight
     static underlayColor = 'lightgray';
+
+    static line = COLOR.BLUE;
 }

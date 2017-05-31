@@ -26,10 +26,10 @@ import CarouselExample from "./example/carousel/CarouselExample";
 
 export const MainScreenNavigator = TabNavigator({
     Setting: {screen: HomeSetting},
-    // List: {screen: HomeList},
-    // Grid: {screen: HomeGrid},
+    List: {screen: HomeList},
+    Grid: {screen: HomeGrid},
     // Map: {screen: HomeMap},
-    // Notif: {screen: HomeNotif},
+    Notif: {screen: HomeNotif},
 }, {
     tabBarOptions: {
         style: {
@@ -39,6 +39,7 @@ export const MainScreenNavigator = TabNavigator({
         showLabel: false,
         activeTintColor: CONSTANTS.theme.tabBar_tintColor,
     },
+    tabBarPosition: 'bottom',
 });
 
 export const SNAPExampleNavigator = StackNavigator({
