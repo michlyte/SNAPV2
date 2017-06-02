@@ -5,10 +5,11 @@ import React, {Component, PropTypes} from "react";
 import {Animated, Image, ScrollView, Text, View} from "react-native";
 import CONSTANTS from "../../Constants";
 import THEME from "../../style/Theme";
+import SCREEN_HELPER from "../../utils/ScreenHelper";
 
 export default class Profile extends Component {
     static navigationOptions = ({navigation}) => ({
-        headerTitle: CONSTANTS.appName,
+        headerTitle: SCREEN_HELPER.PROFILE,
         headerTintColor: CONSTANTS.theme.navBar_tintColor,
         headerTitleStyle: {
             color: CONSTANTS.theme.navBar_tintColor,

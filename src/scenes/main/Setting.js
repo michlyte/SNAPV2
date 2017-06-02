@@ -62,8 +62,11 @@ export default class HomeSetting extends Component {
     _onPress = ({item}) => {
         const {navigate} = this.props.navigation;
         switch (item.title) {
-            case 'Profile':
+            case SCREEN_HELPER.PROFILE:
                 navigate(SCREEN_HELPER.PROFILE);
+                break;
+            case SCREEN_HELPER.NOTIFICATIONS:
+                navigate(SCREEN_HELPER.NOTIFICATIONS);
                 break;
         }
     };

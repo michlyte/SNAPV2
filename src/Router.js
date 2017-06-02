@@ -20,6 +20,9 @@ import HomeSetting from "./scenes/main/Setting";
 import CameraAndCameraRoll from "./scenes/newcase/CameraAndCameraRollScreen";
 // Setting
 import ProfileScreen from "./scenes/setting/Profile";
+import NotificationsScreen from "./scenes/setting/Notifications";
+import NotificationsNewScreen from "./scenes/setting/NotificationsNew";
+
 // Example
 import WebViewExample from "./example/WebViewExample";
 import CarouselExample from "./example/carousel/CarouselExample";
@@ -94,7 +97,8 @@ export const SNAPWelcomeNavigator = StackNavigator({
 
     // Main Screens
     Main: {
-        screen: MainScreenNavigator,
+        // screen: MainScreenNavigator,
+        screen: NotificationsNewScreen,
     },
     CameraAndCameraRoll: {
         screen: CameraAndCameraRoll,
@@ -107,5 +111,11 @@ export const SNAPWelcomeNavigator = StackNavigator({
         navigationOptions: {
             title: SCREEN_HELPER.PROFILE,
         }
-    }
+    },
+    Notifications: {
+        screen: NotificationsScreen,
+        navigationOptions: {
+            title: SCREEN_HELPER.NOTIFICATIONS,
+        }
+    },
 });

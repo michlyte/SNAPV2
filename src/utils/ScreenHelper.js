@@ -13,4 +13,5 @@ export default class ScreenHelper {
     static CAMERA_AND_CAMERA_ROLL = 'CameraAndCameraRoll';
 
     static PROFILE = 'Profile';
+    static NOTIFICATIONS = 'Notifications';
 }
