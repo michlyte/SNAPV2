@@ -1,12 +1,11 @@
 /**
  * Created by michael on 5/31/2017.
  */
-import React, {Component, PropTypes} from "react";
-import {Animated, Switch, ScrollView, View, Text, StyleSheet} from "react-native";
+import React, {PureComponent} from "react";
+import {View, FlatList, Text, Switch} from "react-native";
 import CONSTANTS from "../../Constants";
-import THEME from "../../style/Theme";
 
-export default class Notifications extends Component {
+export default class Notifications extends PureComponent {
     static navigationOptions = ({navigation}) => ({
         headerTintColor: CONSTANTS.theme.navBar_tintColor,
         headerTitleStyle: {
@@ -24,83 +23,85 @@ export default class Notifications extends Component {
         super(props);
 
         this.state = {
-            statusValue: true,
-            commentValue: true,
-            likeValue: true,
+            data: [
+                {
+                    id: 0,
+                    title: "Status",
+                    value: true,
+                },
+                {
+                    id: 1,
+                    title: "Like",
+                    value: true,
+                },
+                {
+                    id: 2,
+                    title: "Comment",
+                    value: false,
+                },
+            ],
         }
     }
 
-    _onStatusValueChange = (value) => {
-        this.setState({statusValue: value});
-    };
+    _keyExtractor = (item, index) => item.id;
 
-    _onCommentValueChange = (value) => {
-        this.setState({commentValue: value});
-    };
-
-    _onLikeValueChange = (value) => {
-        this.setState({likeValue: value});
-    };
-
-    render() {
+    _renderItem = ({item, index}) => {
         return (
-            <ScrollView
-                scrollEventThrottle={16}
-                onScroll={Animated.event(
-                    [{
-                        nativeEvent: {
-                            contentOffset: {y: this.state.scrollY}
-                        }
-                    }]
-                )}>
-                <View style={{height: 10}}/>
-
-                <NotificationsContent
-                    title={'Status'}
-                    value={this.state.statusValue}
-                    onValueChange={this._onStatusValueChange}/>
-
-                <NotificationsContent
-                    title={'Comment'}
-                    value={this.state.commentValue}
-                    onValueChange={this._onCommentValueChange}/>
-
-                <NotificationsContent
-                    title={'Like'}
-                    value={this.state.likeValue}
-                    onValueChange={this._onLikeValueChange}/>
-            </ScrollView>
+            <ListItem item={item} index={index} onPressItem={this._onPressItem}/>
         );
-    }
-}
+    };
 
-class NotificationsContent extends Component {
+    _onPressItem = (item, index, value) => {
+        const newData = this.state.data;
+        newData[index].value = value;
+        this.setState({
+            data: newData
+        });
+    };
+
     render() {
         return (
-            <View style={[{
-                flexDirection: 'row',
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center'
-            }, styles.layout]}>
-                <Text style={{flex: 2, fontSize: 18}}>{this.props.title}</Text>
-                <Switch style={{flex: 1, height: 20}} onValueChange={this.props.onValueChange}
-                        value={this.props.value}/>
+            <View style={{flex: 1, backgroundColor: 'white', paddingTop: 15}}>
+                <FlatList
+                    keyExtractor={this._keyExtractor}
+                    data={this.state.data}
+                    renderItem={this._renderItem}
+                    extraData={this.state}
+                    removeClippedSubviews={false}
+                />
             </View>
         );
     }
 }
 
-NotificationsContent.propTypes = {
-    title: PropTypes.string.isRequired,
-    value: PropTypes.bool.isRequired,
-    onValueChange: PropTypes.func.isRequired,
-};
+class ListItem extends PureComponent {
+    constructor(props) {
+        super(props);
 
-const styles = StyleSheet.create({
-    layout: {
-        marginLeft: 20,
-        marginRight: 20,
-        marginBottom: 10,
+        this.state = {
+            value: this.props.item.value,
+        }
     }
-});
+
+    _onValueChange = (value) => {
+        this.setState({value});
+        this.props.onPressItem(this.props.item, this.props.index, value);
+    };
+
+    render() {
+        return (
+            <View style={{
+                flexDirection: 'row',
+                flex: 1,
+                justifyContent: 'space-between',
+                marginLeft: 20,
+                marginRight: 20,
+                marginBottom: 8,
+            }}>
+                <Text style={{fontSize: 18}}>{this.props.item.title}</Text>
+                <Switch style={{flex: 1}} onValueChange={this._onValueChange}
+                        value={this.state.value}/>
+            </View>
+        );
+    }
+}

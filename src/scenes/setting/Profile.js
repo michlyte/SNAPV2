@@ -2,7 +2,9 @@
  * Created by michael on 5/19/2017.
  */
 import React, {Component, PropTypes} from "react";
-import {Animated, Image, ScrollView, Text, View} from "react-native";
+import {Animated, Image, ScrollView, Text, View, Button} from "react-native";
+import ImagePicker from 'react-native-image-picker';
+
 import CONSTANTS from "../../Constants";
 import THEME from "../../style/Theme";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
@@ -36,6 +38,60 @@ export default class Profile extends Component {
         }
     }
 
+    _onChangePicturePressed = () => {
+        // More info on all the options is below in the README...just some common use cases shown here
+        let options = {
+            title: 'Select Avatar',
+            customButtons: [
+                // {name: 'fb', title: 'Choose Photo from Facebook'},
+            ],
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            }
+        };
+
+        /**
+         * The first arg is the options object for customization (it can also be null or omitted for default options),
+         * The second arg is the callback which sends object: response (more info below in README)
+         */
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            // else if (response.customButton) {
+            //     console.log('User tapped custom button: ', response.customButton);
+            // }
+            else {
+                let source = {uri: response.uri};
+
+                // You can also display the image using data:
+                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+                console.log('path: ' + response.path);
+
+                // ImageCropPicker.openCropper({
+                //     path: response.path,
+                //     width: 400,
+                //     height: 400
+                // }).then(image => {
+                //     console.log(image);
+                // });
+
+                // const newData = this.state.data;
+                // newData.userPictureUrl = response.path;
+                // this.setState({
+                //     data: newData
+                // });
+            }
+        });
+    };
+
     render() {
         return (
             <ScrollView
@@ -50,8 +106,8 @@ export default class Profile extends Component {
                 <View style={{
                     flex: 1,
                     height: 150,
-                    marginTop: 30,
-                    marginBottom: 30,
+                    marginTop: 25,
+                    marginBottom: 15,
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
@@ -59,16 +115,23 @@ export default class Profile extends Component {
                            style={{width: 140, height: 140, borderRadius: 70}}/>
                 </View>
 
+                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <Button
+                        onPress={this._onChangePicturePressed}
+                        title="Change Avatar"
+                        color={THEME.navBar_backgroundColor}
+                    />
+                </View>
+
                 <View
                     style={{
                         height: 1,
                         backgroundColor: THEME.line,
+                        marginTop: 20,
                         marginBottom: 20,
                         marginLeft: 25,
                         marginRight: 25
                     }}/>
-                {/*<Text style={{color: THEME.line, fontSize: 20, marginBottom: 15, marginLeft: 25, marginRight: 25}}>Your*/}
-                {/*Bio</Text>*/}
 
                 <ProfileContent title={'DisplayName'} content={this.state.data.displayName}/>
                 <ProfileContent title={'Email'} content={this.state.data.email}/>

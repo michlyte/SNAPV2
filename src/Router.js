@@ -21,7 +21,6 @@ import CameraAndCameraRoll from "./scenes/newcase/CameraAndCameraRollScreen";
 // Setting
 import ProfileScreen from "./scenes/setting/Profile";
 import NotificationsScreen from "./scenes/setting/Notifications";
-import NotificationsNewScreen from "./scenes/setting/NotificationsNew";
 
 // Example
 import WebViewExample from "./example/WebViewExample";
@@ -98,7 +97,7 @@ export const SNAPWelcomeNavigator = StackNavigator({
     // Main Screens
     Main: {
         // screen: MainScreenNavigator,
-        screen: NotificationsNewScreen,
+        screen: ProfileScreen,
     },
     CameraAndCameraRoll: {
         screen: CameraAndCameraRoll,
@@ -106,6 +105,8 @@ export const SNAPWelcomeNavigator = StackNavigator({
             header: null,
         },
     },
+
+    // Setting
     Profile: {
         screen: ProfileScreen,
         navigationOptions: {
