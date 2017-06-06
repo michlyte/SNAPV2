@@ -2,8 +2,9 @@
  * Created by michael on 5/19/2017.
  */
 import React, {Component, PropTypes} from "react";
-import {Animated, Image, ScrollView, Text, View, Button} from "react-native";
+import {Animated, Image, ScrollView, Text, View, Button, Alert} from "react-native";
 import ImagePicker from 'react-native-image-picker';
+import ImageCropPicker from 'react-native-image-crop-picker';
 
 import CONSTANTS from "../../Constants";
 import THEME from "../../style/Theme";
@@ -39,6 +40,14 @@ export default class Profile extends Component {
     }
 
     _onChangePicturePressed = () => {
+        // ImageCropPicker.openPicker({
+        //     width: 400,
+        //     height: 400,
+        //     cropping: true
+        // }).then(image => {
+        //     console.log(image);
+        // });
+
         // More info on all the options is below in the README...just some common use cases shown here
         let options = {
             title: 'Select Avatar',
@@ -68,23 +77,23 @@ export default class Profile extends Component {
             //     console.log('User tapped custom button: ', response.customButton);
             // }
             else {
-                let source = {uri: response.uri};
+                // let source = {uri: response.uri};
 
                 // You can also display the image using data:
-                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+                // let source = {uri: 'data:image/jpeg;base64,' + response.data};
+                let source = 'data:image/jpeg;base64,' + response.data;
 
-                console.log('path: ' + response.path);
-
-                // ImageCropPicker.openCropper({
-                //     path: response.path,
-                //     width: 400,
-                //     height: 400
-                // }).then(image => {
-                //     console.log(image);
-                // });
+                // Crop feature
+                ImageCropPicker.openCropper({
+                    path: "file://" + response.path,
+                    width: 400,
+                    height: 400
+                }).then(image => {
+                    console.log(image);
+                });
 
                 // const newData = this.state.data;
-                // newData.userPictureUrl = response.path;
+                // newData.userPictureUrl = source;
                 // this.setState({
                 //     data: newData
                 // });
