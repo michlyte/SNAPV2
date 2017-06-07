@@ -4,10 +4,15 @@
 import React, {Component} from "react";
 import {StyleSheet, Dimensions, View, TextInput} from "react-native";
 import MapView from 'react-native-maps';
+import Geocoder from 'react-native-geocoder';
+
+import CONSTANTS from "../../Constants";
 
 export default class LocationDetail extends Component {
     constructor(props) {
         super(props);
+
+        Geocoder.fallbackToGoogle(CONSTANTS.GOOGLE_API_KEY);
 
         this.state = {
             location: '',
@@ -38,8 +43,10 @@ export default class LocationDetail extends Component {
 
             this.setState({
                 region: region,
-            })
-        })
+            });
+        });
+
+        this._onGeocodingLatLong(this.state.marker.latitude, this.state.marker.longitude);
     }
 
     componentWillUnmount() {
@@ -50,7 +57,25 @@ export default class LocationDetail extends Component {
         // Move marker
         this.setState({
             marker: event.nativeEvent.coordinate,
-        })
+        });
+
+        this._onGeocodingLatLong(this.state.marker.latitude, this.state.marker.longitude);
+    };
+
+    _onGeocodingLatLong = (lat, lng) => {
+        const position = {
+            lat: lat,
+            lng: lng,
+        };
+
+        Geocoder.geocodePosition(position).then(res => {
+            if (res.length > 0) {
+                const data = res[0];
+                this.setState({
+                    location: data.formattedAddress,
+                })
+            }
+        }).catch(err => console.log(err))
     };
 
     render() {
