@@ -35,22 +35,22 @@ export default class HomeSetting extends Component {
             data: [
                 {
                     id: '1',
-                    title: 'Profile',
+                    title: SCREEN_HELPER.PROFILE,
                     iconName: 'user',
                 },
                 {
                     id: '2',
-                    title: 'Notifications',
+                    title: SCREEN_HELPER.NOTIFICATIONS,
                     iconName: 'bell',
                 },
                 {
                     id: '3',
-                    title: 'Change Password',
+                    title: SCREEN_HELPER.CHANGE_PASSWORD,
                     iconName: 'unlock-alt',
                 },
                 {
                     id: '4',
-                    title: 'Log Out',
+                    title: SCREEN_HELPER.LOG_OUT,
                     iconName: 'sign-out',
                 }
             ],
@@ -68,7 +68,9 @@ export default class HomeSetting extends Component {
             case SCREEN_HELPER.NOTIFICATIONS:
                 navigate(SCREEN_HELPER.NOTIFICATIONS);
                 break;
-            case "Log Out":
+            case SCREEN_HELPER.CHANGE_PASSWORD:
+                break;
+            case SCREEN_HELPER.LOG_OUT:
                 Alert.alert(
                     'Log Out',
                     'Are you sure you want to log out?',

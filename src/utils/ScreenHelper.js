@@ -14,4 +14,6 @@ export default class ScreenHelper {
 
     static PROFILE = 'Profile';
     static NOTIFICATIONS = 'Notifications';
+    static CHANGE_PASSWORD = 'Change Password';
+    static LOG_OUT = 'Log Out';
 }

@@ -18,6 +18,7 @@ import HomeNotif from "./scenes/main/Notif";
 import HomeSetting from "./scenes/main/Setting";
 // New Case
 import CameraAndCameraRoll from "./scenes/newcase/CameraAndCameraRollScreen";
+import CameraAndCameraRollNew from "./scenes/newcase/CameraAndCameraRollScreenNew";
 // Setting
 import ProfileScreen from "./scenes/setting/Profile";
 import NotificationsScreen from "./scenes/setting/Notifications";
@@ -99,7 +100,7 @@ export const SNAPWelcomeNavigator = StackNavigator({
         screen: MainScreenNavigator,
     },
     CameraAndCameraRoll: {
-        screen: CameraAndCameraRoll,
+        screen: CameraAndCameraRollNew,
         navigationOptions: {
             header: null,
         },
