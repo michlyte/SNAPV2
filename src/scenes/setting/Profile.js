@@ -2,13 +2,14 @@
  * Created by michael on 5/19/2017.
  */
 import React, {Component, PropTypes} from "react";
-import {Animated, Image, ScrollView, Text, View, Button, Alert} from "react-native";
-import ImagePicker from 'react-native-image-picker';
-import ImageCropPicker from 'react-native-image-crop-picker';
+import {Animated, Button, Image, ScrollView, Text, View} from "react-native";
+import ImagePicker from "react-native-image-picker";
+import ImageCropPicker from "react-native-image-crop-picker";
 
 import CONSTANTS from "../../Constants";
-import THEME from "../../style/Theme";
+import THEME from "../../styles/Theme";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
+import SESSION_HELPER from "../../utils/SessionHelper";
 
 export default class Profile extends Component {
     static navigationOptions = ({navigation}) => ({

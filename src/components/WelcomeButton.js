@@ -4,7 +4,7 @@
 import React, {Component} from "react";
 import {StyleSheet, Text, TouchableHighlight} from "react-native";
 import CONSTANTS from "../Constants";
-import SIZE from "../style/Size";
+import SIZE from "../styles/Size";
 
 export default class WelcomeButton extends Component {
     render() {

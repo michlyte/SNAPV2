@@ -5,7 +5,6 @@
 import React, {Component} from "react";
 import {Platform} from "react-native";
 import {SNAPWelcomeNavigator} from "./Router";
-import FlatListDemo from "./example/FlatListExample";
 import FCM, {
     FCMEvent,
     NotificationType,

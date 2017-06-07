@@ -4,7 +4,7 @@
 import React, {Component} from "react";
 import {BackHandler, Text, View} from "react-native";
 
-import STYLE from "../../style/Style";
+import STYLE from "../../styles/Style";
 
 import STRING_HELPER from "../../utils/StringHelper";
 import SCREEN_HELPER from "../../utils/ScreenHelper";

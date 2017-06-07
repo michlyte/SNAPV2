@@ -1,17 +1,21 @@
 import React, {Component} from "react";
-import {Image, NativeModules, StyleSheet, Text, TouchableHighlight, View} from "react-native";
+import {Image, NativeModules, StyleSheet, Text, TouchableHighlight, View, AsyncStorage} from "react-native";
 import {TabBar, TabViewAnimated} from "react-native-tab-view";
 import {NavigationActions} from "react-navigation";
 import FBSDK from "react-native-fbsdk";
 
 import CONSTANTS from "../../Constants";
-import COLOR from "../../style/Color";
-import SIZE from "../../style/Size";
-import STYLE from "../../style/Style";
+
+import COLOR from "../../styles/Color";
+import SIZE from "../../styles/Size";
+import STYLE from "../../styles/Style";
 
 import ASSET_HELPER from "../../utils/AssetHelper";
 import STRING_HELPER from "../../utils/StringHelper";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
+import PARAM_HELPER from "../../utils/ParamHelper";
+import DUMMY_HELPER from "../../utils/DummyHelper";
+import SESSION_HELPER from "../../utils/SessionHelper";
 
 import WelcomeTextInput from "../../components/WelcomeTextInput";
 import WelcomeContainer from "../../components/WelcomeContainer";
@@ -216,8 +220,8 @@ class LoginTab extends Component {
         let tempPassword = '';
         switch (CONSTANTS.BUILD) {
             case CONSTANTS.BUILD_TYPE.DEVELOPMENT_DUMMY:
-                tempEmailAddress = 'mikefla10@gmail.com';
-                tempPassword = 'password$1';
+                tempEmailAddress = DUMMY_HELPER.emailAddress;
+                tempPassword = DUMMY_HELPER.password;
                 break;
             default:
                 break;
@@ -230,13 +234,28 @@ class LoginTab extends Component {
     }
 
     _onLoginPressed = () => {
-        const resetAction = NavigationActions.reset({
-            index: 0,
-            actions: [
-                NavigationActions.navigate({routeName: SCREEN_HELPER.MAIN})
-            ]
-        });
-        this.props.navigation.dispatch(resetAction)
+        switch (CONSTANTS.BUILD) {
+            case CONSTANTS.BUILD_TYPE.DEVELOPMENT_DUMMY:
+                let userInfo = [
+                    [PARAM_HELPER.userId, "0"],
+                    [PARAM_HELPER.email, this.state.emailAddress],
+                    [PARAM_HELPER.isLoggedIn, "true"],
+                ];
+                SESSION_HELPER.multiSet(userInfo);
+                break;
+            case CONSTANTS.BUILD_TYPE.DEVELOPMENT:
+                break;
+            case CONSTANTS.BUILD_TYPE.PRODUCTION:
+                break;
+        }
+
+        // const resetAction = NavigationActions.reset({
+        //     index: 0,
+        //     actions: [
+        //         NavigationActions.navigate({routeName: SCREEN_HELPER.MAIN})
+        //     ]
+        // });
+        // this.props.navigation.dispatch(resetAction)
     };
 
     _onForgotPressed = () => {

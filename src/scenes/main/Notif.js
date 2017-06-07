@@ -8,8 +8,8 @@ import CONSTANTS from "../../Constants";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 import ASSET_HELPER from "../../utils/AssetHelper";
 
-import StyImages from "../../style/Image";
-import StyText from "../../style/Text";
+import StyImages from "../../styles/Image";
+import StyText from "../../styles/Text";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 

@@ -5,7 +5,7 @@ import React, {Component} from "react";
 import {View} from "react-native";
 
 import CONSTANTS from "../../Constants";
-import STYLE from "../../style/Style";
+import STYLE from "../../styles/Style";
 
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 import STRING_HELPER from "../../utils/StringHelper";

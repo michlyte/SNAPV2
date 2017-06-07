@@ -96,8 +96,7 @@ export const SNAPWelcomeNavigator = StackNavigator({
 
     // Main Screens
     Main: {
-        // screen: MainScreenNavigator,
-        screen: ProfileScreen,
+        screen: MainScreenNavigator,
     },
     CameraAndCameraRoll: {
         screen: CameraAndCameraRoll,
