@@ -33,7 +33,10 @@ export default STYLE = StyleSheet.create({
     text: {
         color: CONSTANTS.theme.text_welcome_tintColor,
         fontSize: 18,
-    }
+    },
+    spaceMarginBottom: {
+        marginBottom: SIZE.WELCOME_HEIGHT_SPACE,
+    },
 });
 
 module.exports = STYLE;

@@ -28,4 +28,6 @@ export default class StringHelper {
 
     static REGISTER_VIA_FACEBOOK = 'Register via Facebook';
     static REGISTER_VIA_TWITTER = 'Register via Twitter';
+
+    static errorMsgEmailAddress = 'Insert a valid email';
 }

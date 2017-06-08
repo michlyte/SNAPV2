@@ -34,6 +34,8 @@ WelcomeTextInput.propTypes = {
 
 const styles = StyleSheet.create({
     welcomeTextInput: {
+        paddingLeft: 5,
+        paddingRight: 5,
         height: SIZE.WELCOME_BUTTON_HEIGHT,
         backgroundColor: 'white',
         fontSize: 18,

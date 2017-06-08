@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Image, NativeModules, StyleSheet, Text, TouchableHighlight, View, AsyncStorage} from "react-native";
+import {Image, NativeModules, StyleSheet, Text, TouchableHighlight, View} from "react-native";
 import {TabBar, TabViewAnimated} from "react-native-tab-view";
 import {NavigationActions} from "react-navigation";
 import FBSDK from "react-native-fbsdk";

@@ -144,6 +144,7 @@ dependencies {
     compile project(':react-native-image-picker')
     compile project(':react-native-image-crop-picker')
     compile project(':react-native-geocoder')
+    compile project(':react-native-google-places')
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.facebook.react:react-native:+'
     // From node_modules

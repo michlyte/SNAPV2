@@ -2,10 +2,10 @@ import React from "react";
 import {StackNavigator, TabNavigator} from "react-navigation";
 import SCREEN_HELPER from "./utils/ScreenHelper";
 import CONSTANTS from "./Constants";
-
 // Welcome
 import WelcomeScreen from "./scenes/welcome/Welcome";
 import WelcomeRegisterViaEmailScreen from "./scenes/welcome/RegisterViaEmail";
+// import RegisterViaEmailNew from "./scenes/welcome/RegisterViaEmailNew";
 import WelcomeVerificationCodeScreen from "./scenes/welcome/VerificationCode";
 import WelcomeAcknowledgementScreen from "./scenes/welcome/Acknowledgement";
 import Forgot from "./scenes/welcome/Forgot";
@@ -17,13 +17,11 @@ import HomeMap from "./scenes/main/Map";
 import HomeNotif from "./scenes/main/Notif";
 import HomeSetting from "./scenes/main/Setting";
 // New Case
-import CameraAndCameraRoll from "./scenes/newcase/CameraAndCameraRollScreen";
 import CameraAndCameraRollNew from "./scenes/newcase/CameraAndCameraRollScreenNew";
 import LocationDetail from "./scenes/newcase/LocationDetail";
 // Setting
 import ProfileScreen from "./scenes/setting/Profile";
 import NotificationsScreen from "./scenes/setting/Notifications";
-
 // Example
 import WebViewExample from "./example/WebViewExample";
 import CarouselExample from "./example/carousel/CarouselExample";
@@ -100,6 +98,9 @@ export const SNAPWelcomeNavigator = StackNavigator({
     Main: {
         // screen: MainScreenNavigator,
         screen: LocationDetail,
+        navigationOptions: {
+            header: null,
+        },
     },
     CameraAndCameraRoll: {
         screen: CameraAndCameraRollNew,
@@ -109,6 +110,9 @@ export const SNAPWelcomeNavigator = StackNavigator({
     },
     LocationDetail: {
         screen: LocationDetail,
+        navigationOptions: {
+            header: null,
+        },
     },
 
     // Setting
