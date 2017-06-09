@@ -2,16 +2,19 @@
  * Created by michael on 6/7/2017.
  */
 import React, {Component} from "react";
-import {StyleSheet, Dimensions, View, TextInput, TouchableOpacity, ScrollView} from "react-native";
-import MapView from 'react-native-maps';
-import Geocoder from 'react-native-geocoder';
-import RNGooglePlaces from 'react-native-google-places';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import {Dimensions, ScrollView, StyleSheet, View, Alert} from "react-native";
+import MapView from "react-native-maps";
+import Geocoder from "react-native-geocoder";
+import t from "tcomb-form-native";
+import _ from "lodash";
+import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
 import SNAPButton from "../../components/SNAPButton";
 
 import CONSTANTS from "../../Constants";
+import STRING_HELPER from "../../utils/StringHelper";
+
+const Form = t.form.Form;
+const stylesheet = _.cloneDeep(t.form.Form.stylesheet);
 
 export default class LocationDetail extends Component {
     constructor(props) {
@@ -19,17 +22,20 @@ export default class LocationDetail extends Component {
 
         Geocoder.fallbackToGoogle(CONSTANTS.GOOGLE_API_KEY);
 
+        this.marker = null;
+        this.googlePlacesAutocomplete = null;
+        this.maps = null;
+
+        this.data = t.struct({
+            title: t.String,
+            description: t.String,
+        });
+
         this.state = {
             location: '',
             title: '',
             description: '',
 
-            region: {
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            },
             marker: {
                 latitude: 37.76409597022716,
                 longitude: -122.43240404874085,
@@ -38,33 +44,13 @@ export default class LocationDetail extends Component {
     }
 
     componentDidMount() {
-        this.watchID = navigator.geolocation.watchPosition((position) => {
-            let region = {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            };
-
-            this.setState({
-                region: region,
-            });
+        navigator.geolocation.getCurrentPosition((position) => {
+            this._onGeocodingLatLong(position.coords.latitude, position.coords.longitude);
         });
-
-        this._onGeocodingLatLong(this.state.marker.latitude, this.state.marker.longitude);
-    }
-
-    componentWillUnmount() {
-        navigator.geolocation.clearWatch(this.watchID);
     }
 
     _onLongPress = (event) => {
-        // Move marker
-        this.setState({
-            marker: event.nativeEvent.coordinate,
-        });
-
-        this._onGeocodingLatLong(this.state.marker.latitude, this.state.marker.longitude);
+        this._onGeocodingLatLong(event.nativeEvent.coordinate.latitude, event.nativeEvent.coordinate.longitude);
     };
 
     _onGeocodingLatLong = (lat, lng) => {
@@ -76,47 +62,75 @@ export default class LocationDetail extends Component {
         Geocoder.geocodePosition(position).then(res => {
             if (res.length > 0) {
                 const data = res[0];
-                this.setState({
-                    location: data.formattedAddress,
-                })
+                // console.log("lat: " + lat);
+                // console.log("lng: " + lng);
+                // console.log("location: " + data.formattedAddress);
+
+                this._setAddressText(data.formattedAddress);
+                this._setMapPosition(lat, lng);
+                this._setMarkerPosition(lat, lng, data.formattedAddress);
             }
         }).catch(err => console.log(err))
     };
 
-    _openSearchModal = () => {
-        RNGooglePlaces.openAutocompleteModal({
-            latitude: this.state.marker.latitude,
-            longitude: this.state.marker.longitude,
-        })
-            .then((place) => {
-                console.log(place);
-                // place represents user's selection from the
-                // suggestions and it is a simplified Google Place object.
-                this.setState({
-                    location: place.address,
-                });
-            })
-            .catch(error => console.log(error.message));  // error is a Javascript Error object
-    };
-
-    _openPickerModal = () => {
-        RNGooglePlaces.openPlacePickerModal({
-            latitude: 53.544389,
-            longitude: -113.490927,
-            radius: 0.01 // 10 meters
-        })
-            .then((place) => {
-                console.log(place);
-            })
-            .catch(error => console.log(error.message));
-    };
-
-    _onFocus = () => {
-        console.log("_onFocus");
-    };
-
     _attemptSubmit = () => {
+        // const location = this.state.location;
+        //
+        // if (location && location.length > 0) {
+        //     const value = this.refs.form.getValue();
+        //     if (value) {
+        //         console.log(value);
+        //     }
+        // } else {
+            Alert.alert(
+                STRING_HELPER.TITLE_WARNING,
+                'Location is required',
+                [
+                    {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ],
+                {cancelable: false}
+            )
+        // }
+    };
 
+    _onPressGooglePlacesAutocomplete = (lat, lng, formattedAddress) => {
+        this._setMapPosition(lat, lng);
+        this._setMarkerPosition(lat, lng, formattedAddress);
+    };
+
+    _setMapPosition = (lat, lng) => {
+        let tempCoords = {
+            latitude: lat,
+            longitude: lng,
+        };
+        this.maps.animateToCoordinate(tempCoords, 1);
+    };
+
+    _setAddressText = (formattedAddress) => {
+        if (this.googlePlacesAutocomplete) {
+            this.googlePlacesAutocomplete.setAddressText(formattedAddress);
+        }
+    };
+
+    _setMarkerPosition = (lat, lng, formattedAddress) => {
+        if (this.marker) {
+            this.marker.hideCallout();
+        }
+
+        let newMarker = {
+            latitude: lat,
+            longitude: lng,
+        };
+        this.setState({
+            location: formattedAddress,
+            marker: newMarker,
+        });
+
+        setTimeout(() => {
+            if (this.marker) {
+                this.marker.showCallout();
+            }
+        }, 500);
     };
 
     render() {
@@ -125,46 +139,76 @@ export default class LocationDetail extends Component {
                 style={styles.scrollView}
             >
                 <View style={{flex: 1}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <TextInput
-                            style={[styles.layout, styles.textInput, {flex: 1, marginTop: 10}]}
-                            placeholder={"Enter Location... "}
-                            onFocus={this._onFocus}
-                            onChangeText={(location) => this.setState({location: location})}
-                            value={this.state.location}
-                        />
-                        <TouchableOpacity
-                            style={{marginRight: 10}}
-                            onPress={this._openSearchModal}
-                        >
-                            <FontAwesome name="search" size={26} color={'black'}/>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.space}/>
+                    <GooglePlacesAutocomplete
+                        ref={googlePlacesAutocomplete => {
+                            (this.googlePlacesAutocomplete = googlePlacesAutocomplete)
+                        }}
+                        placeholder='Search'
+                        minLength={2} // minimum length of text to search
+                        autoFocus={false}
+                        returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
+                        listViewDisplayed='auto'    // true/false/undefined
+                        fetchDetails={true}
+                        renderDescription={(row) => row.description} // custom description render
+                        onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+                            this._onPressGooglePlacesAutocomplete(details.geometry.location.lat, details.geometry.location.lng, details.formatted_address);
+                        }}
+                        query={{
+                            // available options: https://developers.google.com/places/web-service/autocomplete
+                            key: CONSTANTS.GOOGLE_API_KEY,
+                            language: 'en', // language of the results
+                            types: 'geocode', // default: 'geocode'
+                        }}
+                        styles={{
+                            description: {
+                                fontWeight: 'bold',
+                            },
+                            predefinedPlacesDescription: {
+                                color: '#1faadb',
+                            },
+                        }}
+                        currentLocation={false} // Will add a 'Current location' button at the top of the predefined places list
+                        debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
+                    />
                     <MapView
+                        ref={component => this.maps = component}
                         style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width}}
-                        initialRegion={this.state.region}
+                        initialRegion={{
+                            latitude: 37.78825,
+                            longitude: -122.4324,
+                            latitudeDelta: 0.0922,
+                            longitudeDelta: 0.0421,
+                        }}
                         onLongPress={this._onLongPress}
                     >
                         <MapView.Marker
                             coordinate={this.state.marker}
-                            title={"Michael Halim"}
-                            description={"Description"}
+                            title={"Your Location"}
+                            description={this.state.location}
+                            ref={marker => (this.marker = marker)}
                         />
                     </MapView>
                     <View style={styles.space}/>
-                    <TextInput
-                        style={[styles.layout, styles.textInput]}
-                        onChangeText={(title) => this.setState({title: title})}
-                        value={this.state.title}
-                    />
-                    <View style={styles.space}/>
-                    <TextInput
-                        style={[styles.layout, styles.textInput]}
-                        onChangeText={(description) => this.setState({description: description})}
-                        value={this.state.description}
-                    />
-                    <View style={[styles.layout, {marginTop: 10, alignItems: 'flex-end'}]}>
+                    <View style={{paddingLeft: 15, paddingRight: 15}}>
+                        <Form
+                            ref="form"
+                            type={this.data}
+                            options={{
+                                auto: 'placeholders',
+                                fields: {
+                                    title: {
+                                        stylesheet: stylesheet,
+                                        value: this.state.title,
+                                    },
+                                    description: {
+                                        stylesheet: stylesheet,
+                                        value: this.state.description,
+                                    },
+                                }
+                            }}
+                        />
+                    </View>
+                    <View style={[styles.layout, {marginTop: 5, alignItems: 'flex-end'}]}>
                         <SNAPButton
                             onPress={this._attemptSubmit}
                             text={"Submit"}
@@ -189,8 +233,11 @@ const styles = StyleSheet.create({
         height: 10,
     },
     textInput: {
-        height: 40,
-        borderColor: 'gray',
+        fontSize: 17,
+        height: 36,
+        borderColor: '#cccccc',
         borderWidth: 1,
+        borderRadius: 4,
+        padding: 7,
     },
 });

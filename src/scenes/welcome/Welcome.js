@@ -234,28 +234,42 @@ class LoginTab extends Component {
     }
 
     _onLoginPressed = () => {
-        switch (CONSTANTS.BUILD) {
-            case CONSTANTS.BUILD_TYPE.DEVELOPMENT_DUMMY:
-                let userInfo = [
-                    [PARAM_HELPER.userId, "0"],
-                    [PARAM_HELPER.email, this.state.emailAddress],
-                    [PARAM_HELPER.isLoggedIn, "true"],
-                ];
-                SESSION_HELPER.multiSet(userInfo);
-                break;
-            case CONSTANTS.BUILD_TYPE.DEVELOPMENT:
-                break;
-            case CONSTANTS.BUILD_TYPE.PRODUCTION:
-                break;
+        const emailAddress = this.state.emailAddress;
+        const password = this.state.password;
+        let cancel = false;
+
+        if (!emailAddress || emailAddress.length === 0) {
+            cancel = true;
+        } else if (!password || password.length === 0) {
+            cancel = true;
         }
 
-        // const resetAction = NavigationActions.reset({
-        //     index: 0,
-        //     actions: [
-        //         NavigationActions.navigate({routeName: SCREEN_HELPER.MAIN})
-        //     ]
-        // });
-        // this.props.navigation.dispatch(resetAction)
+        if (cancel) {
+            console.log("Cancel is true");
+        } else {
+            // switch (CONSTANTS.BUILD) {
+            //     case CONSTANTS.BUILD_TYPE.DEVELOPMENT_DUMMY:
+            //         let userInfo = [
+            //             [PARAM_HELPER.userId, "0"],
+            //             [PARAM_HELPER.email, this.state.emailAddress],
+            //             [PARAM_HELPER.isLoggedIn, "true"],
+            //         ];
+            //         SESSION_HELPER.multiSet(userInfo);
+            //         break;
+            //     case CONSTANTS.BUILD_TYPE.DEVELOPMENT:
+            //         break;
+            //     case CONSTANTS.BUILD_TYPE.PRODUCTION:
+            //         break;
+            // }
+
+            const resetAction = NavigationActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({routeName: SCREEN_HELPER.MAIN})
+                ]
+            });
+            this.props.navigation.dispatch(resetAction)
+        }
     };
 
     _onForgotPressed = () => {

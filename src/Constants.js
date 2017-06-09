@@ -12,9 +12,8 @@ export default class Constants {
     // ecq.bdg@gmail.com
     // Ecquaria's Project
     static GOOGLE_API_KEY = 'AIzaSyAm9eKJvHIYvxVWFe4xRCyrxWx6iqLicpY';
-    static GOOGLE_PLACE_API_KEY = 'AIzaSyADHgUx1kjKY4KS2F6eX0U6DKmElaCNVBY';
 
-    static isLoggedIn = false;
+    static isLoggedIn = true;
 
     static BUILD_TYPE = {
         DEVELOPMENT_DUMMY: 'devDummy',

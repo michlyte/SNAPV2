@@ -30,4 +30,6 @@ export default class StringHelper {
     static REGISTER_VIA_TWITTER = 'Register via Twitter';
 
     static errorMsgEmailAddress = 'Insert a valid email';
+
+    static TITLE_WARNING = 'Warning';
 }
