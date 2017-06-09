@@ -5,4 +5,7 @@ export default class Size {
 
   static WELCOME_WIDTH_SPACE = 10;
   static WELCOME_HEIGHT_SPACE = 10;
+
+  static MAX_LENGTH_DESCRIPTION = 300;
+  static MAX_LENGTH_TITLE = 25;
 }

@@ -11,16 +11,19 @@ import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete"
 import SNAPButton from "../../components/SNAPButton";
 
 import CONSTANTS from "../../Constants";
+import SIZE from "../../styles/Size";
 import STRING_HELPER from "../../utils/StringHelper";
 
 const Form = t.form.Form;
-const stylesheet = _.cloneDeep(t.form.Form.stylesheet);
+const stylesheetDescription = _.cloneDeep(t.form.Form.stylesheet);
 
 export default class LocationDetail extends Component {
     constructor(props) {
         super(props);
 
         Geocoder.fallbackToGoogle(CONSTANTS.GOOGLE_API_KEY);
+
+        stylesheetDescription.textbox.normal.height = 72;
 
         this.marker = null;
         this.googlePlacesAutocomplete = null;
@@ -62,9 +65,6 @@ export default class LocationDetail extends Component {
         Geocoder.geocodePosition(position).then(res => {
             if (res.length > 0) {
                 const data = res[0];
-                // console.log("lat: " + lat);
-                // console.log("lng: " + lng);
-                // console.log("location: " + data.formattedAddress);
 
                 this._setAddressText(data.formattedAddress);
                 this._setMapPosition(lat, lng);
@@ -74,14 +74,14 @@ export default class LocationDetail extends Component {
     };
 
     _attemptSubmit = () => {
-        // const location = this.state.location;
-        //
-        // if (location && location.length > 0) {
-        //     const value = this.refs.form.getValue();
-        //     if (value) {
-        //         console.log(value);
-        //     }
-        // } else {
+        const location = this.state.location;
+
+        if (location && location.length > 0) {
+            const value = this.refs.form.getValue();
+            if (value) {
+                console.log(value);
+            }
+        } else {
             Alert.alert(
                 STRING_HELPER.TITLE_WARNING,
                 'Location is required',
@@ -90,7 +90,7 @@ export default class LocationDetail extends Component {
                 ],
                 {cancelable: false}
             )
-        // }
+        }
     };
 
     _onPressGooglePlacesAutocomplete = (lat, lng, formattedAddress) => {
@@ -197,12 +197,14 @@ export default class LocationDetail extends Component {
                                 auto: 'placeholders',
                                 fields: {
                                     title: {
-                                        stylesheet: stylesheet,
                                         value: this.state.title,
+                                        maxLength: SIZE.MAX_LENGTH_TITLE,
                                     },
                                     description: {
-                                        stylesheet: stylesheet,
+                                        stylesheet: stylesheetDescription,
                                         value: this.state.description,
+                                        multiline: true,
+                                        maxLength: SIZE.MAX_LENGTH_DESCRIPTION,
                                     },
                                 }
                             }}
