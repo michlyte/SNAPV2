@@ -32,4 +32,6 @@ export default class StringHelper {
     static errorMsgEmailAddress = 'Insert a valid email';
 
     static TITLE_WARNING = 'Warning';
+
+    static sceneLocationDetail = 'Location Details';
 }

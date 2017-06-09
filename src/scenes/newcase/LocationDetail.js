@@ -24,6 +24,7 @@ export default class LocationDetail extends Component {
         Geocoder.fallbackToGoogle(CONSTANTS.GOOGLE_API_KEY);
 
         stylesheetDescription.textbox.normal.height = 72;
+        stylesheetDescription.textbox.error.height = 72;
 
         this.marker = null;
         this.googlePlacesAutocomplete = null;
@@ -210,12 +211,14 @@ export default class LocationDetail extends Component {
                             }}
                         />
                     </View>
-                    <View style={[styles.layout, {marginTop: 5, alignItems: 'flex-end'}]}>
+                    <View style={[styles.layout, {alignItems: 'flex-end'}]}>
                         <SNAPButton
                             onPress={this._attemptSubmit}
                             text={"Submit"}
                         />
                     </View>
+                    <View style={styles.space}/>
+                    <View style={styles.space}/>
                 </View>
             </ScrollView>
         );

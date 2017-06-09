@@ -1,6 +1,7 @@
 import React from "react";
 import {StackNavigator, TabNavigator} from "react-navigation";
 import SCREEN_HELPER from "./utils/ScreenHelper";
+import STRING_HELPER from "./utils/StringHelper";
 import CONSTANTS from "./Constants";
 // Welcome
 import WelcomeScreen from "./scenes/welcome/Welcome";
@@ -96,11 +97,8 @@ export const SNAPWelcomeNavigator = StackNavigator({
 
     // Main Screens
     Main: {
-        // screen: MainScreenNavigator,
-        screen: LocationDetail,
-        navigationOptions: {
-            header: null,
-        },
+        screen: MainScreenNavigator,
+
     },
     CameraAndCameraRoll: {
         screen: CameraAndCameraRollNew,
@@ -111,7 +109,13 @@ export const SNAPWelcomeNavigator = StackNavigator({
     LocationDetail: {
         screen: LocationDetail,
         navigationOptions: {
-            header: null,
+            headerTitle: STRING_HELPER.sceneLocationDetail,
+            headerTitleStyle: {
+                color: CONSTANTS.theme.navBar_tintColor,
+            },
+            headerStyle: {
+                backgroundColor: CONSTANTS.theme.navBar_backgroundColor,
+            },
         },
     },
 
