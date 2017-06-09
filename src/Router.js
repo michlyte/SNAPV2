@@ -20,6 +20,7 @@ import HomeSetting from "./scenes/main/Setting";
 // New Case
 import CameraAndCameraRollNew from "./scenes/newcase/CameraAndCameraRollScreenNew";
 import LocationDetail from "./scenes/newcase/LocationDetail";
+import CaseLogged from "./scenes/newcase/CaseLogged";
 // Setting
 import ProfileScreen from "./scenes/setting/Profile";
 import NotificationsScreen from "./scenes/setting/Notifications";
@@ -98,7 +99,6 @@ export const SNAPWelcomeNavigator = StackNavigator({
     // Main Screens
     Main: {
         screen: MainScreenNavigator,
-
     },
     CameraAndCameraRoll: {
         screen: CameraAndCameraRollNew,
@@ -110,6 +110,18 @@ export const SNAPWelcomeNavigator = StackNavigator({
         screen: LocationDetail,
         navigationOptions: {
             headerTitle: STRING_HELPER.sceneLocationDetail,
+            headerTitleStyle: {
+                color: CONSTANTS.theme.navBar_tintColor,
+            },
+            headerStyle: {
+                backgroundColor: CONSTANTS.theme.navBar_backgroundColor,
+            },
+        },
+    },
+    CaseLogged: {
+        screen: CaseLogged,
+        navigationOptions: {
+            headerTitle: STRING_HELPER.sceneCaseLogged,
             headerTitleStyle: {
                 color: CONSTANTS.theme.navBar_tintColor,
             },

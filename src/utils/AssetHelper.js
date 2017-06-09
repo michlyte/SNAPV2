@@ -4,6 +4,7 @@ export default class AssetsHelper {
 
     // Images
     static img_no_profile_picture = require('../assets/img_no_profile_picture.png');
+    static img_instagram = require('../assets/img_instagram.png');
 
     // Icons
     static ic_facebook = require('../assets/facebook.png');

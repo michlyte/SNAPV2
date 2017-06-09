@@ -25,6 +25,9 @@ export default class StringHelper {
     static pleaseTypeVerficationCode = 'Please type in the code to proceed.';
     static verificationAcknowledgment = 'Congratulations! You have successfully registered to ' + CONSTANTS.appName + '. You can submit a new case.';
     static forgotAcknowledgment = 'We have sent you the instruction on how to reset your password.\n\nIf you do not receive the email, please check whether it is in your junk mail.';
+    static caseLoggedSuccess = 'Thank you for submitting the case using ' + CONSTANTS.appName;
+    static caseLoggedReferenceNumberIs = 'Your case reference number is: ';
+    static shareTo = 'Share to';
 
     static REGISTER_VIA_FACEBOOK = 'Register via Facebook';
     static REGISTER_VIA_TWITTER = 'Register via Twitter';
@@ -34,4 +37,5 @@ export default class StringHelper {
     static TITLE_WARNING = 'Warning';
 
     static sceneLocationDetail = 'Location Details';
+    static sceneCaseLogged = 'Case Logged!';
 }

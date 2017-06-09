@@ -25,6 +25,8 @@ export default class EcquariaTheme {
     static text_setting_tintColor = COLOR.BLUE;
     static button_tintColor = COLOR.GREEN;
 
+    static normal_backgroundColor = 'white';
+
     // TouchableHighlight
     static underlayColor = 'lightgray';
 
