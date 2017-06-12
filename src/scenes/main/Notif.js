@@ -2,14 +2,12 @@
  * Created by michael on 5/16/2017.
  */
 import React, {PureComponent} from "react";
-import {ActivityIndicator, FlatList, Image, Text, TouchableHighlight, View} from "react-native";
+import {FlatList, TouchableHighlight, View} from "react-native";
 import CONSTANTS, {MainTheme} from "../../Constants";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
-import ASSET_HELPER from "../../utils/AssetHelper";
 import NotifInListClass from "../../models/NotifInListClass";
+import NotifInListItem from "../../components/NotifInListItem";
 import {Env} from "../../utils/EnumHelper";
-import StyImages from "../../styles/Image";
-import StyText from "../../styles/Text";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import ListLoadMoreView from "../../components/ListLoadMoreView";
 
@@ -95,7 +93,6 @@ export default class HomeNotif extends PureComponent {
         //     });
     }
 
-    // To change default id 'key' to 'notificationId'
     _keyExtractor = (item, index) => item.notificationId;
 
     _onRefresh = () => {
@@ -169,7 +166,23 @@ export default class HomeNotif extends PureComponent {
         );
     };
 
-    _onPressItem = (notificationId: string) => {
+    _renderItem = ({item, index}) => {
+        return (
+            <NotifInListItem
+                item={item}
+                onCasePress={this._onCasePressed}
+                onUserPress={this._onUserPressed}
+                selected={!!this.state.selected.get(item.notificationId)}
+            />
+        );
+    };
+
+    _onUserPressed = () => {
+        console.log("_onUserPressed");
+    };
+
+    _onCasePressed = (notificationId: string) => {
+        console.log("_onCasePressed");
         this.setState((state) => {
             let newState = state;
 
@@ -179,16 +192,6 @@ export default class HomeNotif extends PureComponent {
 
             return {newState};
         });
-    };
-
-    _renderItem = ({item, index}) => {
-        return (
-            <NotifListItem
-                item={item}
-                onPress={this._onPressItem}
-                selected={!!this.state.selected.get(item.notificationId)}
-            />
-        );
     };
 
     render() {
@@ -205,57 +208,6 @@ export default class HomeNotif extends PureComponent {
                     onEndReachedThreshold={(CONSTANTS.numberOfItemPerPage / 2)}
                     ListFooterComponent={this._renderFooter}
                 />
-            </View>
-        );
-    }
-}
-
-class NotifListItem extends PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.fpUrl = (this.props.item.friendPictureUrl ? {uri: this.props.item.friendPictureUrl} : ASSET_HELPER.img_no_profile_picture);
-
-        this.prefix = '';
-        this.suffix = '';
-        if (this.props.item.body !== null) {
-            let n = this.props.item.body.search(this.props.item.caseTitle);
-
-            if (n > 0) {
-                this.prefix = this.props.item.body.substring(0, n);
-            }
-
-            if ((n + this.props.item.caseTitle.length) < (this.props.item.body.length)) {
-                this.suffix = this.props.item.body.substring((n + this.props.item.caseTitle.length), this.props.item.body.length);
-            }
-        }
-    }
-
-    render() {
-        return (
-            <View style={{flex: 1, marginBottom: 15}}>
-                <View style={{flexDirection: 'row'}}>
-                    {/* Friend profile picture */}
-                    <Image
-                        style={StyImages.friendPictureNotif}
-                        source={this.fpUrl}
-                    />
-                    {/* Message */}
-                    <View
-                        style={{flex: 1, marginLeft: 10, marginRight: 10}}
-                    >
-                        <Text style={StyText.messageNotif}>
-                            <Text>{this.prefix}</Text>
-                            <Text style={{fontWeight: 'bold'}}>{this.props.item.caseTitle}</Text>
-                            <Text>{this.suffix}</Text>
-                        </Text>
-                    </View>
-                    {/* Image */}
-                    <Image
-                        style={StyImages.attachmentThumbNotif}
-                        source={{uri: this.props.item.attachmentUrlThumb}}
-                    />
-                </View>
             </View>
         );
     }

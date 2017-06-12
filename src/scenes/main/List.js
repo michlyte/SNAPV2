@@ -12,7 +12,7 @@ import CaseInListClass, {
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 import {Env} from "../../utils/EnumHelper";
 import ListLoadMoreView from "../../components/ListLoadMoreView";
-import NotifInListItem from "../../components/NotifInListItem";
+import NotifInListItem from "../../components/CaseInListItem";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default class HomeList extends PureComponent {
