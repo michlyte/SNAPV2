@@ -2,13 +2,30 @@
  * Created by michael on 6/12/2017.
  */
 import React, {PureComponent} from "react";
-import {StyleSheet, Image, Text, TouchableOpacity, View, Dimensions} from "react-native";
+import {
+    StyleSheet,
+    Image,
+    Text,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    View,
+    Dimensions
+} from "react-native";
+import PropTypes from "prop-types";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default class NotifInListItem extends PureComponent {
     constructor(props) {
         super(props);
     }
+
+    _onTitlePressed = () => {
+        this.props.onTitlePress(this.props.item.caseId);
+    };
+
+    _onImagePressed = () => {
+        this.props.onImagePress(this.props.item.caseId);
+    };
 
     _onLikePressed = () => {
         this.props.onLikePress(this.props.item.caseId);
@@ -33,28 +50,35 @@ export default class NotifInListItem extends PureComponent {
         return (
             <View style={{flex: 1}}>
                 {/* Bar Header */}
-                <View style={[
-                    styles.layout,
-                    {
-                        flexDirection: 'row',
-                        height: 60,
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                    }
-                ]}>
+                <TouchableWithoutFeedback onPress={this._onTitlePressed}>
+                    <View style={[
+                        styles.layout,
+                        {
+                            flexDirection: 'row',
+                            height: 60,
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                        }
+                    ]}>
 
-                    <View style={{flexDirection: 'row', flex: 1}}>
-                        <Image style={styles.profilePicture} source={{uri: this.props.item.userPictureUrl}}/>
-                        <Text style={styles.title}>{this.props.item.caseTitle}</Text>
+                        <View style={{flexDirection: 'row', flex: 1}}>
+                            <Image style={styles.profilePicture} source={{uri: this.props.item.userPictureUrl}}/>
+                            <Text style={styles.title}>{this.props.item.caseTitle}</Text>
+                        </View>
+
+                        {/*<Image style={{width: 40, height: 40, borderRadius: 20, marginRight: 20}}*/}
+                        {/*source={{uri: 'http://placehold.it/100x100'}}/>*/}
                     </View>
-
-                    {/*<Image style={{width: 40, height: 40, borderRadius: 20, marginRight: 20}}*/}
-                    {/*source={{uri: 'http://placehold.it/100x100'}}/>*/}
-                </View>
+                </TouchableWithoutFeedback>
 
                 {/* Image */}
 
-                <Image style={styles.image} source={{uri: this.props.item.attachments.attachmentUrlThumb}}/>
+                <TouchableWithoutFeedback onPress={this._onImagePressed}>
+                    <Image
+                        style={styles.image}
+                        source={{uri: this.props.item.attachments.attachmentUrlThumb}}
+                    />
+                </TouchableWithoutFeedback>
 
                 {/* Bar Actions */}
 
@@ -90,6 +114,16 @@ export default class NotifInListItem extends PureComponent {
         );
     }
 }
+
+NotifInListItem.propTypes = {
+    item: PropTypes.object.isRequired,
+    onTitlePress: PropTypes.func.isRequired,
+    onImagePress: PropTypes.func.isRequired,
+    onLikePress: PropTypes.func.isRequired,
+    onCommentPress: PropTypes.func.isRequired,
+    onSharePress: PropTypes.func.isRequired,
+    selected: PropTypes.bool.isRequired,
+};
 
 const styles = StyleSheet.create({
     profilePicture: {

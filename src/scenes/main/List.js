@@ -1,7 +1,14 @@
 import React, {PureComponent} from "react";
-import {FlatList, TouchableHighlight, View} from "react-native";
+import {
+    FlatList,
+    TouchableHighlight,
+    View
+} from "react-native";
 import CONSTANTS, {MainTheme} from "../../Constants";
-import CaseInListClass, {CaseAttachment, CaseLocation} from "../../models/CaseInListClass";
+import CaseInListClass, {
+    CaseAttachment,
+    CaseLocation
+} from "../../models/CaseInListClass";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 import {Env} from "../../utils/EnumHelper";
 import ListLoadMoreView from "../../components/ListLoadMoreView";
@@ -45,19 +52,6 @@ export default class HomeList extends PureComponent {
     }
 
     _keyExtractor = (item, index) => item.caseId;
-
-    _renderItem = ({item, index}) => {
-        return (
-            <NotifInListItem
-                item={item}
-                onPress={this._onPressItem}
-                onLikePress={this._onLikePressed}
-                onCommentPress={this._onCommentPressed}
-                onSharePress={this._onSharePressed}
-                selected={!!this.state.selected.get(item.caseId)}
-            />
-        );
-    };
 
     _onRefresh = () => {
         switch (CONSTANTS.Env) {
@@ -143,24 +137,30 @@ export default class HomeList extends PureComponent {
         );
     };
 
-    _onPressItem = (caseId: string) => {
-        console.log("_onPressItem");
-
-        this.setState((state) => {
-            let newState = state;
-
-            const selected = new Map(state.selected);
-            selected.set(caseId, !selected.get(caseId)); // toggle
-            newState.selected = selected;
-
-            return newState;
-        });
+    _renderItem = ({item, index}) => {
+        return (
+            <NotifInListItem
+                item={item}
+                onTitlePress={this._onTitlePressed}
+                onImagePress={this._onImagePressed}
+                onLikePress={this._onLikePressed}
+                onCommentPress={this._onCommentPressed}
+                onSharePress={this._onSharePressed}
+                selected={!!this.state.selected.get(item.caseId)}
+            />
+        );
     };
 
     // Events
-    _onLikePressed = (caseId: string) => {
-        console.log("_onLikePressed");
+    _onTitlePressed = (caseId: string) => {
+        console.log("_onTitlePressed");
+    };
 
+    _onImagePressed = (caseId: string) => {
+        console.log("_onImagePressed");
+    };
+
+    _onLikePressed = (caseId: string) => {
         this.setState((state) => {
             let newState = state;
 
