@@ -2,11 +2,10 @@ import React from "react";
 import {StackNavigator, TabNavigator} from "react-navigation";
 import SCREEN_HELPER from "./utils/ScreenHelper";
 import STRING_HELPER from "./utils/StringHelper";
-import CONSTANTS from "./Constants";
+import {MainTheme} from "./Constants";
 // Welcome
 import WelcomeScreen from "./scenes/welcome/Welcome";
 import WelcomeRegisterViaEmailScreen from "./scenes/welcome/RegisterViaEmail";
-// import RegisterViaEmailNew from "./scenes/welcome/RegisterViaEmailNew";
 import WelcomeVerificationCodeScreen from "./scenes/welcome/VerificationCode";
 import WelcomeAcknowledgementScreen from "./scenes/welcome/Acknowledgement";
 import Forgot from "./scenes/welcome/Forgot";
@@ -29,19 +28,19 @@ import WebViewExample from "./example/WebViewExample";
 import CarouselExample from "./example/carousel/CarouselExample";
 
 export const MainScreenNavigator = TabNavigator({
-    List: {screen: HomeList},
-    Grid: {screen: HomeGrid},
-    Map: {screen: HomeMap},
+    // List: {screen: HomeList},
+    // Grid: {screen: HomeGrid},
+    // Map: {screen: HomeMap},
     Notif: {screen: HomeNotif},
-    Setting: {screen: HomeSetting},
+    // Setting: {screen: HomeSetting},
 }, {
     tabBarOptions: {
         style: {
-            backgroundColor: CONSTANTS.theme.tabBar_backgroundColor,
+            backgroundColor: MainTheme.tabBar_backgroundColor,
         },
         showIcon: true,
         showLabel: false,
-        activeTintColor: CONSTANTS.theme.tabBar_tintColor,
+        activeTintColor: MainTheme.tabBar_tintColor,
     },
     tabBarPosition: 'bottom',
 });
@@ -99,10 +98,13 @@ export const SNAPWelcomeNavigator = StackNavigator({
     // Main Screens
     Main: {
         // screen: MainScreenNavigator,
-        screen: NotificationsScreen,
-        navigationOptions: {
-            title: SCREEN_HELPER.NOTIFICATIONS,
-        }
+
+        screen: MainScreenNavigator,
+
+        // screen: NotificationsScreen,
+        // navigationOptions: {
+        //     title: SCREEN_HELPER.NOTIFICATIONS,
+        // }
     },
     CameraAndCameraRoll: {
         screen: CameraAndCameraRollNew,
@@ -115,10 +117,10 @@ export const SNAPWelcomeNavigator = StackNavigator({
         navigationOptions: {
             headerTitle: STRING_HELPER.sceneLocationDetail,
             headerTitleStyle: {
-                color: CONSTANTS.theme.navBar_tintColor,
+                color: MainTheme.navBar_tintColor,
             },
             headerStyle: {
-                backgroundColor: CONSTANTS.theme.navBar_backgroundColor,
+                backgroundColor: MainTheme.navBar_backgroundColor,
             },
         },
     },
@@ -127,10 +129,10 @@ export const SNAPWelcomeNavigator = StackNavigator({
         navigationOptions: {
             headerTitle: STRING_HELPER.sceneCaseLogged,
             headerTitleStyle: {
-                color: CONSTANTS.theme.navBar_tintColor,
+                color: MainTheme.navBar_tintColor,
             },
             headerStyle: {
-                backgroundColor: CONSTANTS.theme.navBar_backgroundColor,
+                backgroundColor: MainTheme.navBar_backgroundColor,
             },
         },
     },

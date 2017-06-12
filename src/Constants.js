@@ -1,7 +1,7 @@
 /**
  * Created by michael on 4/17/2017.
  */
-import THEME from "./styles/Theme";
+import {Ecquaria} from "./styles/Theme";
 import {Env} from "./utils/EnumHelper";
 
 export default class Constants {
@@ -11,13 +11,15 @@ export default class Constants {
 
     /*
      Email
-        ecq.bdg@gmail.com
-            Ecquaria's Project
+     ecq.bdg@gmail.com
+     Ecquaria's Project
      */
     static GOOGLE_API_KEY = 'AIzaSyAm9eKJvHIYvxVWFe4xRCyrxWx6iqLicpY';
 
     static isLoggedIn = true;
-
+    static numberOfItemPerPage = 10;
     static Env = Env.DEV_DUMMY;
-    static theme = THEME;
 }
+
+export const WelcomeTheme = Ecquaria.welcomeTheme;
+export const MainTheme = Ecquaria.mainTheme;

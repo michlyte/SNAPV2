@@ -6,20 +6,18 @@ import {Animated, Button, Image, ScrollView, Text, View} from "react-native";
 import ImagePicker from "react-native-image-picker";
 import ImageCropPicker from "react-native-image-crop-picker";
 
-import CONSTANTS from "../../Constants";
-import THEME from "../../styles/Theme";
+import CONSTANTS, {MainTheme} from "../../Constants";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
-import SESSION_HELPER from "../../utils/SessionHelper";
 
 export default class Profile extends Component {
     static navigationOptions = ({navigation}) => ({
         headerTitle: SCREEN_HELPER.PROFILE,
-        headerTintColor: CONSTANTS.theme.navBar_tintColor,
+        headerTintColor: MainTheme.navBar_tintColor,
         headerTitleStyle: {
-            color: CONSTANTS.theme.navBar_tintColor,
+            color: MainTheme.navBar_tintColor,
         },
         headerStyle: {
-            backgroundColor: CONSTANTS.theme.navBar_backgroundColor,
+            backgroundColor: MainTheme.navBar_backgroundColor,
         },
         headerRight: <View style={{marginRight: 15}}>
 
@@ -129,14 +127,14 @@ export default class Profile extends Component {
                     <Button
                         onPress={this._onChangePicturePressed}
                         title="Change Avatar"
-                        color={THEME.navBar_backgroundColor}
+                        color={MainTheme.navBar_backgroundColor}
                     />
                 </View>
 
                 <View
                     style={{
                         height: 1,
-                        backgroundColor: THEME.line,
+                        backgroundColor: MainTheme.line,
                         marginTop: 20,
                         marginBottom: 20,
                         marginLeft: 25,

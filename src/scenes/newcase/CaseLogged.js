@@ -3,7 +3,7 @@
  */
 import React, {Component} from "react";
 import {StyleSheet, View, Text, Image, TouchableOpacity} from "react-native";
-import CONSTANTS from "../../Constants";
+import {MainTheme} from "../../Constants";
 import STRING_HELPER from "../../utils/StringHelper";
 import ASSET_HELPER from "../../utils/AssetHelper";
 
@@ -30,7 +30,7 @@ export default class CaseLogged extends Component {
                 <View style={styles.space}/>
 
                 <Text style={{fontSize: 16, fontWeight: 'bold'}}>{STRING_HELPER.caseLoggedReferenceNumberIs}</Text>
-                <Text style={{fontSize: 25, color: CONSTANTS.theme.navBar_backgroundColor}}>EPARTIC-20152707-0001</Text>
+                <Text style={{fontSize: 25, color: MainTheme.navBar_backgroundColor}}>EPARTIC-20152707-0001</Text>
 
                 <View style={styles.space}/>
 
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 25,
         paddingRight: 25,
-        backgroundColor: CONSTANTS.theme.normal_backgroundColor,
+        backgroundColor: MainTheme.normal_backgroundColor,
     },
     space: {
         width: 35,

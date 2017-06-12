@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Dimensions, FlatList, Image, StyleSheet, TouchableHighlight, View} from "react-native";
-import CONSTANTS from "../../Constants";
+import CONSTANTS, {MainTheme} from "../../Constants";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -12,14 +12,14 @@ export default class HomeGrid extends Component {
     static navigationOptions = ({navigation}) => ({
         headerTitle: CONSTANTS.appName,
         headerTitleStyle: {
-            color: CONSTANTS.theme.navBar_tintColor,
+            color: MainTheme.navBar_tintColor,
         },
         headerStyle: {
-            backgroundColor: CONSTANTS.theme.navBar_backgroundColor,
+            backgroundColor: MainTheme.navBar_backgroundColor,
         },
         headerRight: <View style={{marginRight: 15}}>
             <TouchableHighlight onPress={() => navigation.navigate(SCREEN_HELPER.CAMERA_AND_CAMERA_ROLL)}>
-                <FontAwesome name="plus" size={20} color={CONSTANTS.theme.navBar_tintColor}/>
+                <FontAwesome name="plus" size={20} color={MainTheme.navBar_tintColor}/>
             </TouchableHighlight>
         </View>,
         tabBarLabel: 'Grid',

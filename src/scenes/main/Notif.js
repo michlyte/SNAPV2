@@ -3,29 +3,27 @@
  */
 import React, {PureComponent} from "react";
 import {ActivityIndicator, FlatList, Image, Text, TouchableHighlight, View} from "react-native";
-import CONSTANTS from "../../Constants";
-
+import CONSTANTS, {MainTheme} from "../../Constants";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 import ASSET_HELPER from "../../utils/AssetHelper";
+import NotifInListClass from "../../models/NotifInListClass";
 import {Env} from "../../utils/EnumHelper";
-
 import StyImages from "../../styles/Image";
 import StyText from "../../styles/Text";
-
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default class HomeNotif extends PureComponent {
     static navigationOptions = ({navigation}) => ({
         headerTitle: CONSTANTS.appName,
         headerTitleStyle: {
-            color: CONSTANTS.theme.navBar_tintColor,
+            color: MainTheme.navBar_tintColor,
         },
         headerStyle: {
-            backgroundColor: CONSTANTS.theme.navBar_backgroundColor,
+            backgroundColor: MainTheme.navBar_backgroundColor,
         },
         headerRight: <View style={{marginRight: 15}}>
             <TouchableHighlight onPress={() => navigation.navigate(SCREEN_HELPER.CAMERA_AND_CAMERA_ROLL)}>
-                <FontAwesome name="plus" size={20} color={CONSTANTS.theme.navBar_tintColor}/>
+                <FontAwesome name="plus" size={20} color={MainTheme.navBar_tintColor}/>
             </TouchableHighlight>
         </View>,
         tabBarLabel: 'Notif',
@@ -38,91 +36,62 @@ export default class HomeNotif extends PureComponent {
         super(props);
 
         this.state = {
-            loading: false,
+            selected: (new Map(): Map<string, boolean>),
             data: [],
             page: 1,
             error: null,
+            loading: false,
             refreshing: false,
-            selected: (new Map(): Map<string, boolean>)
         }
     }
 
     componentDidMount() {
-        this._wsRequest();
-    }
-
-    _wsRequest() {
-        /*
-         *  STRUCTURE
-         *  "notificationId":440,
-         *  "body":"egp_ecquaria commented on your case : test title",
-         *  "caseTitle":"test title",
-         *  "caseId":426,
-         *  "friendPictureUrl":null,
-         *  "attachmentUrlThumb":"http://192.168.0.19/html/epartic_image/IMG_20160412_150544.thumb.jpg",
-         *  "notificationDate":1460483504000
-         */
-
         switch (CONSTANTS.Env) {
             case Env.DEV_DUMMY:
-                const {page} = this.state;
                 this.setState({loading: true});
-
                 let newData = [];
-                for (i = (page * 20); i <= ((page * 20) * 20); i++) {
-                    if (i == 2) {
-                        newData.push({
-                            key: i,
-                            notificationId: i,
-                            body: 'egp_ecquaria commented on your case : test title.',
-                            caseTitle: 'test title',
-                            caseId: i,
-                            friendPictureUrl: null,
-                            attachmentUrlThumb: 'https://s-media-cache-ak0.pinimg.com/736x/80/91/f9/8091f9dceb2ea55fa7b57bb7295e1824.jpg',
-                            notificationDate: '1460483504000',
-                        });
-                        continue;
-                    }
-
-                    newData.push({
-                        notificationId: i,
-                        body: i + ' egp_ecquaria commented on your case : test title.',
-                        caseTitle: 'test title',
-                        caseId: i,
-                        friendPictureUrl: 'http://cdn01.androidauthority.net/wp-content/uploads/2015/11/00-best-backgrounds-and-wallpaper-apps-for-android.jpg',
-                        attachmentUrlThumb: 'https://s-media-cache-ak0.pinimg.com/736x/80/91/f9/8091f9dceb2ea55fa7b57bb7295e1824.jpg',
-                        notificationDate: '1460483504000',
-                    });
+                for (let i = 0; i < CONSTANTS.numberOfItemPerPage; i++) {
+                    newData.push(
+                        new NotifInListClass(
+                            i,
+                            i + ' egp_ecquaria commented on your case : test title.',
+                            'test title',
+                            i,
+                            'http://cdn01.androidauthority.net/wp-content/uploads/2015/11/00-best-backgrounds-and-wallpaper-apps-for-android.jpg',
+                            'https://s-media-cache-ak0.pinimg.com/736x/80/91/f9/8091f9dceb2ea55fa7b57bb7295e1824.jpg',
+                            '1460483504000'
+                        )
+                    );
                 }
-
                 this.setState({
-                    data: page === 1 ? newData : [...this.state.data, ...newData],
+                    data: newData,
                     loading: false,
-                    refreshing: false,
                 });
                 break;
             case Env.DEV:
             case Env.PROD:
-                // const {page, seed} = this.state;
-                // const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
-                // this.setState({loading: true});
-                // fetch(url)
-                //     .then(res => res.json())
-                //     .then(res => {
-                //         this.setState({
-                //             data: page === 1 ? res.results : [...this.state.data, ...res.results],
-                //             error: res.error || null,
-                //             loading: false,
-                //             refreshing: false
-                //         });
-                //     })
-                //     .catch(error => {
-                //         this.setState({error, loading: false});
-                //     });
-                break;
-            default:
+                this._wsRequest();
                 break;
         }
+    }
+
+    _wsRequest() {
+        // const {page, seed} = this.state;
+        // const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
+        // this.setState({loading: true});
+        // fetch(url)
+        //     .then(res => res.json())
+        //     .then(res => {
+        //         this.setState({
+        //             data: page === 1 ? res.results : [...this.state.data, ...res.results],
+        //             error: res.error || null,
+        //             loading: false,
+        //             refreshing: false
+        //         });
+        //     })
+        //     .catch(error => {
+        //         this.setState({error, loading: false});
+        //     });
     }
 
     // To change default id 'key' to 'notificationId'
@@ -135,7 +104,18 @@ export default class HomeNotif extends PureComponent {
                 refreshing: true
             },
             () => {
-                this._wsRequest();
+                switch (CONSTANTS.Env) {
+                    case Env.DEV_DUMMY:
+                        this.setState({
+                            loading: false,
+                            refreshing: false,
+                        });
+                        break;
+                    case Env.DEV:
+                    case Env.PROD:
+                        this._wsRequest();
+                        break;
+                }
             }
         );
     };
@@ -146,7 +126,36 @@ export default class HomeNotif extends PureComponent {
                 page: this.state.page + 1
             },
             () => {
-                this._wsRequest();
+                switch (CONSTANTS.Env) {
+                    case Env.DEV_DUMMY:
+                        this.setState({loading: true});
+                        setTimeout(() => {
+                            let newData = [];
+                            for (let i = this.state.data.length; i < this.state.data.length + CONSTANTS.numberOfItemPerPage; i++) {
+                                newData.push(
+                                    new NotifInListClass(
+                                        i,
+                                        i + ' egp_ecquaria commented on your case : test title.',
+                                        'test title',
+                                        i,
+                                        'http://cdn01.androidauthority.net/wp-content/uploads/2015/11/00-best-backgrounds-and-wallpaper-apps-for-android.jpg',
+                                        'https://s-media-cache-ak0.pinimg.com/736x/80/91/f9/8091f9dceb2ea55fa7b57bb7295e1824.jpg',
+                                        '1460483504000'
+                                    )
+                                );
+                            }
+                            this.setState({
+                                data: [...this.state.data, ...newData],
+                                loading: false,
+                                refreshing: false,
+                            });
+                        }, 1500);
+                        break;
+                    case Env.DEV:
+                    case Env.PROD:
+                        this._wsRequest();
+                        break;
+                }
             }
         );
     };
@@ -167,29 +176,25 @@ export default class HomeNotif extends PureComponent {
         );
     };
 
-    // _onPressItem = (notificationId: string) => {
-    //     // updater functions are preferred for transactional updates
-    //     this.setState((state) => {
-    //         // copy the map rather than modifying state.
-    //         const selected = new Map(state.selected);
-    //         selected.set(notificationId, !state.get(id)); // toggle
-    //         return {selected};
-    //     });
-    // };
+    _onPressItem = (notificationId: string) => {
+        this.setState((state) => {
+            let newState = state;
+
+            const selected = new Map(state.selected);
+            selected.set(notificationId, !selected.get(notificationId)); // toggle
+            newState.selected = selected;
+
+            return newState;
+        });
+    };
 
     _renderItem = ({item, index}) => {
         return (
             <NotifListItem
                 item={item}
-                onPress={() => this.setState((oldState) => ({
-                    selected: { // New instance breaks `===`
-                        ...oldState.selected, // copy old data
-                        [item.key]: !oldState.selected[item.key], // toggle
-                    }
-                }))}
-                selected={
-                    !!this.state.selected[item.key] // renderItem depends on state
-                }/>
+                onPress={this._onPressItem}
+                selected={!!this.state.selected.get(item.notificationId)}
+            />
         );
     };
 
@@ -198,14 +203,14 @@ export default class HomeNotif extends PureComponent {
             <View style={{flex: 1, backgroundColor: 'white', paddingTop: 10, paddingRight: 10, paddingLeft: 10}}>
                 <FlatList
                     data={this.state.data}
+                    extraData={this.state}
                     renderItem={this._renderItem}
                     keyExtractor={this._keyExtractor}
-                    onRefresh={() => this._onRefresh}
-                    refreshing={false}
+                    onRefresh={this._onRefresh}
+                    refreshing={this.state.refreshing}
                     onEndReached={this._handleLoadMore}
-                    onEndReachedThreshold={5}
+                    onEndReachedThreshold={(CONSTANTS.numberOfItemPerPage / 2)}
                     ListFooterComponent={this._renderFooter}
-                    removeClippedSubviews={false}
                 />
             </View>
         );
@@ -238,10 +243,14 @@ class NotifListItem extends PureComponent {
             <View style={{flex: 1, marginBottom: 15}}>
                 <View style={{flexDirection: 'row'}}>
                     {/* Friend profile picture */}
-                    <Image style={StyImages.friendPictureNotif}
-                           source={this.fpUrl}/>
+                    <Image
+                        style={StyImages.friendPictureNotif}
+                        source={this.fpUrl}
+                    />
                     {/* Message */}
-                    <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>
+                    <View
+                        style={{flex: 1, marginLeft: 10, marginRight: 10}}
+                    >
                         <Text style={StyText.messageNotif}>
                             <Text>{this.prefix}</Text>
                             <Text style={{fontWeight: 'bold'}}>{this.props.item.caseTitle}</Text>
@@ -249,8 +258,10 @@ class NotifListItem extends PureComponent {
                         </Text>
                     </View>
                     {/* Image */}
-                    <Image style={StyImages.attachmentThumbNotif}
-                           source={{uri: this.props.item.attachmentUrlThumb}}/>
+                    <Image
+                        style={StyImages.attachmentThumbNotif}
+                        source={{uri: this.props.item.attachmentUrlThumb}}
+                    />
                 </View>
             </View>
         );

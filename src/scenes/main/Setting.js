@@ -3,7 +3,7 @@
  */
 import React, {Component} from "react";
 import {FlatList, Text, View, TouchableHighlight, Alert} from "react-native";
-import CONSTANTS from "../../Constants";
+import CONSTANTS, {MainTheme} from "../../Constants";
 
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 
@@ -13,10 +13,10 @@ export default class HomeSetting extends Component {
     static navigationOptions = ({navigation}) => ({
         headerTitle: CONSTANTS.appName,
         headerTitleStyle: {
-            color: CONSTANTS.theme.navBar_tintColor,
+            color: MainTheme.navBar_tintColor,
         },
         headerStyle: {
-            backgroundColor: CONSTANTS.theme.navBar_backgroundColor,
+            backgroundColor: MainTheme.navBar_backgroundColor,
         },
         headerRight: <View style={{marginRight: 15}}>
 
@@ -86,7 +86,7 @@ export default class HomeSetting extends Component {
 
     _renderItem = ({item, index}) => {
         return (
-            <TouchableHighlight underlayColor={CONSTANTS.theme.underlayColor} onPress={() => this._onPress({item})}>
+            <TouchableHighlight underlayColor={MainTheme.underlayColor} onPress={() => this._onPress({item})}>
                 <View
                     style={{
                         flex: 1,
@@ -99,7 +99,7 @@ export default class HomeSetting extends Component {
 
                     <View style={{flexDirection: 'row'}}>
                         <View style={{width: 30, height: 30, justifyContent: 'center', alignItems: 'center'}}>
-                            <FontAwesome name={item.iconName} size={30} color={CONSTANTS.theme.text_setting_tintColor}/>
+                            <FontAwesome name={item.iconName} size={30} color={MainTheme.text_setting_tintColor}/>
                         </View>
 
                         <View style={{width: 10}}/>

@@ -3,7 +3,7 @@
  */
 import React, {Component} from "react";
 import {StyleSheet, Text, TouchableHighlight} from "react-native";
-import CONSTANTS from "../Constants";
+import {WelcomeTheme} from "../Constants";
 import SIZE from "../styles/Size";
 
 export default class WelcomeButton extends Component {
@@ -30,11 +30,11 @@ const styles = StyleSheet.create({
     welcomeActionButton: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: CONSTANTS.theme.button_welcome_backgroundColor,
+        backgroundColor: WelcomeTheme.button_welcome_backgroundColor,
         height: SIZE.WELCOME_BUTTON_HEIGHT,
     },
     welcomeActionButtonText: {
-        color: CONSTANTS.theme.button_welcome_tintColor,
+        color: WelcomeTheme.button_welcome_tintColor,
         fontSize: 22,
     },
 });

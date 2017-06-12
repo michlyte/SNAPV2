@@ -3,18 +3,18 @@
  */
 import React, {PureComponent} from "react";
 import {FlatList, StyleSheet, Switch, Text, View} from "react-native";
-import CONSTANTS from "../../Constants";
+import {MainTheme} from "../../Constants";
 import NotificationClass from "../../models/NotificationClass";
 import {NotificationType} from "../../utils/EnumHelper";
 
 export default class Notifications extends PureComponent {
     static navigationOptions = ({navigation}) => ({
-        headerTintColor: CONSTANTS.theme.navBar_tintColor,
+        headerTintColor: MainTheme.navBar_tintColor,
         headerTitleStyle: {
-            color: CONSTANTS.theme.navBar_tintColor,
+            color: MainTheme.navBar_tintColor,
         },
         headerStyle: {
-            backgroundColor: CONSTANTS.theme.navBar_backgroundColor,
+            backgroundColor: MainTheme.navBar_backgroundColor,
         },
         headerRight: <View style={{marginRight: 15}}>
 
@@ -101,7 +101,7 @@ class NotificationItem extends PureComponent {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: CONSTANTS.theme.normal_backgroundColor,
+        backgroundColor: MainTheme.normal_backgroundColor,
         paddingTop: 15
     },
     notificationItem: {

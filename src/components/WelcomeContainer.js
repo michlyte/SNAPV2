@@ -4,7 +4,7 @@
 import React, {Component} from "react";
 import {Image, StyleSheet, TouchableHighlight, View} from "react-native";
 
-import CONSTANTS from "../Constants";
+import {MainTheme} from "../Constants";
 
 import ASSET_HELPER from "../utils/AssetHelper";
 
@@ -13,13 +13,11 @@ import Icon from "react-native-vector-icons/FontAwesome";
 export default class WelcomeContainer extends Component {
     constructor(props) {
         super(props);
-
-        this.onBackPressed = this._onBackPressed.bind(this);
     }
 
-    _onBackPressed() {
+    _onBackPressed = () => {
         this.props.navigation.goBack();
-    }
+    };
 
     render() {
         const isBackButtonShowed = this.props.isBackButtonShowed;
@@ -27,8 +25,8 @@ export default class WelcomeContainer extends Component {
         if (isBackButtonShowed) {
             backButton = <TouchableHighlight
                 style={{marginTop: 10, marginLeft: 20, position: 'absolute'}}
-                onPress={this.onBackPressed}>
-                <Icon name="angle-left" size={50} color={CONSTANTS.theme.button_welcome_backgroundColor}/>
+                onPress={this._onBackPressed}>
+                <Icon name="angle-left" size={50} color={MainTheme.button_welcome_backgroundColor}/>
             </TouchableHighlight>;
         }
 

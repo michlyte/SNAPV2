@@ -4,7 +4,7 @@ import {TabBar, TabViewAnimated} from "react-native-tab-view";
 import {NavigationActions} from "react-navigation";
 import FBSDK from "react-native-fbsdk";
 
-import CONSTANTS from "../../Constants";
+import CONSTANTS, {WelcomeTheme} from "../../Constants";
 
 import COLOR from "../../styles/Color";
 import SIZE from "../../styles/Size";
@@ -75,9 +75,9 @@ class WelcomeBottomContainer extends Component {
 
     _renderHeader = (props) => {
         return <TabBar {...props}
-                       indicatorStyle={{backgroundColor: CONSTANTS.theme.tabBar_welcome_indicatorColor}}
-                       labelStyle={{color: CONSTANTS.theme.tabBar_welcome_tintColor}}
-                       style={{backgroundColor: CONSTANTS.theme.tabBar_welcome_backgroundColor}}/>
+                       indicatorStyle={{backgroundColor: WelcomeTheme.tabBar_welcome_indicatorColor}}
+                       labelStyle={{color: WelcomeTheme.tabBar_welcome_tintColor}}
+                       style={{backgroundColor: WelcomeTheme.tabBar_welcome_backgroundColor}}/>
     };
 
     _renderScene = ({route}) => {
@@ -246,21 +246,6 @@ class LoginTab extends Component {
         if (cancel) {
             console.log("Cancel is true");
         } else {
-            // switch (CONSTANTS.BUILD) {
-            //     case CONSTANTS.BUILD_TYPE.DEVELOPMENT_DUMMY:
-            //         let userInfo = [
-            //             [PARAM_HELPER.userId, "0"],
-            //             [PARAM_HELPER.email, this.state.emailAddress],
-            //             [PARAM_HELPER.isLoggedIn, "true"],
-            //         ];
-            //         SESSION_HELPER.multiSet(userInfo);
-            //         break;
-            //     case CONSTANTS.BUILD_TYPE.DEVELOPMENT:
-            //         break;
-            //     case CONSTANTS.BUILD_TYPE.PRODUCTION:
-            //         break;
-            // }
-
             const resetAction = NavigationActions.reset({
                 index: 0,
                 actions: [
@@ -309,7 +294,7 @@ class LoginTab extends Component {
                 </View>
 
                 <View style={{alignItems: 'center'}}>
-                    <Text style={{color: CONSTANTS.theme.text_welcome_tintColor}}>
+                    <Text style={{color: WelcomeTheme.text_welcome_tintColor}}>
                         or login using
                     </Text>
 
@@ -386,7 +371,7 @@ class RegisterTab extends Component {
                 </View>
 
                 <View style={{alignItems: 'center'}}>
-                    <Text style={{color: CONSTANTS.theme.text_welcome_tintColor}}>
+                    <Text style={{color: WelcomeTheme.text_welcome_tintColor}}>
                         or sign up using
                     </Text>
 
@@ -404,7 +389,7 @@ class RegisterTab extends Component {
                                 Email
                             </Text>
                             <View style={STYLE.divider}/>
-                            <Icon name="check" size={20} color={CONSTANTS.theme.button_text_welcome_tintColor}/>
+                            <Icon name="check" size={20} color={WelcomeTheme.button_text_welcome_tintColor}/>
                         </View>
                     </TouchableHighlight>
 
