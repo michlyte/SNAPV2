@@ -1,11 +1,14 @@
-import React, {Component} from "react";
-import {Dimensions, FlatList, Image, StyleSheet, Text, TouchableHighlight, View} from "react-native";
+import React, {PureComponent} from "react";
+import {FlatList, TouchableHighlight, View} from "react-native";
 import CONSTANTS, {MainTheme} from "../../Constants";
+import CaseInListClass, {CaseAttachment, CaseLocation} from "../../models/CaseInListClass";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
-
+import {Env} from "../../utils/EnumHelper";
+import ListLoadMoreView from "../../components/ListLoadMoreView";
+import NotifInListItem from "../../components/NotifInListItem";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default class HomeList extends Component {
+export default class HomeList extends PureComponent {
     static navigationOptions = ({navigation}) => ({
         headerTitle: CONSTANTS.appName,
         headerTitleStyle: {
@@ -25,34 +28,164 @@ export default class HomeList extends Component {
         ),
     });
 
-// Initialize the hardcoded data
     constructor(props) {
         super(props);
 
         this.state = {
-            data: [
-                {
-                    key: 'a',
-                    title: 'a title',
-                    description: 'Death Note, di Indonesia juga dikenal dengan judul Dunia Dewa Kematian, adalah judul sebuah serial manga Jepang yang ditulis oleh Tsugumi Ohba dan ilustrasi oleh Takeshi Obata. Manga ini menceritakan tentang Light Yagami, seorang siswa genius yang secara kebetulan menemukan Death Note milik shinigami (dewa kematian). Direalisasikan di majalah Shonen Jump dari Januari 2004 hingga Mei 2006 dengan total 108 bab. Versi tankoubonnya terbit sebanyak 12 jilid dan 1 jilid spesial yang berjudul How to Read 13 yang berisi tentang penjelasan dan profil tentang Death Note. Di Indonesia anime ini ditayangkan oleh SCTV dan Global TV.',
-                    profilePictureUrl: 'http://assets0.prcdn.com/uk/people/default-profile.png?1406639312',
-                    imageUrl: 'http://cdn01.androidauthority.net/wp-content/uploads/2015/11/00-best-backgrounds-and-wallpaper-apps-for-android.jpg'
-                },
-                {
-                    key: 'b',
-                    title: 'b title',
-                    description: 'Death Note, di Indonesia juga dikenal dengan judul Dunia Dewa Kematian, adalah judul sebuah serial manga Jepang yang ditulis oleh Tsugumi Ohba dan ilustrasi oleh Takeshi Obata. Manga ini menceritakan tentang Light Yagami, seorang siswa genius yang secara kebetulan menemukan Death Note milik shinigami (dewa kematian). Direalisasikan di majalah Shonen Jump dari Januari 2004 hingga Mei 2006 dengan total 108 bab. Versi tankoubonnya terbit sebanyak 12 jilid dan 1 jilid spesial yang berjudul How to Read 13 yang berisi tentang penjelasan dan profil tentang Death Note. Di Indonesia anime ini ditayangkan oleh SCTV dan Global TV.',
-                    profilePictureUrl: 'http://www.anz.com/resources/5/1/51effbe1-70cb-4203-b8f2-c1555c306d46/4/profile.png?MOD=AJPERES&CACHEID=51effbe1-70cb-4203-b8f2-c1555c306d46/4',
-                    imageUrl: 'https://s-media-cache-ak0.pinimg.com/736x/80/91/f9/8091f9dceb2ea55fa7b57bb7295e1824.jpg'
-                }
-            ]
+            selected: (new Map(): Map<string, boolean>),
+            data: [],
+            page: 1,
+            loading: false,
+            refreshing: false,
         };
     }
 
-    _renderItem = ({item}) => {
+    componentDidMount() {
+        this._onRefresh();
+    }
+
+    _keyExtractor = (item, index) => item.caseId;
+
+    _renderItem = ({item, index}) => {
         return (
-            <ListItem item={item}/>
+            <NotifInListItem
+                item={item}
+                onPress={this._onPressItem}
+                onLikePress={this._onLikePressed}
+                onCommentPress={this._onCommentPressed}
+                onSharePress={this._onSharePressed}
+                selected={!!this.state.selected.get(item.caseId)}
+            />
         );
+    };
+
+    _onRefresh = () => {
+        switch (CONSTANTS.Env) {
+            case Env.DEV_DUMMY:
+                this.setState({loading: true});
+                let newData = [];
+                for (let i = 0; i < CONSTANTS.numberOfItemPerPage; i++) {
+                    newData.push(
+                        new CaseInListClass(
+                            i,
+                            'internet',
+                            0,
+                            i + ' title',
+                            'Death Note, di Indonesia juga dikenal dengan judul Dunia Dewa Kematian, adalah judul sebuah serial manga Jepang yang ditulis oleh Tsugumi Ohba dan ilustrasi oleh Takeshi Obata. Manga ini menceritakan tentang Light Yagami, seorang siswa genius yang secara kebetulan menemukan Death Note milik shinigami (dewa kematian). Direalisasikan di majalah Shonen Jump dari Januari 2004 hingga Mei 2006 dengan total 108 bab. Versi tankoubonnya terbit sebanyak 12 jilid dan 1 jilid spesial yang berjudul How to Read 13 yang berisi tentang penjelasan dan profil tentang Death Note. Di Indonesia anime ini ditayangkan oleh SCTV dan Global TV.',
+                            '17-May-2016 15:55:04',
+                            'Logged',
+                            'https://facebook.github.io/react/img/logo_og.png',
+                            new CaseLocation(354, '4.202654637500015', '16.068396717309952', 'RN 10, Central African Republic'),
+                            new CaseAttachment(5533, 'CASE_20160512_040648-158261009.jpg', 'https://facebook.github.io/react/img/logo_og.png', 'https://facebook.github.io/react/img/logo_og.png', 100, 100),
+                            '0',
+                            '0',
+                            '0',
+                            ''
+                        )
+                    );
+                }
+
+                this.setState({
+                    data: newData,
+                    loading: false,
+                    refreshing: false,
+                });
+                break;
+            case Env.DEV:
+            case Env.PROD:
+                break;
+        }
+    };
+
+    _onEndReached = () => {
+        switch (CONSTANTS.Env) {
+            case Env.DEV_DUMMY:
+                this.setState({loading: true});
+                setTimeout(() => {
+                    let newData = [];
+                    for (let i = this.state.data.length; i < this.state.data.length + CONSTANTS.numberOfItemPerPage; i++) {
+                        newData.push(
+                            new CaseInListClass(
+                                i + '',
+                                'internet',
+                                0,
+                                i + ' title',
+                                'Death Note, di Indonesia juga dikenal dengan judul Dunia Dewa Kematian, adalah judul sebuah serial manga Jepang yang ditulis oleh Tsugumi Ohba dan ilustrasi oleh Takeshi Obata. Manga ini menceritakan tentang Light Yagami, seorang siswa genius yang secara kebetulan menemukan Death Note milik shinigami (dewa kematian). Direalisasikan di majalah Shonen Jump dari Januari 2004 hingga Mei 2006 dengan total 108 bab. Versi tankoubonnya terbit sebanyak 12 jilid dan 1 jilid spesial yang berjudul How to Read 13 yang berisi tentang penjelasan dan profil tentang Death Note. Di Indonesia anime ini ditayangkan oleh SCTV dan Global TV.',
+                                '17-May-2016 15:55:04',
+                                'Logged',
+                                'https://facebook.github.io/react/img/logo_og.png',
+                                new CaseLocation(354, '4.202654637500015', '16.068396717309952', 'RN 10, Central African Republic'),
+                                new CaseAttachment(5533, 'CASE_20160512_040648-158261009.jpg', 'https://facebook.github.io/react/img/logo_og.png', 'https://www.rtr.at/fileadmin/template/rtr/img/banner-post@hires.jpg', 100, 100),
+                                '0',
+                                '0',
+                                '0',
+                                ''
+                            )
+                        )
+                    }
+                    this.setState({
+                        data: [...this.state.data, ...newData],
+                        loading: false,
+                    });
+                }, 1500);
+                break;
+            case Env.DEV:
+            case Env.PROD:
+                break;
+        }
+    };
+
+    _renderFooter = () => {
+        if (!this.state.loading) return null;
+
+        return (
+            <ListLoadMoreView />
+        );
+    };
+
+    _onPressItem = (caseId: string) => {
+        console.log("_onPressItem");
+
+        this.setState((state) => {
+            let newState = state;
+
+            const selected = new Map(state.selected);
+            selected.set(caseId, !selected.get(caseId)); // toggle
+            newState.selected = selected;
+
+            return newState;
+        });
+    };
+
+    // Events
+    _onLikePressed = (caseId: string) => {
+        console.log("_onLikePressed");
+
+        this.setState((state) => {
+            let newState = state;
+
+            let newLikeState = state.data[caseId].likeState;
+            if (newLikeState === '1') {
+                newLikeState = '0';
+            } else {
+                newLikeState = '1';
+            }
+            newState.data[caseId].likeState = newLikeState;
+
+            const selected = new Map(state.selected);
+            selected.set(caseId, !selected.get(caseId)); // toggle
+            newState.selected = selected;
+
+            return {newState};
+        });
+    };
+
+    _onCommentPressed = (caseId: string) => {
+        console.log("_onCommentPressed");
+    };
+
+    _onSharePressed = (caseId: string) => {
+        console.log("_onSharePressed");
     };
 
     render() {
@@ -60,103 +193,16 @@ export default class HomeList extends Component {
             <View style={{flex: 1, backgroundColor: 'white'}}>
                 <FlatList
                     data={this.state.data}
+                    extraData={this.state}
+                    keyExtractor={this._keyExtractor}
                     renderItem={this._renderItem}
+                    onRefresh={this._onRefresh}
+                    refreshing={this.state.refreshing}
+                    onEndReached={this._onEndReached}
+                    onEndReachedThreshold={CONSTANTS.numberOfItemPerPage}
+                    ListFooterComponent={this._renderFooter}
                 />
             </View>
         );
     }
 }
-
-class ListItem extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        const id = this.props.item.id;
-        const title = this.props.item.title;
-        const description = this.props.item.description;
-        const imageUrl = this.props.item.imageUrl;
-        const profilePictureUrl = this.props.item.profilePictureUrl;
-
-        return (
-            <View style={{flex: 1}}>
-                {/* Bar Header */}
-                <View style={[
-                    styles.layout,
-                    {
-                        flexDirection: 'row',
-                        height: 60,
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                    }
-                ]}>
-
-                    <View style={{flexDirection: 'row', flex: 1}}>
-                        <Image style={styles.profilePicture}
-                               source={{uri: profilePictureUrl}}/>
-                        <Text style={styles.title}>{title}</Text>
-                    </View>
-
-                    {/*<Image style={{width: 40, height: 40, borderRadius: 20, marginRight: 20}}*/}
-                    {/*source={{uri: 'http://placehold.it/100x100'}}/>*/}
-                </View>
-
-                {/* Image */}
-
-                <Image style={styles.image} source={{uri: imageUrl}}/>
-
-                {/* Bar Actions */}
-
-                <View
-                    style={[styles.layout, {flexDirection: 'row', height: 60, alignItems: 'center'}]}>
-                    <FontAwesome name="heart-o" size={25}/>
-                    <View style={styles.space}/>
-                    <FontAwesome name="comment-o" size={25}/>
-                    <View style={styles.space}/>
-                    <FontAwesome name="share" size={25}/>
-                </View>
-
-                {/* Bar Description */}
-
-                <View style={[styles.layout, {paddingBottom: 20}]}>
-                    <Text numberOfLines={4} style={styles.description}>
-                        {description}
-                    </Text>
-                    <Text style={{paddingTop: 5}}>15 May 2017</Text>
-                </View>
-            </View>
-        );
-    }
-}
-
-const styles = StyleSheet.create({
-    profilePicture: {
-        width: 40,
-        height: 40,
-        borderRadius: 20
-    },
-    title: {
-        flex: 1,
-        marginLeft: 10,
-        fontSize: 24,
-        color: 'black',
-    },
-    image: {
-        height: Dimensions.get('window').width,
-    },
-    actionIcon: {
-        width: 35,
-        height: 35,
-    },
-    description: {
-        color: 'black',
-    },
-    space: {
-        width: 15,
-    },
-    layout: {
-        paddingLeft: 15,
-        paddingRight: 15,
-    }
-});

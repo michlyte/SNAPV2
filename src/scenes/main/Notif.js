@@ -11,6 +11,7 @@ import {Env} from "../../utils/EnumHelper";
 import StyImages from "../../styles/Image";
 import StyText from "../../styles/Text";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import ListLoadMoreView from "../../components/ListLoadMoreView";
 
 export default class HomeNotif extends PureComponent {
     static navigationOptions = ({navigation}) => ({
@@ -164,15 +165,7 @@ export default class HomeNotif extends PureComponent {
         if (!this.state.loading) return null;
 
         return (
-            <View
-                style={{
-                    paddingVertical: 20,
-                    borderTopWidth: 1,
-                    borderColor: "#CED0CE"
-                }}
-            >
-                <ActivityIndicator animating size="large"/>
-            </View>
+            <ListLoadMoreView />
         );
     };
 
@@ -184,7 +177,7 @@ export default class HomeNotif extends PureComponent {
             selected.set(notificationId, !selected.get(notificationId)); // toggle
             newState.selected = selected;
 
-            return newState;
+            return {newState};
         });
     };
 
