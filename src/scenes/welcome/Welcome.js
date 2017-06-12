@@ -13,9 +13,8 @@ import STYLE from "../../styles/Style";
 import ASSET_HELPER from "../../utils/AssetHelper";
 import STRING_HELPER from "../../utils/StringHelper";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
-import PARAM_HELPER from "../../utils/ParamHelper";
 import DUMMY_HELPER from "../../utils/DummyHelper";
-import SESSION_HELPER from "../../utils/SessionHelper";
+import {Env} from "../../utils/EnumHelper";
 
 import WelcomeTextInput from "../../components/WelcomeTextInput";
 import WelcomeContainer from "../../components/WelcomeContainer";
@@ -218,8 +217,8 @@ class LoginTab extends Component {
         // Check buildType
         let tempEmailAddress = '';
         let tempPassword = '';
-        switch (CONSTANTS.BUILD) {
-            case CONSTANTS.BUILD_TYPE.DEVELOPMENT_DUMMY:
+        switch (CONSTANTS.Env) {
+            case Env.DEV_DUMMY:
                 tempEmailAddress = DUMMY_HELPER.emailAddress;
                 tempPassword = DUMMY_HELPER.password;
                 break;

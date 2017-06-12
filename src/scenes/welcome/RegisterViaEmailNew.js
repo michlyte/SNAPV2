@@ -10,6 +10,7 @@ import STYLE from "../../styles/Style";
 
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 import STRING_HELPER from "../../utils/StringHelper";
+import {Env} from "../../utils/EnumHelper";
 
 import WelcomeContainer from "../../components/WelcomeContainer";
 import WelcomeButton from "../../components/WelcomeButton";
@@ -45,8 +46,8 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
         let tempEmailAddress = '';
         let tempPassword = '';
         let tempConfirmPassword = '';
-        switch (CONSTANTS.BUILD) {
-            case CONSTANTS.BUILD_TYPE.DEVELOPMENT_DUMMY:
+        switch (CONSTANTS.Env) {
+            case Env.DEV_DUMMY:
                 // tempEmailAddress = 'mikefla10@gmail.com';
                 tempPassword = 'password$1';
                 tempConfirmPassword = tempPassword;

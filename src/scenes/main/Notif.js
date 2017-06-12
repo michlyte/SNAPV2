@@ -7,6 +7,7 @@ import CONSTANTS from "../../Constants";
 
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 import ASSET_HELPER from "../../utils/AssetHelper";
+import {Env} from "../../utils/EnumHelper";
 
 import StyImages from "../../styles/Image";
 import StyText from "../../styles/Text";
@@ -62,8 +63,8 @@ export default class HomeNotif extends PureComponent {
          *  "notificationDate":1460483504000
          */
 
-        switch (CONSTANTS.BUILD) {
-            case CONSTANTS.BUILD_TYPE.DEVELOPMENT_DUMMY:
+        switch (CONSTANTS.Env) {
+            case Env.DEV_DUMMY:
                 const {page} = this.state;
                 this.setState({loading: true});
 
@@ -100,8 +101,8 @@ export default class HomeNotif extends PureComponent {
                     refreshing: false,
                 });
                 break;
-            case CONSTANTS.BUILD_TYPE.DEVELOPMENT:
-            case CONSTANTS.BUILD_TYPE.PRODUCTION:
+            case Env.DEV:
+            case Env.PROD:
                 // const {page, seed} = this.state;
                 // const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
                 // this.setState({loading: true});

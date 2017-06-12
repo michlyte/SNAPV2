@@ -2,8 +2,10 @@
  * Created by michael on 5/31/2017.
  */
 import React, {PureComponent} from "react";
-import {View, FlatList, Text, Switch} from "react-native";
+import {FlatList, StyleSheet, Switch, Text, View} from "react-native";
 import CONSTANTS from "../../Constants";
+import NotificationClass from "../../models/NotificationClass";
+import {NotificationType} from "../../utils/EnumHelper";
 
 export default class Notifications extends PureComponent {
     static navigationOptions = ({navigation}) => ({
@@ -23,22 +25,11 @@ export default class Notifications extends PureComponent {
         super(props);
 
         this.state = {
+            selected: (new Map(): Map<string, boolean>),
             data: [
-                {
-                    id: 0,
-                    title: "Status",
-                    value: true,
-                },
-                {
-                    id: 1,
-                    title: "Like",
-                    value: true,
-                },
-                {
-                    id: 2,
-                    title: "Comment",
-                    value: false,
-                },
+                new NotificationClass(0, NotificationType.Status, true),
+                new NotificationClass(1, NotificationType.Like, true),
+                new NotificationClass(2, NotificationType.Comment, true),
             ],
         }
     }
@@ -47,61 +38,84 @@ export default class Notifications extends PureComponent {
 
     _renderItem = ({item, index}) => {
         return (
-            <ListItem item={item} index={index} onPressItem={this._onPressItem}/>
+            <NotificationItem
+                item={item}
+                onPressItem={this._onPressItem}
+                selected={!!this.state.selected.get(item.id)}
+            />
         );
     };
 
-    _onPressItem = (item, index, value) => {
-        const newData = this.state.data;
-        newData[index].value = value;
-        this.setState({
-            data: newData
+    _onPressItem = (item, value) => {
+        this.setState((state) => {
+            let newState = state;
+            // Set value
+            newState.data[item.id].value = value;
+
+            // Notify flatlist to update component
+            const selected = new Map(state.selected);
+            selected.set(item.id, !selected.get(item.id)); // toggle
+            newState.selected = selected;
+
+            return {newState};
         });
     };
 
     render() {
         return (
-            <View style={{flex: 1, backgroundColor: 'white', paddingTop: 15}}>
+            <View style={styles.container}>
                 <FlatList
                     keyExtractor={this._keyExtractor}
                     data={this.state.data}
                     renderItem={this._renderItem}
                     extraData={this.state}
-                    removeClippedSubviews={false}
                 />
             </View>
         );
     }
 }
 
-class ListItem extends PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            value: this.props.item.value,
-        }
-    }
-
+class NotificationItem extends PureComponent {
     _onValueChange = (value) => {
-        this.setState({value});
-        this.props.onPressItem(this.props.item, this.props.index, value);
+        this.props.onPressItem(this.props.item, value);
     };
 
     render() {
         return (
-            <View style={{
-                flexDirection: 'row',
-                flex: 1,
-                justifyContent: 'space-between',
-                marginLeft: 20,
-                marginRight: 20,
-                marginBottom: 8,
-            }}>
-                <Text style={{fontSize: 18}}>{this.props.item.title}</Text>
-                <Switch style={{flex: 1}} onValueChange={this._onValueChange}
-                        value={this.state.value}/>
+            <View style={styles.notificationItem}>
+                <Text
+                    style={styles.notificationTitle}
+                >
+                    {this.props.item.title}
+                </Text>
+                <Switch
+                    style={styles.notificationSwitch}
+                    onValueChange={this._onValueChange}
+                    value={this.props.item.value}
+                />
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: CONSTANTS.theme.normal_backgroundColor,
+        paddingTop: 15
+    },
+    notificationItem: {
+        flexDirection: 'row',
+        flex: 1,
+        justifyContent: 'space-between',
+        marginLeft: 20,
+        marginRight: 20,
+        marginBottom: 8,
+    },
+    notificationTitle: {
+        fontSize: 18
+    },
+    notificationSwitch: {
+        flex: 1
+    },
+});

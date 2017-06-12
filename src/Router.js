@@ -98,7 +98,11 @@ export const SNAPWelcomeNavigator = StackNavigator({
 
     // Main Screens
     Main: {
-        screen: MainScreenNavigator,
+        // screen: MainScreenNavigator,
+        screen: NotificationsScreen,
+        navigationOptions: {
+            title: SCREEN_HELPER.NOTIFICATIONS,
+        }
     },
     CameraAndCameraRoll: {
         screen: CameraAndCameraRollNew,
