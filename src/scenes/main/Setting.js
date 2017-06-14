@@ -132,7 +132,6 @@ export default class HomeSetting extends Component {
                     data={this.state.data}
                     renderItem={this._renderItem}
                     ItemSeparatorComponent={this._renderSeparator}
-                    removeClippedSubviews={false}
                 />
             </View>
         );

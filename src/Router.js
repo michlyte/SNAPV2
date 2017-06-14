@@ -29,10 +29,10 @@ import CarouselExample from "./example/carousel/CarouselExample";
 
 export const MainScreenNavigator = TabNavigator({
     // List: {screen: HomeList},
-    // Grid: {screen: HomeGrid},
+    Grid: {screen: HomeGrid},
     // Map: {screen: HomeMap},
-    Notif: {screen: HomeNotif},
-    // Setting: {screen: HomeSetting},
+    // Notif: {screen: HomeNotif},
+    Setting: {screen: HomeSetting},
 }, {
     tabBarOptions: {
         style: {
@@ -97,14 +97,7 @@ export const SNAPWelcomeNavigator = StackNavigator({
 
     // Main Screens
     Main: {
-        // screen: MainScreenNavigator,
-
         screen: MainScreenNavigator,
-
-        // screen: NotificationsScreen,
-        // navigationOptions: {
-        //     title: SCREEN_HELPER.NOTIFICATIONS,
-        // }
     },
     CameraAndCameraRoll: {
         screen: CameraAndCameraRollNew,

@@ -1,37 +1,43 @@
 import React, {PureComponent} from "react";
-import {
-    FlatList,
-    TouchableHighlight,
-    View
-} from "react-native";
+import {FlatList, Text, View, TouchableOpacity} from "react-native";
 import CONSTANTS, {MainTheme} from "../../Constants";
-import CaseInListClass, {
-    CaseAttachment,
-    CaseLocation
-} from "../../models/CaseInListClass";
-import SCREEN_HELPER from "../../utils/ScreenHelper";
+import CaseInListClass, {CaseAttachment, CaseLocation} from "../../models/CaseInListClass";
 import {Env} from "../../utils/EnumHelper";
 import ListLoadMoreView from "../../components/ListLoadMoreView";
 import NotifInListItem from "../../components/CaseInListItem";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+//Header
+import NewCaseButton from "../../components/NewCaseButton";
 
 export default class HomeList extends PureComponent {
     static navigationOptions = ({navigation}) => ({
-        headerTitle: CONSTANTS.appName,
+        headerTitle: <View
+            style={{
+                width: '100%',
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginLeft: 35,
+            }}
+        >
+            <TouchableOpacity onPress={() => {
+            }}>
+                <Text>Michael Halim</Text>
+            </TouchableOpacity>
+        </View>,
         headerTitleStyle: {
+            justifyContent: 'space-between',
+            textAlign: 'center',
             color: MainTheme.navBar_tintColor,
+            backgroundColor: 'black',
         },
         headerStyle: {
             backgroundColor: MainTheme.navBar_backgroundColor,
         },
-        headerRight: <View style={{marginRight: 15}}>
-            <TouchableHighlight onPress={() => navigation.navigate(SCREEN_HELPER.CAMERA_AND_CAMERA_ROLL)}>
-                <FontAwesome name="plus" size={20} color={MainTheme.navBar_tintColor}/>
-            </TouchableHighlight>
-        </View>,
+        headerRight: <NewCaseButton navigation={navigation}/>,
         tabBarLabel: 'List',
         tabBarIcon: ({tintColor}) => (
-            <FontAwesome name="list" size={20} color={tintColor}/>
+            <FontAwesome name="th-large" size={20} color={tintColor}/>
         ),
     });
 
@@ -50,6 +56,10 @@ export default class HomeList extends PureComponent {
     componentDidMount() {
         this._onRefresh();
     }
+
+    _onChangeDataType = () => {
+        console.log("_onChangeDataType");
+    };
 
     _keyExtractor = (item, index) => item.caseId;
 
