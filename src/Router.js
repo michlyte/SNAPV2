@@ -18,20 +18,32 @@ import HomeNotif from "./scenes/main/Notif";
 import HomeSetting from "./scenes/main/Setting";
 // New Case
 import CameraAndCameraRollNew from "./scenes/newcase/CameraAndCameraRollScreenNew";
+import Preview from "./scenes/newcase/Preview";
 import LocationDetail from "./scenes/newcase/LocationDetail";
 import CaseLogged from "./scenes/newcase/CaseLogged";
 // Setting
 import ProfileScreen from "./scenes/setting/Profile";
 import NotificationsScreen from "./scenes/setting/Notifications";
 // Example
+import HomeScreenExample from "./example/react-navigation/HomeScreen";
+import ChatScreenExample from "./example/react-navigation/ChatScreen";
 import WebViewExample from "./example/WebViewExample";
 import CarouselExample from "./example/carousel/CarouselExample";
 
+// Example
+export const SNAPExampleNavigator = StackNavigator({
+    Home: {screen: HomeScreenExample},
+    Chat: {screen: ChatScreenExample},
+    Carousel: {screen: CarouselExample},
+    WebView: {screen: WebViewExample},
+});
+
+// Main Tabs
 export const MainScreenNavigator = TabNavigator({
-    // List: {screen: HomeList},
+    List: {screen: HomeList},
     Grid: {screen: HomeGrid},
-    // Map: {screen: HomeMap},
-    // Notif: {screen: HomeNotif},
+    Map: {screen: HomeMap},
+    Notif: {screen: HomeNotif},
     Setting: {screen: HomeSetting},
 }, {
     tabBarOptions: {
@@ -43,11 +55,6 @@ export const MainScreenNavigator = TabNavigator({
         activeTintColor: MainTheme.tabBar_tintColor,
     },
     tabBarPosition: 'bottom',
-});
-
-export const SNAPExampleNavigator = StackNavigator({
-    Carousel: {screen: CarouselExample},
-    WebView: {screen: WebViewExample},
 });
 
 // SNAP : If you change any screen name please do the same in the ScreenHelper.js file.
@@ -95,15 +102,27 @@ export const SNAPWelcomeNavigator = StackNavigator({
         },
     },
 
-    // Main Screens
+    // Main screens
     Main: {
-        screen: MainScreenNavigator,
+        // screen: MainScreenNavigator,
+        screen: Preview,
+        navigationOptions: {
+            header: null,
+        },
     },
+
+    // Add a new case screens
     CameraAndCameraRoll: {
         screen: CameraAndCameraRollNew,
         navigationOptions: {
             header: null,
         },
+    },
+    Preview: {
+        screen: Preview,
+        navigationOptions: {
+            header: null,
+        }
     },
     LocationDetail: {
         screen: LocationDetail,
@@ -130,7 +149,7 @@ export const SNAPWelcomeNavigator = StackNavigator({
         },
     },
 
-    // Setting
+    // Setting screens
     Profile: {
         screen: ProfileScreen,
         navigationOptions: {

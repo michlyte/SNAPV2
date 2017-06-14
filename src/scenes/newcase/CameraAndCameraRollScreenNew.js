@@ -4,7 +4,8 @@
 import React, {Component} from "react";
 import {Image, StatusBar, StyleSheet, TouchableOpacity, View, Text} from "react-native";
 import Camera from "react-native-camera";
-import ASSET_HELPER from "../../utils/AssetHelper";
+import AssetHelper from "../../utils/AssetHelper";
+import ScreenHelper from "../../utils/ScreenHelper";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
@@ -28,7 +29,12 @@ export default class CameraAndCameraRollScreen extends Component {
     takePicture = () => {
         if (this.camera) {
             this.camera.capture()
-                .then((data) => console.log(data))
+                .then((data) => {
+                    console.log(data);
+
+                    const {navigate} = this.props.navigation;
+                    navigate(ScreenHelper.PREVIEW, {data: data.path})
+                })
                 .catch(err => console.error(err));
         }
     };
@@ -56,9 +62,9 @@ export default class CameraAndCameraRollScreen extends Component {
         const {back, front} = Camera.constants.Type;
 
         if (this.state.camera.type === back) {
-            icon = ASSET_HELPER.ic_camera_rear_white;
+            icon = AssetHelper.ic_camera_rear_white;
         } else if (this.state.camera.type === front) {
-            icon = ASSET_HELPER.ic_camera_front_white;
+            icon = AssetHelper.ic_camera_front_white;
         }
 
         return icon;
@@ -89,11 +95,11 @@ export default class CameraAndCameraRollScreen extends Component {
         const {auto, on, off} = Camera.constants.FlashMode;
 
         if (this.state.camera.flashMode === auto) {
-            icon = ASSET_HELPER.ic_flash_auto_white;
+            icon = AssetHelper.ic_flash_auto_white;
         } else if (this.state.camera.flashMode === on) {
-            icon = ASSET_HELPER.ic_flash_on_white;
+            icon = AssetHelper.ic_flash_on_white;
         } else if (this.state.camera.flashMode === off) {
-            icon = ASSET_HELPER.ic_flash_off_white;
+            icon = AssetHelper.ic_flash_off_white;
         }
 
         return icon;
@@ -156,7 +162,7 @@ export default class CameraAndCameraRollScreen extends Component {
                         onPress={this.takePicture}
                     >
                         <Image
-                            source={ASSET_HELPER.ic_photo_camera}
+                            source={AssetHelper.ic_photo_camera}
                         />
                     </TouchableOpacity>
 

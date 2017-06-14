@@ -4,7 +4,7 @@
 
 import React, {Component} from "react";
 import {Platform} from "react-native";
-import {SNAPWelcomeNavigator} from "./Router";
+import {SNAPExampleNavigator, SNAPWelcomeNavigator} from "./Router";
 import FCM, {
     FCMEvent,
     NotificationType,
