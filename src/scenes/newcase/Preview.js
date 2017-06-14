@@ -18,6 +18,7 @@ export default class Preview extends Component {
         this.iconMinus = 'minus';
         this.iconPlus = 'plus';
         this.iconCheck = 'check';
+        this._carousel = null;
 
         this.no_image = 'http://7bna.net/wallpapers/picture.html';
 
@@ -52,6 +53,11 @@ export default class Preview extends Component {
             multiple: true
         }).then(images => {
             console.log(images);
+
+            this.setState({
+                data: [...this.state.data, ...images],
+                index: this.state.data.length - 1,
+            });
         });
     };
 
@@ -60,7 +66,6 @@ export default class Preview extends Component {
     };
 
     onSnapToItem = (index) => {
-        console.log(index);
         this.setState({
             index: index,
         });
@@ -87,6 +92,9 @@ export default class Preview extends Component {
 
             // Image slider
             carousel = <Carousel
+                ref={(carousel) => {
+                    this._carousel = carousel;
+                }}
                 sliderWidth={viewportWidth}
                 itemWidth={viewportWidth}
                 slideStyle={{width: viewportWidth}}
