@@ -27,11 +27,13 @@ import NotificationsScreen from "./scenes/setting/Notifications";
 // Example
 import HomeScreenExample from "./example/react-navigation/HomeScreen";
 import ChatScreenExample from "./example/react-navigation/ChatScreen";
+import HeaderCustomExample from "./example/react-navigation/HeaderCustom";
 import WebViewExample from "./example/WebViewExample";
 import CarouselExample from "./example/carousel/CarouselExample";
 
 // Example
 export const SNAPExampleNavigator = StackNavigator({
+    HeaderCustom: {screen: HeaderCustomExample},
     Home: {screen: HomeScreenExample},
     Chat: {screen: ChatScreenExample},
     Carousel: {screen: CarouselExample},

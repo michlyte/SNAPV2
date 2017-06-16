@@ -86,7 +86,7 @@ export default class SampleApp extends Component {
 
     render() {
         return (
-            <SNAPWelcomeNavigator />
+            <SNAPExampleNavigator />
         );
     }
 }
