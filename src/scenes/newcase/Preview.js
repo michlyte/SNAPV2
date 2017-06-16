@@ -31,6 +31,9 @@ export default class Preview extends Component {
                 {
                     path: 'https://static.greatbigcanvas.com/categories/lindstrand-doug-2380.jpg',
                 },
+                {
+                    path: 'https://s-media-cache-ak0.pinimg.com/736x/58/38/e3/5838e35952fa8d7f3ac98d4178b05667.jpg',
+                },
             ],
         };
     }
@@ -43,21 +46,33 @@ export default class Preview extends Component {
     };
 
     onMinus = () => {
-        this.removeItem(this.state.index);
+        this.setState((prevState) => {
+            let newState = prevState;
+
+            if (prevState.index === prevState.data.length - 1) {
+
+            } else {
+                newState.data = prevState.data.filter((_, i) => i !== prevState.index);
+            }
+
+            return {newState};
+        });
     };
 
     onPlus = () => {
-        console.log("onPlus");
-
         ImagePicker.openPicker({
             multiple: true
         }).then(images => {
             console.log(images);
 
             this.setState({
-                data: [...this.state.data, ...images],
-                index: this.state.data.length - 1,
-            });
+                    data: [...this.state.data, ...images],
+                },
+                () => {
+                    setTimeout(() => {
+                        this._carousel.snapToItem(this.state.data.length - 1);
+                    }, 500);
+                });
         });
     };
 
