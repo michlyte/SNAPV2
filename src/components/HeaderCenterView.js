@@ -4,7 +4,7 @@
 import React, {Component} from "react";
 import {StyleSheet, Text, TouchableOpacity, View, Dimensions} from "react-native";
 import SegmentedControlTab from 'react-native-segmented-control-tab';
-import StringHelper from "../utils/StringHelper";
+import {DataType} from "../utils/EnumHelper";
 import {MainTheme} from "../Constants";
 
 export class ToggleAllAndMyCases extends Component {
@@ -21,6 +21,8 @@ export class ToggleAllAndMyCases extends Component {
     };
 
     onTabPress = (index) => {
+        this.props.onTabPress(index);
+
         this.setState({
             selectedIndex: index,
         });
@@ -34,7 +36,7 @@ export class ToggleAllAndMyCases extends Component {
                     activeTabStyle={styles.activeTabStyle}
                     activeTabTextStyle={styles.activeTabTextStyle}
                     tabTextStyle={styles.tabTextStyle}
-                    values={[StringHelper.action_allCases, StringHelper.action_myCases]}
+                    values={[DataType.AllCases, DataType.MyCases]}
                     selectedIndex={this.state.selectedIndex}
                     onTabPress={this.onTabPress}
                 />

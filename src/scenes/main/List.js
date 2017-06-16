@@ -2,7 +2,7 @@ import React, {PureComponent} from "react";
 import {FlatList, InteractionManager, View} from "react-native";
 import CONSTANTS from "../../Constants";
 import CaseInListClass, {CaseAttachment, CaseLocation} from "../../models/CaseInListClass";
-import {Env} from "../../utils/EnumHelper";
+import {Env, DataType} from "../../utils/EnumHelper";
 import ListLoadMoreView from "../../components/ListLoadMoreView";
 import NotifInListItem from "../../components/CaseInListItem";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -10,11 +10,14 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {mainStyle} from "../../styles/Style";
 import {EcquariaLogo, NewCaseButton} from "../../components/HeaderRightView";
 import {ToggleAllAndMyCases} from "../../components/HeaderCenterView";
+// Dummy
+import {ecqDummyListInit} from "../../dummies/Dummy";
 
 export default class HomeList extends PureComponent {
     static navigationOptions = ({navigation}) => ({
         headerTitle: <ToggleAllAndMyCases
             onPress={() => navigation.state.params.onCenterPressed()}
+            onTabPress={(index) => navigation.state.params.onTabPress(index)}
         />,
         headerStyle: mainStyle.mainHeader,
         headerLeft: <EcquariaLogo />,
@@ -31,6 +34,7 @@ export default class HomeList extends PureComponent {
 
         this.state = {
             selected: (new Map(): Map<string, boolean>),
+            dataType: DataType.AllCases,
             data: [],
             page: 1,
             loading: false,
@@ -43,6 +47,7 @@ export default class HomeList extends PureComponent {
         InteractionManager.runAfterInteractions(() => {
             this.props.navigation.setParams({
                 onCenterPressed: this.onCenterPressed,
+                onTabPress: this.onDataChange,
             });
         });
 
@@ -53,8 +58,22 @@ export default class HomeList extends PureComponent {
         console.log("onCenterPressed");
     };
 
-    _onChangeDataType = () => {
-        console.log("_onChangeDataType");
+    onDataChange = (index) => {
+        this.setState((prevState) => {
+                let newState = prevState;
+
+                switch (index) {
+                    case 0:
+                        newState.dataType = DataType.AllCases;
+                        break;
+                    case 1:
+                        newState.dataType = DataType.MyCases;
+                        break;
+                }
+
+                return {newState};
+            },
+            this._onRefresh);
     };
 
     _keyExtractor = (item, index) => item.caseId;
@@ -62,32 +81,9 @@ export default class HomeList extends PureComponent {
     _onRefresh = () => {
         switch (CONSTANTS.Env) {
             case Env.DEV_DUMMY:
-                this.setState({loading: true});
-                let newData = [];
-                for (let i = 0; i < CONSTANTS.numberOfItemPerPage; i++) {
-                    newData.push(
-                        new CaseInListClass(
-                            i,
-                            'internet',
-                            0,
-                            i + ' title',
-                            'Death Note, di Indonesia juga dikenal dengan judul Dunia Dewa Kematian, adalah judul sebuah serial manga Jepang yang ditulis oleh Tsugumi Ohba dan ilustrasi oleh Takeshi Obata. Manga ini menceritakan tentang Light Yagami, seorang siswa genius yang secara kebetulan menemukan Death Note milik shinigami (dewa kematian). Direalisasikan di majalah Shonen Jump dari Januari 2004 hingga Mei 2006 dengan total 108 bab. Versi tankoubonnya terbit sebanyak 12 jilid dan 1 jilid spesial yang berjudul How to Read 13 yang berisi tentang penjelasan dan profil tentang Death Note. Di Indonesia anime ini ditayangkan oleh SCTV dan Global TV.',
-                            '17-May-2016 15:55:04',
-                            'Logged',
-                            'https://facebook.github.io/react/img/logo_og.png',
-                            new CaseLocation(354, '4.202654637500015', '16.068396717309952', 'RN 10, Central African Republic'),
-                            new CaseAttachment(5533, 'CASE_20160512_040648-158261009.jpg', 'https://facebook.github.io/react/img/logo_og.png', 'https://facebook.github.io/react/img/logo_og.png', 100, 100),
-                            '0',
-                            '0',
-                            '0',
-                            ''
-                        )
-                    );
-                }
-
+                let newData = ecqDummyListInit(0, this.state.dataType);
                 this.setState({
                     data: newData,
-                    loading: false,
                     refreshing: false,
                 });
                 break;
@@ -102,27 +98,7 @@ export default class HomeList extends PureComponent {
             case Env.DEV_DUMMY:
                 this.setState({loading: true});
                 setTimeout(() => {
-                    let newData = [];
-                    for (let i = this.state.data.length; i < this.state.data.length + CONSTANTS.numberOfItemPerPage; i++) {
-                        newData.push(
-                            new CaseInListClass(
-                                i + '',
-                                'internet',
-                                0,
-                                i + ' title',
-                                'Death Note, di Indonesia juga dikenal dengan judul Dunia Dewa Kematian, adalah judul sebuah serial manga Jepang yang ditulis oleh Tsugumi Ohba dan ilustrasi oleh Takeshi Obata. Manga ini menceritakan tentang Light Yagami, seorang siswa genius yang secara kebetulan menemukan Death Note milik shinigami (dewa kematian). Direalisasikan di majalah Shonen Jump dari Januari 2004 hingga Mei 2006 dengan total 108 bab. Versi tankoubonnya terbit sebanyak 12 jilid dan 1 jilid spesial yang berjudul How to Read 13 yang berisi tentang penjelasan dan profil tentang Death Note. Di Indonesia anime ini ditayangkan oleh SCTV dan Global TV.',
-                                '17-May-2016 15:55:04',
-                                'Logged',
-                                'https://facebook.github.io/react/img/logo_og.png',
-                                new CaseLocation(354, '4.202654637500015', '16.068396717309952', 'RN 10, Central African Republic'),
-                                new CaseAttachment(5533, 'CASE_20160512_040648-158261009.jpg', 'https://facebook.github.io/react/img/logo_og.png', 'https://www.rtr.at/fileadmin/template/rtr/img/banner-post@hires.jpg', 100, 100),
-                                '0',
-                                '0',
-                                '0',
-                                ''
-                            )
-                        )
-                    }
+                    let newData = ecqDummyListInit(this.state.data.length, this.state.dataType);
                     this.setState({
                         data: [...this.state.data, ...newData],
                         loading: false,
