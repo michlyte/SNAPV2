@@ -5,11 +5,11 @@ import {
     StyleSheet
 } from 'react-native';
 
-import {WelcomeTheme} from "../Constants";
+import {WelcomeTheme, MainTheme} from "../Constants";
 import SIZE from './Size';
 import COLOR from './Color';
 
-export default STYLE = StyleSheet.create({
+export const welcomeStyle = StyleSheet.create({
 //    Welcome
     containerBottom: {
         flex: 3.5,
@@ -39,4 +39,14 @@ export default STYLE = StyleSheet.create({
     },
 });
 
-module.exports = STYLE;
+export const mainStyle = StyleSheet.create({
+    mainHeaderTitle: {
+        justifyContent: 'space-between',
+        textAlign: 'center',
+        color: MainTheme.navBar_tintColor,
+        backgroundColor: 'black',
+    },
+    mainHeader: {
+        backgroundColor: MainTheme.navBar_backgroundColor,
+    },
+});

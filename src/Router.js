@@ -43,10 +43,10 @@ export const SNAPExampleNavigator = StackNavigator({
 // Main Tabs
 export const MainScreenNavigator = TabNavigator({
     List: {screen: HomeList},
-    Grid: {screen: HomeGrid},
-    Map: {screen: HomeMap},
-    Notif: {screen: HomeNotif},
-    Setting: {screen: HomeSetting},
+    // Grid: {screen: HomeGrid},
+    // Map: {screen: HomeMap},
+    // Notif: {screen: HomeNotif},
+    // Setting: {screen: HomeSetting},
 }, {
     tabBarOptions: {
         style: {
@@ -106,11 +106,7 @@ export const SNAPWelcomeNavigator = StackNavigator({
 
     // Main screens
     Main: {
-        // screen: MainScreenNavigator,
-        screen: Preview,
-        navigationOptions: {
-            header: null,
-        },
+        screen: MainScreenNavigator,
     },
 
     // Add a new case screens

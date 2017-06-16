@@ -8,7 +8,7 @@ import ScreenHelper from "../utils/ScreenHelper";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {MainTheme} from "../Constants";
 
-export default class NewCaseButton extends Component {
+export class NewCaseButton extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (

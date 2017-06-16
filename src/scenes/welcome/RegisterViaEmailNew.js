@@ -6,7 +6,7 @@ import {StyleSheet, View, ScrollView} from "react-native";
 import t from "tcomb-form-native";
 
 import CONSTANTS from "../../Constants";
-import STYLE from "../../styles/Style";
+import {welcomeStyle} from "../../styles/Style";
 
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 import STRING_HELPER from "../../utils/StringHelper";
@@ -75,8 +75,8 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
 
     render() {
         return (
-            <View style={STYLE.containerBottom}>
-                <View style={STYLE.page}>
+            <View style={welcomeStyle.containerBottom}>
+                <View style={welcomeStyle.page}>
                     <Form
                         ref="form"
                         type={this.data}
@@ -88,7 +88,7 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
                                     error: STRING_HELPER.errorMsgEmailAddress,
                                     template: () => {
                                         return (
-                                            <View style={STYLE.spaceMarginBottom}>
+                                            <View style={welcomeStyle.spaceMarginBottom}>
                                                 <WelcomeTextInput
                                                     onChangeText={(text) => this.setState({emailAddress: text})}
                                                     value={ this.state.emailAddress }
@@ -103,7 +103,7 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
                                 password: {
                                     template: () => {
                                         return (
-                                            <View style={STYLE.spaceMarginBottom}>
+                                            <View style={welcomeStyle.spaceMarginBottom}>
                                                 <WelcomeTextInput
                                                     onChangeText={(text) => this.setState({password: text})}
                                                     value={ this.state.password }
@@ -118,7 +118,7 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
                                 confirmPassword: {
                                     template: () => {
                                         return (
-                                            <View style={STYLE.spaceMarginBottom}>
+                                            <View style={welcomeStyle.spaceMarginBottom}>
                                                 <WelcomeTextInput
                                                     onChangeText={(text) => this.setState({confirmPassword: text})}
                                                     value={ this.state.confirmPassword }

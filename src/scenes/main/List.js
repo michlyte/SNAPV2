@@ -1,40 +1,25 @@
 import React, {PureComponent} from "react";
-import {FlatList, Text, View, TouchableOpacity} from "react-native";
-import CONSTANTS, {MainTheme} from "../../Constants";
+import {FlatList, InteractionManager, View} from "react-native";
+import CONSTANTS from "../../Constants";
 import CaseInListClass, {CaseAttachment, CaseLocation} from "../../models/CaseInListClass";
 import {Env} from "../../utils/EnumHelper";
 import ListLoadMoreView from "../../components/ListLoadMoreView";
 import NotifInListItem from "../../components/CaseInListItem";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 //Header
-import NewCaseButton from "../../components/NewCaseButton";
+import {mainStyle} from "../../styles/Style";
+import {NewCaseButton} from "../../components/HeaderRightView";
+import {ToggleAllAndMyCases} from "../../components/HeaderCenterView";
 
 export default class HomeList extends PureComponent {
     static navigationOptions = ({navigation}) => ({
-        headerTitle: <View
-            style={{
-                width: '100%',
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginLeft: 35,
-            }}
-        >
-            <TouchableOpacity onPress={() => {
-            }}>
-                <Text>Michael Halim</Text>
-            </TouchableOpacity>
-        </View>,
-        headerTitleStyle: {
-            justifyContent: 'space-between',
-            textAlign: 'center',
-            color: MainTheme.navBar_tintColor,
-            backgroundColor: 'black',
-        },
-        headerStyle: {
-            backgroundColor: MainTheme.navBar_backgroundColor,
-        },
+        headerTitle: <ToggleAllAndMyCases
+            onPress={() => navigation.state.params.onCenterPressed()}
+        />,
+        headerTitleStyle: mainStyle.mainHeaderTitle,
+        headerStyle: mainStyle.mainHeader,
         headerRight: <NewCaseButton navigation={navigation}/>,
+
         tabBarLabel: 'List',
         tabBarIcon: ({tintColor}) => (
             <FontAwesome name="th-large" size={20} color={tintColor}/>
@@ -54,8 +39,19 @@ export default class HomeList extends PureComponent {
     }
 
     componentDidMount() {
+        // Tricky part to connect stackNavigator header with component's method.
+        InteractionManager.runAfterInteractions(() => {
+            this.props.navigation.setParams({
+                onCenterPressed: this.onCenterPressed,
+            });
+        });
+
         this._onRefresh();
     }
+
+    onCenterPressed = () => {
+        console.log("onCenterPressed");
+    };
 
     _onChangeDataType = () => {
         console.log("_onChangeDataType");

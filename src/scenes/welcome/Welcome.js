@@ -8,7 +8,7 @@ import CONSTANTS, {WelcomeTheme} from "../../Constants";
 
 import COLOR from "../../styles/Color";
 import SIZE from "../../styles/Size";
-import STYLE from "../../styles/Style";
+import {welcomeStyle} from "../../styles/Style";
 
 import ASSET_HELPER from "../../utils/AssetHelper";
 import STRING_HELPER from "../../utils/StringHelper";
@@ -388,7 +388,7 @@ class RegisterTab extends Component {
                             }}>
                                 Email
                             </Text>
-                            <View style={STYLE.divider}/>
+                            <View style={welcomeStyle.divider}/>
                             <Icon name="check" size={20} color={WelcomeTheme.button_text_welcome_tintColor}/>
                         </View>
                     </TouchableHighlight>

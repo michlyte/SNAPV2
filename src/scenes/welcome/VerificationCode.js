@@ -4,7 +4,7 @@
 import React, {Component} from "react";
 import {Text, View} from "react-native";
 
-import STYLE from "../../styles/Style";
+import {welcomeStyle} from "../../styles/Style";
 
 import STRING_HELPER from "../../utils/StringHelper";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
@@ -54,21 +54,21 @@ class WelcomeVerificationCodeBottomContainer extends Component {
     render() {
         let verificationCodeMessage = reactStringReplace(STRING_HELPER.verificationCodeHasBeenSent, /(@email)/g, () => this.props.email);
         return (
-            <View style={STYLE.containerBottom}>
-                <View style={STYLE.page}>
-                    <Text style={STYLE.text}>
+            <View style={welcomeStyle.containerBottom}>
+                <View style={welcomeStyle.page}>
+                    <Text style={welcomeStyle.text}>
                         { verificationCodeMessage }
                     </Text>
 
-                    <Text style={STYLE.text}>
+                    <Text style={welcomeStyle.text}>
                         {"\n"}
                     </Text>
 
-                    <Text style={STYLE.text}>
+                    <Text style={welcomeStyle.text}>
                         { STRING_HELPER.pleaseTypeVerficationCode }
                     </Text>
 
-                    <View style={STYLE.space}/>
+                    <View style={welcomeStyle.space}/>
 
                     <WelcomeTextInput
                         onChangeText={(text) => this.setState({verificationCode: text})}
@@ -78,7 +78,7 @@ class WelcomeVerificationCodeBottomContainer extends Component {
                         returnKeyType='done'
                     />
 
-                    <View style={STYLE.space}/>
+                    <View style={welcomeStyle.space}/>
 
                     <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                         <View style={{flex: 1}}>
@@ -87,7 +87,7 @@ class WelcomeVerificationCodeBottomContainer extends Component {
                                 text={STRING_HELPER.RESEND}/>
                         </View>
 
-                        <View style={STYLE.space}/>
+                        <View style={welcomeStyle.space}/>
 
                         <View style={{flex: 1}}>
                             <WelcomeButton

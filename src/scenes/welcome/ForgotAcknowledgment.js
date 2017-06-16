@@ -4,7 +4,7 @@
 import React, {Component} from "react";
 import {BackHandler, Text, View} from "react-native";
 
-import STYLE from "../../styles/Style";
+import {welcomeStyle} from "../../styles/Style";
 
 import STRING_HELPER from "../../utils/StringHelper";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
@@ -59,13 +59,13 @@ class ForgotAcknowledgementBottomContainer extends Component {
 
     render() {
         return (
-            <View style={STYLE.containerBottom}>
-                <View style={STYLE.page}>
-                    <Text style={STYLE.text}>
+            <View style={welcomeStyle.containerBottom}>
+                <View style={welcomeStyle.page}>
+                    <Text style={welcomeStyle.text}>
                         { STRING_HELPER.forgotAcknowledgment }
                     </Text>
 
-                    <View style={STYLE.space}/>
+                    <View style={welcomeStyle.space}/>
 
                     <WelcomeButton
                         onPress={this.props.onDonePressed}

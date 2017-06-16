@@ -4,7 +4,7 @@
 import React, {Component} from "react";
 import {View} from "react-native";
 
-import STYLE from "../../styles/Style";
+import {welcomeStyle} from "../../styles/Style";
 
 import STRING_HELPER from "../../utils/StringHelper";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
@@ -44,8 +44,8 @@ class WelcomeForgotBottomContainer extends Component {
     render() {
         const navigation = this.props.navigation;
         return (
-            <View style={STYLE.containerBottom}>
-                <View style={STYLE.page}>
+            <View style={welcomeStyle.containerBottom}>
+                <View style={welcomeStyle.page}>
                     <WelcomeTextInput
                         onChangeText={(text) => this.setState({emailAddress: text})}
                         value={ this.state.emailAddress }
@@ -53,7 +53,7 @@ class WelcomeForgotBottomContainer extends Component {
                         keyboardType='email-address'
                         returnKeyType='done'
                     />
-                    <View style={STYLE.space}/>
+                    <View style={welcomeStyle.space}/>
                     <WelcomeButton
                         onPress={this._onForgotPressed}
                         text={STRING_HELPER.FORGOT}/>

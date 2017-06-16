@@ -5,7 +5,7 @@ import React, {Component} from "react";
 import {View} from "react-native";
 
 import CONSTANTS from "../../Constants";
-import STYLE from "../../styles/Style";
+import {welcomeStyle} from "../../styles/Style";
 
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 import STRING_HELPER from "../../utils/StringHelper";
@@ -61,8 +61,8 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
 
     render() {
         return (
-            <View style={STYLE.containerBottom}>
-                <View style={STYLE.page}>
+            <View style={welcomeStyle.containerBottom}>
+                <View style={welcomeStyle.page}>
                     <WelcomeTextInput
                         onChangeText={(text) => this.setState({emailAddress: text})}
                         value={ this.state.emailAddress }
@@ -70,7 +70,7 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
                         keyboardType='email-address'
                         returnKeyType='next'
                     />
-                    <View style={STYLE.space}/>
+                    <View style={welcomeStyle.space}/>
                     <WelcomeTextInput
                         onChangeText={(text) => this.setState({password: text})}
                         value={ this.state.password }
@@ -78,7 +78,7 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
                         secureTextEntry={ true }
                         returnKeyType='next'
                     />
-                    <View style={STYLE.space}/>
+                    <View style={welcomeStyle.space}/>
                     <WelcomeTextInput
                         onChangeText={(text) => this.setState({confirmPassword: text})}
                         value={ this.state.confirmPassword }
@@ -86,7 +86,7 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
                         secureTextEntry={ true }
                         returnKeyType='done'
                     />
-                    <View style={STYLE.space}/>
+                    <View style={welcomeStyle.space}/>
                     <WelcomeButton
                         onPress={this._onRegisterPressed}
                         text={STRING_HELPER.REGISTER}/>
