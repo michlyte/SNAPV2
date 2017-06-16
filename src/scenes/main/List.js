@@ -1,8 +1,7 @@
 import React, {PureComponent} from "react";
 import {FlatList, InteractionManager, View} from "react-native";
 import CONSTANTS from "../../Constants";
-import CaseInListClass, {CaseAttachment, CaseLocation} from "../../models/CaseInListClass";
-import {Env, DataType} from "../../utils/EnumHelper";
+import {DataType, Env} from "../../utils/EnumHelper";
 import ListLoadMoreView from "../../components/ListLoadMoreView";
 import NotifInListItem from "../../components/CaseInListItem";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -16,7 +15,6 @@ import {ecqDummyListInit} from "../../dummies/Dummy";
 export default class HomeList extends PureComponent {
     static navigationOptions = ({navigation}) => ({
         headerTitle: <ToggleAllAndMyCases
-            onPress={() => navigation.state.params.onCenterPressed()}
             onTabPress={(index) => navigation.state.params.onTabPress(index)}
         />,
         headerStyle: mainStyle.mainHeader,
@@ -25,7 +23,7 @@ export default class HomeList extends PureComponent {
 
         tabBarLabel: 'List',
         tabBarIcon: ({tintColor}) => (
-            <FontAwesome name="th-large" size={20} color={tintColor}/>
+            <FontAwesome name="list-ul" size={20} color={tintColor}/>
         ),
     });
 
@@ -46,17 +44,12 @@ export default class HomeList extends PureComponent {
         // Tricky part to connect stackNavigator header with component's method.
         InteractionManager.runAfterInteractions(() => {
             this.props.navigation.setParams({
-                onCenterPressed: this.onCenterPressed,
                 onTabPress: this.onDataChange,
             });
         });
 
         this._onRefresh();
     }
-
-    onCenterPressed = () => {
-        console.log("onCenterPressed");
-    };
 
     onDataChange = (index) => {
         this.setState((prevState) => {

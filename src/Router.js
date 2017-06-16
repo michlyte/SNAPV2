@@ -43,7 +43,7 @@ export const SNAPExampleNavigator = StackNavigator({
 // Main Tabs
 export const MainScreenNavigator = TabNavigator({
     List: {screen: HomeList},
-    // Grid: {screen: HomeGrid},
+    Grid: {screen: HomeGrid},
     // Map: {screen: HomeMap},
     // Notif: {screen: HomeNotif},
     // Setting: {screen: HomeSetting},

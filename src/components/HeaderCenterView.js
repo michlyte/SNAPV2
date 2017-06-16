@@ -16,10 +16,6 @@ export class ToggleAllAndMyCases extends Component {
         };
     }
 
-    onPress = () => {
-        this.props.onPress();
-    };
-
     onTabPress = (index) => {
         this.props.onTabPress(index);
 

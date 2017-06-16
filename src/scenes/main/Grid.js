@@ -1,32 +1,109 @@
-import React, {Component} from "react";
-import {Dimensions, FlatList, Image, StyleSheet, TouchableHighlight, View} from "react-native";
-import CONSTANTS, {MainTheme} from "../../Constants";
-import SCREEN_HELPER from "../../utils/ScreenHelper";
-
+import React, {PureComponent} from "react";
+import {Dimensions, FlatList, Image, InteractionManager, StyleSheet, View} from "react-native";
+import CONSTANTS from "../../Constants";
+import {DataType, Env} from "../../utils/EnumHelper";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+//Header
+import {mainStyle} from "../../styles/Style";
+import {EcquariaLogo, NewCaseButton} from "../../components/HeaderRightView";
+import {ToggleAllAndMyCases} from "../../components/HeaderCenterView";
+// Dummy
+import {ecqDummyListInit} from "../../dummies/Dummy";
 
 const gridNumOfColumns = 3;
 const gridItemSize = (Dimensions.get('window').width - 20) / gridNumOfColumns;
 
-export default class HomeGrid extends Component {
+export default class HomeGrid extends PureComponent {
     static navigationOptions = ({navigation}) => ({
-        headerTitle: CONSTANTS.appName,
-        headerTitleStyle: {
-            color: MainTheme.navBar_tintColor,
-        },
-        headerStyle: {
-            backgroundColor: MainTheme.navBar_backgroundColor,
-        },
-        headerRight: <View style={{marginRight: 15}}>
-            <TouchableHighlight onPress={() => navigation.navigate(SCREEN_HELPER.CAMERA_AND_CAMERA_ROLL)}>
-                <FontAwesome name="plus" size={20} color={MainTheme.navBar_tintColor}/>
-            </TouchableHighlight>
-        </View>,
+        headerTitle: <ToggleAllAndMyCases
+            onTabPress={(index) => navigation.state.params.onTabPress(index)}
+        />,
+        headerStyle: mainStyle.mainHeader,
+        headerLeft: <EcquariaLogo />,
+        headerRight: <NewCaseButton navigation={navigation}/>,
+
         tabBarLabel: 'Grid',
         tabBarIcon: ({tintColor}) => (
             <FontAwesome name="th-large" size={20} color={tintColor}/>
         ),
     });
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            selected: (new Map(): Map<string, boolean>),
+            dataType: DataType.AllCases,
+            data: [],
+            page: 1,
+            loading: false,
+            refreshing: false,
+        };
+    }
+
+    componentDidMount() {
+        // Tricky part to connect stackNavigator header with component's method.
+        InteractionManager.runAfterInteractions(() => {
+            this.props.navigation.setParams({
+                onTabPress: this.onDataChange,
+            });
+        });
+
+        this._onRefresh();
+    }
+
+    onDataChange = (index) => {
+        this.setState((prevState) => {
+                let newState = prevState;
+
+                switch (index) {
+                    case 0:
+                        newState.dataType = DataType.AllCases;
+                        break;
+                    case 1:
+                        newState.dataType = DataType.MyCases;
+                        break;
+                }
+
+                return {newState};
+            },
+            this._onRefresh);
+    };
+
+    _keyExtractor = (item, index) => item.caseId;
+
+    _onRefresh = () => {
+        switch (CONSTANTS.Env) {
+            case Env.DEV_DUMMY:
+                let newData = ecqDummyListInit(0, this.state.dataType);
+                this.setState({
+                    data: newData,
+                    refreshing: false,
+                });
+                break;
+            case Env.DEV:
+            case Env.PROD:
+                break;
+        }
+    };
+
+    _onEndReached = () => {
+        switch (CONSTANTS.Env) {
+            case Env.DEV_DUMMY:
+                this.setState({loading: true});
+                setTimeout(() => {
+                    let newData = ecqDummyListInit(this.state.data.length, this.state.dataType);
+                    this.setState({
+                        data: [...this.state.data, ...newData],
+                        loading: false,
+                    });
+                }, 1500);
+                break;
+            case Env.DEV:
+            case Env.PROD:
+                break;
+        }
+    };
 
     _renderItem({item, index}) {
 
@@ -67,7 +144,7 @@ export default class HomeGrid extends Component {
                 backgroundColor: '#CCC',
             }}>
                 <Image style={{flex: 1}}
-                       source={{uri: 'https://www.ssbwiki.com/images/thumb/6/67/Chocobo.png/250px-Chocobo.png'}}/>
+                       source={{uri: item.attachments.attachmentUrlThumb}}/>
             </View>
         );
     }
@@ -75,16 +152,22 @@ export default class HomeGrid extends Component {
     render() {
         return (<FlatList
             contentContainerStyle={styles.list}
-            data={[{key: 'a'}, {key: 'b'}, {key: 'c'}, {key: 'd'}, {key: 'e'}, {key: 'f'}, {key: 'g'}, {key: 'h'}, {key: 'i'}, {key: 'j'}]}
+            data={this.state.data}
+            extraData={this.state}
+            keyExtractor={this._keyExtractor}
             renderItem={this._renderItem}
+            onRefresh={this._onRefresh}
+            refreshing={this.state.refreshing}
+            onEndReached={this._onEndReached}
+            onEndReachedThreshold={CONSTANTS.numberOfItemPerPage}
         />);
     }
 }
 
 const styles = StyleSheet.create({
     list: {
-        // justifyContent: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap',
+        backgroundColor: 'white',
     }
 });
