@@ -41,10 +41,10 @@ export const welcomeStyle = StyleSheet.create({
 
 export const mainStyle = StyleSheet.create({
     mainHeaderTitle: {
-        justifyContent: 'space-between',
-        textAlign: 'center',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
         color: MainTheme.navBar_tintColor,
-        backgroundColor: 'black',
     },
     mainHeader: {
         backgroundColor: MainTheme.navBar_backgroundColor,

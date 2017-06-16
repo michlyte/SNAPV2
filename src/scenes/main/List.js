@@ -8,7 +8,7 @@ import NotifInListItem from "../../components/CaseInListItem";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 //Header
 import {mainStyle} from "../../styles/Style";
-import {NewCaseButton} from "../../components/HeaderRightView";
+import {EcquariaLogo, NewCaseButton} from "../../components/HeaderRightView";
 import {ToggleAllAndMyCases} from "../../components/HeaderCenterView";
 
 export default class HomeList extends PureComponent {
@@ -16,8 +16,8 @@ export default class HomeList extends PureComponent {
         headerTitle: <ToggleAllAndMyCases
             onPress={() => navigation.state.params.onCenterPressed()}
         />,
-        headerTitleStyle: mainStyle.mainHeaderTitle,
         headerStyle: mainStyle.mainHeader,
+        headerLeft: <EcquariaLogo />,
         headerRight: <NewCaseButton navigation={navigation}/>,
 
         tabBarLabel: 'List',

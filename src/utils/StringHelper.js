@@ -18,6 +18,11 @@ export default class StringHelper {
     static FORGOT = 'FORGOT';
     static NEXT = 'NEXT';
     static DONE = 'DONE';
+    static REGISTER_VIA_FACEBOOK = 'Register via Facebook';
+    static REGISTER_VIA_TWITTER = 'Register via Twitter';
+
+    static action_allCases = "All Cases";
+    static action_myCases = "My Cases";
 
     static forgotYourLoginDetails = 'Forgot your login details?';
     static getHelpSigningIn = 'Get help signing in.';
@@ -28,9 +33,6 @@ export default class StringHelper {
     static caseLoggedSuccess = 'Thank you for submitting the case using ' + CONSTANTS.appName;
     static caseLoggedReferenceNumberIs = 'Your case reference number is: ';
     static shareTo = 'Share to';
-
-    static REGISTER_VIA_FACEBOOK = 'Register via Facebook';
-    static REGISTER_VIA_TWITTER = 'Register via Twitter';
 
     static errorMsgEmailAddress = 'Insert a valid email';
 

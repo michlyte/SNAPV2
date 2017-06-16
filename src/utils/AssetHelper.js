@@ -17,4 +17,5 @@ export default class AssetsHelper {
     static ic_photo_camera = require('../assets/ic_photo_camera_36pt.png');
     static ic_stop = require('../assets/ic_stop_36pt.png');
     static ic_videocam = require('../assets/ic_videocam_36pt.png');
+    static ic_ecquaria_logo = require("../assets/ic_ecquaria_logo.png");
 }
