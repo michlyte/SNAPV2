@@ -45,7 +45,7 @@ export const MainScreenNavigator = TabNavigator({
     List: {screen: HomeList},
     Grid: {screen: HomeGrid},
     // Map: {screen: HomeMap},
-    // Notif: {screen: HomeNotif},
+    Notif: {screen: HomeNotif},
     // Setting: {screen: HomeSetting},
 }, {
     tabBarOptions: {

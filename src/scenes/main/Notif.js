@@ -49,7 +49,7 @@ export default class HomeNotif extends PureComponent {
             case Env.DEV_DUMMY:
                 this.setState({loading: true});
                 let newData = [];
-                for (let i = 0; i < CONSTANTS.numberOfItemPerPage; i++) {
+                for (let i = 0; i < CONSTANTS.numberOfListItemPerPage; i++) {
                     newData.push(
                         new NotifInListClass(
                             i,
@@ -129,7 +129,7 @@ export default class HomeNotif extends PureComponent {
                         this.setState({loading: true});
                         setTimeout(() => {
                             let newData = [];
-                            for (let i = this.state.data.length; i < this.state.data.length + CONSTANTS.numberOfItemPerPage; i++) {
+                            for (let i = this.state.data.length; i < this.state.data.length + CONSTANTS.numberOfListItemPerPage; i++) {
                                 newData.push(
                                     new NotifInListClass(
                                         i,
@@ -205,7 +205,7 @@ export default class HomeNotif extends PureComponent {
                     onRefresh={this._onRefresh}
                     refreshing={this.state.refreshing}
                     onEndReached={this._handleLoadMore}
-                    onEndReachedThreshold={(CONSTANTS.numberOfItemPerPage / 2)}
+                    onEndReachedThreshold={(CONSTANTS.numberOfListItemPerPage / 2)}
                     ListFooterComponent={this._renderFooter}
                 />
             </View>
