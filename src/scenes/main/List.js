@@ -10,7 +10,7 @@ import {mainStyle} from "../../styles/Style";
 import {EcquariaLogo, NewCaseButton} from "../../components/HeaderRightView";
 import {ToggleAllAndMyCases} from "../../components/HeaderCenterView";
 // Dummy
-import {ecqDummyListInit} from "../../dummies/Dummy";
+import {ecqDummyListCase} from "../../dummies/Dummy";
 
 export default class HomeList extends PureComponent {
     static navigationOptions = ({navigation}) => ({
@@ -72,42 +72,53 @@ export default class HomeList extends PureComponent {
     _keyExtractor = (item, index) => item.caseId;
 
     _onRefresh = () => {
-        switch (CONSTANTS.Env) {
-            case Env.DEV_DUMMY:
-                let newData = ecqDummyListInit(
-                    0,
-                    CONSTANTS.numberOfListItemPerPage,
-                    this.state.dataType);
-                this.setState({
-                    data: newData,
-                    refreshing: false,
-                });
-                break;
-            case Env.DEV:
-            case Env.PROD:
-                break;
-        }
+        this.setState({
+                page: 1,
+                refreshing: true
+            },
+            () => {
+                switch (CONSTANTS.Env) {
+                    case Env.DEV_DUMMY:
+                        let newData = ecqDummyListCase(
+                            0,
+                            CONSTANTS.numberOfListItemPerPage,
+                            this.state.dataType);
+                        this.setState({
+                            data: newData,
+                            refreshing: false,
+                        });
+                        break;
+                    case Env.DEV:
+                    case Env.PROD:
+                        break;
+                }
+            });
     };
 
     _onEndReached = () => {
-        switch (CONSTANTS.Env) {
-            case Env.DEV_DUMMY:
-                this.setState({loading: true});
-                setTimeout(() => {
-                    let newData = ecqDummyListInit(
-                        this.state.data.length,
-                        CONSTANTS.numberOfListItemPerPage,
-                        this.state.dataType);
-                    this.setState({
-                        data: [...this.state.data, ...newData],
-                        loading: false,
-                    });
-                }, 1500);
-                break;
-            case Env.DEV:
-            case Env.PROD:
-                break;
-        }
+        this.setState({
+                page: this.state.page + 1
+            },
+            () => {
+                switch (CONSTANTS.Env) {
+                    case Env.DEV_DUMMY:
+                        this.setState({loading: true});
+                        setTimeout(() => {
+                            let newData = ecqDummyListCase(
+                                this.state.data.length,
+                                CONSTANTS.numberOfListItemPerPage,
+                                this.state.dataType);
+                            this.setState({
+                                data: [...this.state.data, ...newData],
+                                loading: false,
+                            });
+                        }, 1500);
+                        break;
+                    case Env.DEV:
+                    case Env.PROD:
+                        break;
+                }
+            });
     };
 
     _renderFooter = () => {

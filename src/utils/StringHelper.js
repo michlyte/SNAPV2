@@ -40,4 +40,5 @@ export default class StringHelper {
 
     static sceneLocationDetail = 'Location Details';
     static sceneCaseLogged = 'Case Logged!';
+    static sceneNotifications = 'Notifications';
 }

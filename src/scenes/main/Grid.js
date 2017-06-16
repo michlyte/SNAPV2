@@ -8,7 +8,7 @@ import {mainStyle} from "../../styles/Style";
 import {EcquariaLogo, NewCaseButton} from "../../components/HeaderRightView";
 import {ToggleAllAndMyCases} from "../../components/HeaderCenterView";
 // Dummy
-import {ecqDummyListInit} from "../../dummies/Dummy";
+import {ecqDummyListCase} from "../../dummies/Dummy";
 
 const gridNumOfColumns = 3;
 const gridItemSize = (Dimensions.get('window').width - 20) / gridNumOfColumns;
@@ -75,7 +75,7 @@ export default class HomeGrid extends PureComponent {
     _onRefresh = () => {
         switch (CONSTANTS.Env) {
             case Env.DEV_DUMMY:
-                let newData = ecqDummyListInit(
+                let newData = ecqDummyListCase(
                     0,
                     CONSTANTS.numberOfGridItemPerPage,
                     this.state.dataType);
@@ -95,7 +95,7 @@ export default class HomeGrid extends PureComponent {
             case Env.DEV_DUMMY:
                 this.setState({loading: true});
                 setTimeout(() => {
-                    let newData = ecqDummyListInit(
+                    let newData = ecqDummyListCase(
                         this.state.data.length,
                         CONSTANTS.numberOfGridItemPerPage,
                         this.state.dataType);

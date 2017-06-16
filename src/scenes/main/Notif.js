@@ -2,29 +2,24 @@
  * Created by michael on 5/16/2017.
  */
 import React, {PureComponent} from "react";
-import {FlatList, TouchableHighlight, View} from "react-native";
+import {FlatList, View} from "react-native";
 import CONSTANTS, {MainTheme} from "../../Constants";
-import SCREEN_HELPER from "../../utils/ScreenHelper";
-import NotifInListClass from "../../models/NotifInListClass";
 import NotifInListItem from "../../components/NotifInListItem";
-import {Env} from "../../utils/EnumHelper";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import ListLoadMoreView from "../../components/ListLoadMoreView";
+import {Env} from "../../utils/EnumHelper";
+import StringHelper from "../../utils/StringHelper";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+// Header
+import {mainStyle} from "../../styles/Style";
+import {Title} from "../../components/HeaderCenterView";
+// Dummy
+import {ecqDummyListNotif} from "../../dummies/Dummy";
 
 export default class HomeNotif extends PureComponent {
     static navigationOptions = ({navigation}) => ({
-        headerTitle: CONSTANTS.appName,
-        headerTitleStyle: {
-            color: MainTheme.navBar_tintColor,
-        },
-        headerStyle: {
-            backgroundColor: MainTheme.navBar_backgroundColor,
-        },
-        headerRight: <View style={{marginRight: 15}}>
-            <TouchableHighlight onPress={() => navigation.navigate(SCREEN_HELPER.CAMERA_AND_CAMERA_ROLL)}>
-                <FontAwesome name="plus" size={20} color={MainTheme.navBar_tintColor}/>
-            </TouchableHighlight>
-        </View>,
+        headerTitle: <Title title={StringHelper.sceneNotifications}/>,
+        headerStyle: mainStyle.mainHeader,
+
         tabBarLabel: 'Notif',
         tabBarIcon: ({tintColor}) => (
             <FontAwesome name="bell" size={20} color={tintColor}/>
@@ -45,33 +40,7 @@ export default class HomeNotif extends PureComponent {
     }
 
     componentDidMount() {
-        switch (CONSTANTS.Env) {
-            case Env.DEV_DUMMY:
-                this.setState({loading: true});
-                let newData = [];
-                for (let i = 0; i < CONSTANTS.numberOfListItemPerPage; i++) {
-                    newData.push(
-                        new NotifInListClass(
-                            i,
-                            i + ' egp_ecquaria commented on your case : test title.',
-                            'test title',
-                            i,
-                            'http://cdn01.androidauthority.net/wp-content/uploads/2015/11/00-best-backgrounds-and-wallpaper-apps-for-android.jpg',
-                            'https://s-media-cache-ak0.pinimg.com/736x/80/91/f9/8091f9dceb2ea55fa7b57bb7295e1824.jpg',
-                            '1460483504000'
-                        )
-                    );
-                }
-                this.setState({
-                    data: newData,
-                    loading: false,
-                });
-                break;
-            case Env.DEV:
-            case Env.PROD:
-                this._wsRequest();
-                break;
-        }
+        this._onRefresh();
     }
 
     _wsRequest() {
@@ -104,7 +73,9 @@ export default class HomeNotif extends PureComponent {
             () => {
                 switch (CONSTANTS.Env) {
                     case Env.DEV_DUMMY:
+                        let newData = ecqDummyListNotif(0, CONSTANTS.numberOfListItemPerPage);
                         this.setState({
+                            data: newData,
                             loading: false,
                             refreshing: false,
                         });
@@ -128,20 +99,9 @@ export default class HomeNotif extends PureComponent {
                     case Env.DEV_DUMMY:
                         this.setState({loading: true});
                         setTimeout(() => {
-                            let newData = [];
-                            for (let i = this.state.data.length; i < this.state.data.length + CONSTANTS.numberOfListItemPerPage; i++) {
-                                newData.push(
-                                    new NotifInListClass(
-                                        i,
-                                        i + ' egp_ecquaria commented on your case : test title.',
-                                        'test title',
-                                        i,
-                                        'http://cdn01.androidauthority.net/wp-content/uploads/2015/11/00-best-backgrounds-and-wallpaper-apps-for-android.jpg',
-                                        'https://s-media-cache-ak0.pinimg.com/736x/80/91/f9/8091f9dceb2ea55fa7b57bb7295e1824.jpg',
-                                        '1460483504000'
-                                    )
-                                );
-                            }
+                            let newData = ecqDummyListNotif(
+                                this.state.data.length,
+                                CONSTANTS.numberOfListItemPerPage);
                             this.setState({
                                 data: [...this.state.data, ...newData],
                                 loading: false,

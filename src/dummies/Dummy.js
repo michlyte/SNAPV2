@@ -2,9 +2,10 @@
  * Created by michael on 6/16/2017.
  */
 import CaseInListClass, {CaseAttachment, CaseLocation} from "../models/CaseInListClass";
+import NotifInListClass from "../models/NotifInListClass";
 import {DataType} from "../utils/EnumHelper";
 
-export const ecqDummyListInit = (startIndex, numberOfItemPerPage, dataType) => {
+export const ecqDummyListCase = (startIndex, numberOfItemPerPage, dataType) => {
     let newData = [];
     for (let i = startIndex; i < startIndex + numberOfItemPerPage; i++) {
         newData.push(
@@ -33,6 +34,24 @@ export const ecqDummyListInit = (startIndex, numberOfItemPerPage, dataType) => {
                 '0',
                 '0',
                 ''
+            )
+        );
+    }
+    return (newData);
+};
+
+export const ecqDummyListNotif = (startIndex, numberOfItemPerPage) => {
+    let newData = [];
+    for (let i = startIndex; i < startIndex + numberOfItemPerPage; i++) {
+        newData.push(
+            new NotifInListClass(
+                i,
+                i + ' egp_ecquaria commented on your case : test title.',
+                'test title',
+                i,
+                'http://cdn01.androidauthority.net/wp-content/uploads/2015/11/00-best-backgrounds-and-wallpaper-apps-for-android.jpg',
+                'https://s-media-cache-ak0.pinimg.com/736x/80/91/f9/8091f9dceb2ea55fa7b57bb7295e1824.jpg',
+                '1460483504000'
             )
         );
     }

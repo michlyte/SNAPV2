@@ -6,6 +6,7 @@ import {StyleSheet, Text, TouchableOpacity, View, Dimensions} from "react-native
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import {DataType} from "../utils/EnumHelper";
 import {MainTheme} from "../Constants";
+import PropTypes from "prop-types";
 
 export class ToggleAllAndMyCases extends Component {
     constructor(props) {
@@ -41,13 +42,30 @@ export class ToggleAllAndMyCases extends Component {
     }
 }
 
+export class Title extends Component {
+    render() {
+        return (
+            <View style={styles.titleContainer}>
+                <Text
+                    style={styles.title}
+                >
+                    {this.props.title}
+                </Text>
+            </View>
+        );
+    }
+}
+
+Title.propTypes = {
+    title: PropTypes.string.isRequired,
+};
+
 const styles = StyleSheet.create({
     container: {
         width: Dimensions.get('window').width / 2,
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'black',
     },
     tabStyle: {
         borderColor: MainTheme.navBar_tintColor,
@@ -60,6 +78,17 @@ const styles = StyleSheet.create({
         color: MainTheme.navBar_backgroundColor,
     },
     tabTextStyle: {
+        color: MainTheme.navBar_tintColor,
+    },
+
+    titleContainer: {
+        flex: 1,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    title: {
+        fontSize: 20,
         color: MainTheme.navBar_tintColor,
     },
 });
