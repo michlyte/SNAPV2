@@ -1,13 +1,12 @@
 /**
  * Created by michael on 6/16/2017.
  */
-import Constants from "../Constants";
 import CaseInListClass, {CaseAttachment, CaseLocation} from "../models/CaseInListClass";
 import {DataType} from "../utils/EnumHelper";
 
-export const ecqDummyListInit = (startIndex, dataType) => {
+export const ecqDummyListInit = (startIndex, numberOfItemPerPage, dataType) => {
     let newData = [];
-    for (let i = startIndex; i < startIndex + Constants.numberOfItemPerPage; i++) {
+    for (let i = startIndex; i < startIndex + numberOfItemPerPage; i++) {
         newData.push(
             new CaseInListClass(
                 i,

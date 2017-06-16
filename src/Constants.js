@@ -17,7 +17,8 @@ export default class Constants {
     static GOOGLE_API_KEY = 'AIzaSyAm9eKJvHIYvxVWFe4xRCyrxWx6iqLicpY';
 
     static isLoggedIn = true;
-    static numberOfItemPerPage = 10;
+    static numberOfListItemPerPage = 10;
+    static numberOfGridItemPerPage = 20;
     static Env = Env.DEV_DUMMY;
 }
 

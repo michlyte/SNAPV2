@@ -75,7 +75,10 @@ export default class HomeGrid extends PureComponent {
     _onRefresh = () => {
         switch (CONSTANTS.Env) {
             case Env.DEV_DUMMY:
-                let newData = ecqDummyListInit(0, this.state.dataType);
+                let newData = ecqDummyListInit(
+                    0,
+                    CONSTANTS.numberOfGridItemPerPage,
+                    this.state.dataType);
                 this.setState({
                     data: newData,
                     refreshing: false,
@@ -92,7 +95,10 @@ export default class HomeGrid extends PureComponent {
             case Env.DEV_DUMMY:
                 this.setState({loading: true});
                 setTimeout(() => {
-                    let newData = ecqDummyListInit(this.state.data.length, this.state.dataType);
+                    let newData = ecqDummyListInit(
+                        this.state.data.length,
+                        CONSTANTS.numberOfGridItemPerPage,
+                        this.state.dataType);
                     this.setState({
                         data: [...this.state.data, ...newData],
                         loading: false,
@@ -159,7 +165,7 @@ export default class HomeGrid extends PureComponent {
             onRefresh={this._onRefresh}
             refreshing={this.state.refreshing}
             onEndReached={this._onEndReached}
-            onEndReachedThreshold={CONSTANTS.numberOfItemPerPage}
+            onEndReachedThreshold={CONSTANTS.numberOfGridItemPerPage}
         />);
     }
 }

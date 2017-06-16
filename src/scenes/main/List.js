@@ -74,7 +74,10 @@ export default class HomeList extends PureComponent {
     _onRefresh = () => {
         switch (CONSTANTS.Env) {
             case Env.DEV_DUMMY:
-                let newData = ecqDummyListInit(0, this.state.dataType);
+                let newData = ecqDummyListInit(
+                    0,
+                    CONSTANTS.numberOfListItemPerPage,
+                    this.state.dataType);
                 this.setState({
                     data: newData,
                     refreshing: false,
@@ -91,7 +94,10 @@ export default class HomeList extends PureComponent {
             case Env.DEV_DUMMY:
                 this.setState({loading: true});
                 setTimeout(() => {
-                    let newData = ecqDummyListInit(this.state.data.length, this.state.dataType);
+                    let newData = ecqDummyListInit(
+                        this.state.data.length,
+                        CONSTANTS.numberOfListItemPerPage,
+                        this.state.dataType);
                     this.setState({
                         data: [...this.state.data, ...newData],
                         loading: false,
@@ -174,7 +180,7 @@ export default class HomeList extends PureComponent {
                     onRefresh={this._onRefresh}
                     refreshing={this.state.refreshing}
                     onEndReached={this._onEndReached}
-                    onEndReachedThreshold={CONSTANTS.numberOfItemPerPage}
+                    onEndReachedThreshold={CONSTANTS.numberOfListItemPerPage}
                     ListFooterComponent={this._renderFooter}
                 />
             </View>
