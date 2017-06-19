@@ -37,7 +37,7 @@ export const ecqDummyListCase = (startIndex, numberOfItemPerPage, dataType) => {
             )
         );
     }
-    return (newData);
+    return newData;
 };
 
 export const ecqDummyListNotif = (startIndex, numberOfItemPerPage) => {
@@ -55,5 +55,5 @@ export const ecqDummyListNotif = (startIndex, numberOfItemPerPage) => {
             )
         );
     }
-    return (newData);
+    return newData;
 };

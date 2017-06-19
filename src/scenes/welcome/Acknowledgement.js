@@ -3,6 +3,7 @@
  */
 import React, {Component} from "react";
 import {BackHandler, Text, View} from "react-native";
+import PropTypes from "prop-types";
 
 import {welcomeStyle} from "../../styles/Style";
 
@@ -46,7 +47,8 @@ export default class WelcomeAcknowledgementScreen extends Component {
                 bottomContainer={
                     <WelcomeAcknowledgementBottomContainer
                         navigation={navigation}
-                        email={params.email}/> }
+                        email={params.email}
+                        onNavigateToRootView={this._onNavigateToRootView}/> }
                 navigation={navigation}
                 isBackButtonShowed={ false }
             />
@@ -60,7 +62,7 @@ class WelcomeAcknowledgementBottomContainer extends Component {
     }
 
     _onNextPressed = () => {
-        console.log(this.props.email);
+        this.props.onNavigateToRootView();
     };
 
     render() {
@@ -81,3 +83,8 @@ class WelcomeAcknowledgementBottomContainer extends Component {
         );
     }
 }
+
+WelcomeAcknowledgementBottomContainer.propTypes = {
+    email: PropTypes.string.isRequired,
+    onNavigateToRootView: PropTypes.func.isRequired,
+};

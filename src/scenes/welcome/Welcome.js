@@ -1,10 +1,11 @@
 import React, {Component} from "react";
-import {Image, NativeModules, StyleSheet, Text, TouchableHighlight, View} from "react-native";
+import {Image, NativeModules, StyleSheet, Text, TouchableHighlight, View, Platform} from "react-native";
 import {TabBar, TabViewAnimated} from "react-native-tab-view";
 import {NavigationActions} from "react-navigation";
 import FBSDK from "react-native-fbsdk";
+import FCM from "react-native-fcm";
 
-import CONSTANTS, {WelcomeTheme} from "../../Constants";
+import CONSTANTS, {WelcomeTheme, RestAPI} from "../../Constants";
 
 import COLOR from "../../styles/Color";
 import SIZE from "../../styles/Size";
@@ -19,6 +20,9 @@ import {Env} from "../../utils/EnumHelper";
 import WelcomeTextInput from "../../components/WelcomeTextInput";
 import WelcomeContainer from "../../components/WelcomeContainer";
 import WelcomeButton from "../../components/WelcomeButton";
+
+import {LoginRequestClass} from "../../models/RequestAPI";
+import {LoginResponseClass} from "../../models/ResponseAPI";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -232,6 +236,22 @@ class LoginTab extends Component {
         };
     }
 
+    _makeRequestLogin = (email, password, imei, pushRegId, deviceType) => {
+        const loginRequest = new LoginRequestClass(email, password, imei, pushRegId, deviceType);
+        return fetch(CONSTANTS.baseUrl + RestAPI.login.url, {
+            method: RestAPI.login.method,
+            headers: RestAPI.login.headers,
+            body: JSON.stringify(loginRequest),
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
     _onLoginPressed = () => {
         const emailAddress = this.state.emailAddress;
         const password = this.state.password;
@@ -246,13 +266,22 @@ class LoginTab extends Component {
         if (cancel) {
             console.log("Cancel is true");
         } else {
-            const resetAction = NavigationActions.reset({
-                index: 0,
-                actions: [
-                    NavigationActions.navigate({routeName: SCREEN_HELPER.MAIN})
-                ]
+            FCM.getFCMToken().then(token => {
+                this._makeRequestLogin(
+                    emailAddress,
+                    password,
+                    CONSTANTS.uniqueID,
+                    token,
+                    Platform.OS
+                );
             });
-            this.props.navigation.dispatch(resetAction)
+            // const resetAction = NavigationActions.reset({
+            //     index: 0,
+            //     actions: [
+            //         NavigationActions.navigate({routeName: SCREEN_HELPER.MAIN})
+            //     ]
+            // });
+            // this.props.navigation.dispatch(resetAction)
         }
     };
 

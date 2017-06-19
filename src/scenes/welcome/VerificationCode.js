@@ -2,8 +2,11 @@
  * Created by michael on 4/17/2017.
  */
 import React, {Component} from "react";
-import {Text, View} from "react-native";
+import {Alert, Platform, Text, View} from "react-native";
+import PropTypes from "prop-types";
+import FCM from "react-native-fcm";
 
+import CONSTANTS, {RestAPI} from "../../Constants";
 import {welcomeStyle} from "../../styles/Style";
 
 import STRING_HELPER from "../../utils/StringHelper";
@@ -12,6 +15,11 @@ import SCREEN_HELPER from "../../utils/ScreenHelper";
 import WelcomeContainer from "../../components/WelcomeContainer";
 import WelcomeTextInput from "../../components/WelcomeTextInput";
 import WelcomeButton from "../../components/WelcomeButton";
+
+import {
+    PreRegisterRequestClass,
+    RegisterViaEmailRequestClass
+} from "../../models/RequestAPI";
 
 const reactStringReplace = require('react-string-replace');
 
@@ -24,7 +32,9 @@ export default class WelcomeVerificationCodeScreen extends Component {
                 bottomContainer={
                     <WelcomeVerificationCodeBottomContainer
                         navigation={navigation}
-                        email={params.email}/> }
+                        email={params.email}
+                        password={params.password}
+                    />}
                 navigation={navigation}
                 isBackButtonShowed={ true }
             />
@@ -42,13 +52,77 @@ class WelcomeVerificationCodeBottomContainer extends Component {
     }
 
     _onResendPressed = () => {
-        console.log('_onResendPressed');
+        const preRegisterRequest = new PreRegisterRequestClass(this.props.email, this.props.password);
+        return fetch(CONSTANTS.baseUrl + RestAPI.preRegister.url, {
+            method: RestAPI.preRegister.method,
+            headers: RestAPI.preRegister.headers,
+            body: JSON.stringify(preRegisterRequest),
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                if (responseJson.meta.status === RestAPI.CODE_200) {
+
+                } else {
+                    Alert.alert(
+                        STRING_HELPER.TITLE_WARNING,
+                        responseJson.method.message,
+                    );
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
+    _getDisplayName = () => {
+        const emailSplit = this.props.email.split('@');
+        if (emailSplit.length > 0) {
+            return emailSplit[0];
+        } else {
+            return this.props.email;
+        }
+    };
+
+    _makeRequestVerify = (email, password, displayName, imei, pushRegId, deviceType, verificationCode) => {
+        const registerViaEmailRequest = new RegisterViaEmailRequestClass(email, password, displayName, imei, pushRegId, deviceType, verificationCode);
+        return fetch(CONSTANTS.baseUrl + RestAPI.registerViaEmail.url, {
+            method: RestAPI.registerViaEmail.method,
+            headers: RestAPI.registerViaEmail.headers,
+            body: JSON.stringify(registerViaEmailRequest),
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                if (responseJson.meta.status === RestAPI.CODE_200) {
+                    const {navigate} = this.props.navigation;
+                    navigate(SCREEN_HELPER.ACKNOWLEDGEMENT, {email: email});
+                } else {
+                    Alert.alert(
+                        STRING_HELPER.TITLE_WARNING,
+                        responseJson.meta.message,
+                    );
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     };
 
     _onVerifyPressed = () => {
-        console.log('_onVerifyPressed');
-        const {navigate} = this.props.navigation;
-        navigate(SCREEN_HELPER.ACKNOWLEDGEMENT, {email: this.props.email});
+        const {verificationCode} = this.state;
+
+        FCM.getFCMToken().then(token => {
+            this._makeRequestVerify(
+                this.props.email,
+                this.props.password,
+                this._getDisplayName(),
+                CONSTANTS.uniqueID,
+                token,
+                Platform.OS,
+                verificationCode,
+            );
+        });
     };
 
     render() {
@@ -100,3 +174,8 @@ class WelcomeVerificationCodeBottomContainer extends Component {
         );
     }
 }
+
+WelcomeVerificationCodeBottomContainer.propTypes = {
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+};

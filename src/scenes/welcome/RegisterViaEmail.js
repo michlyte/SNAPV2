@@ -2,18 +2,23 @@
  * Created by michael on 4/13/2017.
  */
 import React, {Component} from "react";
-import {View} from "react-native";
+import {Alert, View} from "react-native";
+import PropTypes from "prop-types";
 
-import CONSTANTS from "../../Constants";
+import CONSTANTS, {RestAPI} from "../../Constants";
+
 import {welcomeStyle} from "../../styles/Style";
 
-import SCREEN_HELPER from "../../utils/ScreenHelper";
 import STRING_HELPER from "../../utils/StringHelper";
+import SCREEN_HELPER from "../../utils/ScreenHelper";
+import DUMMY_HELPER from "../../utils/DummyHelper";
 import {Env} from "../../utils/EnumHelper";
 
 import WelcomeContainer from "../../components/WelcomeContainer";
 import WelcomeTextInput from "../../components/WelcomeTextInput";
 import WelcomeButton from "../../components/WelcomeButton";
+
+import {PreRegisterRequestClass} from "../../models/RequestAPI";
 
 export default class WelcomeRegisterViaEmailScreen extends Component {
     render() {
@@ -21,7 +26,10 @@ export default class WelcomeRegisterViaEmailScreen extends Component {
         return (
             <WelcomeContainer
                 bottomContainer={
-                    <WelcomeRegisterViaEmailBottomContainer navigation={navigation}/> }
+                    <WelcomeRegisterViaEmailBottomContainer
+                        navigation={navigation}
+                    />
+                }
                 navigation={navigation}
                 isBackButtonShowed={ true }
             />
@@ -39,8 +47,8 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
         let tempConfirmPassword = '';
         switch (CONSTANTS.Env) {
             case Env.DEV_DUMMY:
-                tempEmailAddress = 'mikefla10@gmail.com';
-                tempPassword = 'password$1';
+                tempEmailAddress = DUMMY_HELPER.emailAddress;
+                tempPassword = DUMMY_HELPER.password;
                 tempConfirmPassword = tempPassword;
                 break;
             default:
@@ -54,9 +62,39 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
         };
     }
 
+    _makeRequestPreRegister = (email, password) => {
+        const preRegisterRequest = new PreRegisterRequestClass(email, password);
+        return fetch(CONSTANTS.baseUrl + RestAPI.preRegister.url, {
+            method: RestAPI.preRegister.method,
+            headers: RestAPI.preRegister.headers,
+            body: JSON.stringify(preRegisterRequest),
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+
+                if (responseJson.meta.status === RestAPI.CODE_200) {
+                    const {navigate} = this.props.navigation;
+                    navigate(SCREEN_HELPER.VERIFICATION_CODE, {
+                        email: email,
+                        password: password,
+                    });
+                } else {
+                    Alert.alert(
+                        STRING_HELPER.TITLE_WARNING,
+                        responseJson.meta.message,
+                    );
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
     _onRegisterPressed = () => {
-        const {navigate} = this.props.navigation;
-        navigate(SCREEN_HELPER.VERIFICATION_CODE, {email: this.state.emailAddress});
+        const {emailAddress, password} = this.state;
+
+        this._makeRequestPreRegister(emailAddress, password);
     };
 
     render() {
@@ -95,3 +133,7 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
         );
     }
 }
+
+WelcomeRegisterViaEmailBottomContainer.propTypes = {
+    navigation: PropTypes.object.isRequired,
+};

@@ -8,6 +8,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.arttitude360.reactnative.rngoogleplaces.RNGooglePlacesPackage;
 import com.devfd.RNGeocoder.RNGeocoderPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
@@ -42,6 +43,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new RNDeviceInfo(),
                     new RNGooglePlacesPackage(),
                     new RNGeocoderPackage(),
                     new PickerPackage(),

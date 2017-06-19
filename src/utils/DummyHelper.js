@@ -3,5 +3,5 @@
  */
 export default class DummyHelper {
     static emailAddress = "mikefla10@gmail.com";
-    static password = "password";
+    static password = "password$1";
 }
