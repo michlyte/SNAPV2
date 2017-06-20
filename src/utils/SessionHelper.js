@@ -5,33 +5,6 @@ import {AsyncStorage} from "react-native";
 import PARAM_HELPER from "./ParamHelper";
 
 export default class SessionHelper {
-    // Persisting data
-    static async setItem(key, value) {
-        try {
-            await AsyncStorage.setItem(key, value);
-        } catch (error) {
-            console.log("setItem: key[" + key + "] value[" + value + "] AsyncStorage error: " + error.message);
-        }
-    };
-
-    // Fetching data
-    static async getItem(key) {
-        try {
-            const value = await AsyncStorage.getItem(key);
-            if (value !== null) {
-                // We have data!!
-                console.log("getItem: key[" + key + "]: " + value);
-                return value;
-            } else {
-                console.log("getItem: key[" + key + "]: " + null);
-                return null;
-            }
-        } catch (error) {
-            // Error retrieving data
-            console.log("getItem: key[" + key + "] value[" + value + "] AsyncStorage error: " + error.message);
-            return null;
-        }
-    }
 
     static async removeItem(key) {
         try {

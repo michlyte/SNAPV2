@@ -2,21 +2,21 @@
  * Created by michael on 4/13/2017.
  */
 import React, {Component} from "react";
-import {StyleSheet, Text, TouchableHighlight} from "react-native";
+import {StyleSheet, Text, TouchableOpacity} from "react-native";
 import {WelcomeTheme} from "../Constants";
 import SIZE from "../styles/Size";
 
 export default class WelcomeButton extends Component {
     render() {
         return (
-            <TouchableHighlight
+            <TouchableOpacity
                 style={ styles.welcomeActionButton }
                 onPress={ this.props.onPress }>
                 <Text
                     style={ styles.welcomeActionButtonText }>
                     { this.props.text }
                 </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
         );
     }
 }

@@ -1,11 +1,11 @@
 import React, {Component} from "react";
-import {Image, NativeModules, StyleSheet, Text, TouchableHighlight, View, Platform} from "react-native";
+import {Image, NativeModules, Platform, StyleSheet, Text, TouchableHighlight, View, AsyncStorage} from "react-native";
 import {TabBar, TabViewAnimated} from "react-native-tab-view";
 import {NavigationActions} from "react-navigation";
-import FBSDK from "react-native-fbsdk";
 import FCM from "react-native-fcm";
+import FBSDK from "react-native-fbsdk";
 
-import CONSTANTS, {WelcomeTheme, RestAPI} from "../../Constants";
+import CONSTANTS, {RestAPI, WelcomeTheme} from "../../Constants";
 
 import COLOR from "../../styles/Color";
 import SIZE from "../../styles/Size";
@@ -15,6 +15,7 @@ import ASSET_HELPER from "../../utils/AssetHelper";
 import STRING_HELPER from "../../utils/StringHelper";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 import DUMMY_HELPER from "../../utils/DummyHelper";
+import PARAM_HELPER from "../../utils/ParamHelper";
 import {Env} from "../../utils/EnumHelper";
 
 import WelcomeTextInput from "../../components/WelcomeTextInput";
@@ -22,7 +23,7 @@ import WelcomeContainer from "../../components/WelcomeContainer";
 import WelcomeButton from "../../components/WelcomeButton";
 
 import {LoginRequestClass} from "../../models/RequestAPI";
-import {LoginResponseClass} from "../../models/ResponseAPI";
+import {User, UserJson} from "../../models/User";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -54,7 +55,8 @@ export default class WelcomeScreen extends Component {
             <WelcomeContainer
                 bottomContainer={
                     <WelcomeBottomContainer
-                        navigation={navigation}/> }
+                        navigation={navigation}/>
+                }
             />
         );
     }
@@ -223,6 +225,7 @@ class LoginTab extends Component {
         let tempPassword = '';
         switch (CONSTANTS.Env) {
             case Env.DEV_DUMMY:
+            case Env.DEV:
                 tempEmailAddress = DUMMY_HELPER.emailAddress;
                 tempPassword = DUMMY_HELPER.password;
                 break;
@@ -236,6 +239,17 @@ class LoginTab extends Component {
         };
     }
 
+    _navigateToMainScreen = () => {
+        const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({routeName: SCREEN_HELPER.MAIN})
+            ]
+        });
+        this.props.navigation.dispatch(resetAction);
+        return true;
+    };
+
     _makeRequestLogin = (email, password, imei, pushRegId, deviceType) => {
         const loginRequest = new LoginRequestClass(email, password, imei, pushRegId, deviceType);
         return fetch(CONSTANTS.baseUrl + RestAPI.login.url, {
@@ -243,9 +257,30 @@ class LoginTab extends Component {
             headers: RestAPI.login.headers,
             body: JSON.stringify(loginRequest),
         })
-            .then((response) => response.json())
+            .then((response) => {
+                console.log(response);
+                return response.json()
+            })
             .then((responseJson) => {
-                console.log(responseJson);
+                let user = new User(
+                    responseJson.data.userId,
+                    email,
+                    responseJson.data.displayName,
+                    responseJson.data.authKey,
+                    responseJson.data.maxAttachment,
+                    responseJson.data.deviceUserId,
+                    true
+                );
+
+                AsyncStorage.setItem(PARAM_HELPER.user, JSON.stringify(user), () => {
+                    AsyncStorage.getItem(PARAM_HELPER.user, (err, result) => {
+                        let userJson = JSON.parse(result);
+
+                        if (userJson.login) {
+                            this._navigateToMainScreen();
+                        }
+                    })
+                });
             })
             .catch((error) => {
                 console.error(error);
@@ -266,22 +301,31 @@ class LoginTab extends Component {
         if (cancel) {
             console.log("Cancel is true");
         } else {
-            FCM.getFCMToken().then(token => {
-                this._makeRequestLogin(
-                    emailAddress,
-                    password,
-                    CONSTANTS.uniqueID,
-                    token,
-                    Platform.OS
-                );
-            });
-            // const resetAction = NavigationActions.reset({
-            //     index: 0,
-            //     actions: [
-            //         NavigationActions.navigate({routeName: SCREEN_HELPER.MAIN})
-            //     ]
-            // });
-            // this.props.navigation.dispatch(resetAction)
+            switch (CONSTANTS.Env) {
+                case Env.DEV_DUMMY:
+                    AsyncStorage.setItem(PARAM_HELPER.user, JSON.stringify(DUMMY_HELPER.user), () => {
+                        AsyncStorage.getItem(PARAM_HELPER.user, (err, result) => {
+                            let userJson = JSON.parse(result);
+
+                            if (userJson.login) {
+                                this._navigateToMainScreen();
+                            }
+                        })
+                    });
+                    break;
+                case Env.DEV:
+                case Env.PROD:
+                    FCM.getFCMToken().then(token => {
+                        this._makeRequestLogin(
+                            emailAddress,
+                            password,
+                            CONSTANTS.uniqueID,
+                            token,
+                            Platform.OS
+                        );
+                    });
+                    break;
+            }
         }
     };
 
