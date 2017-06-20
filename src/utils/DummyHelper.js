@@ -3,7 +3,7 @@
  */
 export default class DummyHelper {
     static emailAddress = "mikefla10@gmail.com";
-    static password = "password$1";
+    static password = "password$2";
 
     static user = {
         userId: 'DqlKbj74wyXd',

@@ -3,20 +3,33 @@
  */
 import React, {Component} from "react";
 import {Image, StyleSheet, TouchableHighlight, View} from "react-native";
-
+import PropTypes from "prop-types";
+import Spinner from 'react-native-loading-spinner-overlay';
 import {MainTheme} from "../Constants";
-
 import ASSET_HELPER from "../utils/AssetHelper";
-
 import Icon from "react-native-vector-icons/FontAwesome";
 
 export default class WelcomeContainer extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            visible: false,
+        }
     }
 
     _onBackPressed = () => {
         this.props.navigation.goBack();
+    };
+
+    setVisible = (visible) => {
+        this.setState({
+            visible: visible,
+        });
+    };
+
+    getVisible = () => {
+        return this.state.visible;
     };
 
     render() {
@@ -53,14 +66,16 @@ export default class WelcomeContainer extends Component {
                     { this.props.bottomContainer }
 
                 </Image>
+                <Spinner visible={this.state.visible} textStyle={{color: '#FFF'}}/>
             </View>
         );
     }
 }
 
 WelcomeContainer.propTypes = {
-    navigation: React.PropTypes.object,
-    isBackButtonShowed: React.PropTypes.bool,
+    navigation: PropTypes.object.isRequired,
+    goBack: PropTypes.func.isRequired,
+    isBackButtonShowed: PropTypes.bool.isRequired,
 };
 
 const styles = StyleSheet.create({

@@ -1,7 +1,18 @@
 import React, {Component} from "react";
-import {Image, NativeModules, Platform, StyleSheet, Text, TouchableHighlight, View, AsyncStorage} from "react-native";
+import {
+    Alert,
+    AsyncStorage,
+    Image,
+    NativeModules,
+    Platform,
+    StyleSheet,
+    Text,
+    TouchableHighlight,
+    View
+} from "react-native";
 import {TabBar, TabViewAnimated} from "react-native-tab-view";
 import {NavigationActions} from "react-navigation";
+import PropTypes from "prop-types";
 import FCM from "react-native-fcm";
 import FBSDK from "react-native-fbsdk";
 
@@ -23,7 +34,7 @@ import WelcomeContainer from "../../components/WelcomeContainer";
 import WelcomeButton from "../../components/WelcomeButton";
 
 import {LoginRequestClass} from "../../models/RequestAPI";
-import {User, UserJson} from "../../models/User";
+import {User} from "../../models/User";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -37,6 +48,12 @@ const {
 } = FBSDK;
 
 export default class WelcomeScreen extends Component {
+    constructor(props) {
+        super(props);
+
+        this._welcomeContainer = null;
+    }
+
     componentWillMount() {
         if (CONSTANTS.isLoggedIn) {
             const resetAction = NavigationActions.reset({
@@ -49,14 +66,27 @@ export default class WelcomeScreen extends Component {
         }
     }
 
+    setVisible = (visible) => {
+        this._welcomeContainer.setVisible(visible);
+    };
+
     render() {
         const navigation = this.props.navigation;
         return (
             <WelcomeContainer
+                ref={(component) => {
+                    this._welcomeContainer = component
+                }}
                 bottomContainer={
                     <WelcomeBottomContainer
-                        navigation={navigation}/>
+                        navigation={navigation}
+                        setVisible={this.setVisible}
+                    />
                 }
+                navigation={navigation}
+                goBack={() => {
+                }}
+                isBackButtonShowed={false}
             />
         );
     }
@@ -89,9 +119,14 @@ class WelcomeBottomContainer extends Component {
     _renderScene = ({route}) => {
         switch (route.key) {
             case '1':
-                return <RegisterTab navigation={this.props.navigation}/>;
+                return <RegisterTab
+                    navigation={this.props.navigation}
+                />;
             case '2':
-                return <LoginTab navigation={this.props.navigation}/>;
+                return <LoginTab
+                    navigation={this.props.navigation}
+                    setVisible={this.props.setVisible}
+                />;
             default:
                 return null;
         }
@@ -109,6 +144,11 @@ class WelcomeBottomContainer extends Component {
         );
     }
 }
+
+WelcomeBottomContainer.propTypes = {
+    navigation: PropTypes.object.isRequired,
+    setVisible: PropTypes.func.isRequired,
+};
 
 class SocialContainer extends Component {
     render() {
@@ -250,18 +290,21 @@ class LoginTab extends Component {
         return true;
     };
 
-    _makeRequestLogin = (email, password, imei, pushRegId, deviceType) => {
+    _makeRequestLogin = async (email, password, imei, pushRegId, deviceType) => {
         const loginRequest = new LoginRequestClass(email, password, imei, pushRegId, deviceType);
-        return fetch(CONSTANTS.baseUrl + RestAPI.login.url, {
-            method: RestAPI.login.method,
-            headers: RestAPI.login.headers,
-            body: JSON.stringify(loginRequest),
-        })
-            .then((response) => {
-                console.log(response);
-                return response.json()
-            })
-            .then((responseJson) => {
+        try {
+            let response = await fetch(CONSTANTS.baseUrl + RestAPI.login.url, {
+                method: RestAPI.login.method,
+                headers: RestAPI.login.headers,
+                body: JSON.stringify(loginRequest),
+            });
+            this.props.setVisible(false);
+
+            console.log(response);
+
+            let responseJson = await response.json();
+
+            if (responseJson.meta.status === RestAPI.CODE_200) {
                 let user = new User(
                     responseJson.data.userId,
                     email,
@@ -277,14 +320,21 @@ class LoginTab extends Component {
                         let userJson = JSON.parse(result);
 
                         if (userJson.login) {
-                            this._navigateToMainScreen();
+                            console.log("Login berhasil.");
+                            // this._navigateToMainScreen();
                         }
                     })
                 });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+            } else {
+                Alert.alert(
+                    STRING_HELPER.TITLE_WARNING,
+                    responseJson.meta.message
+                )
+            }
+        } catch (error) {
+            this.props.setVisible(false);
+            console.error(error);
+        }
     };
 
     _onLoginPressed = () => {
@@ -315,15 +365,22 @@ class LoginTab extends Component {
                     break;
                 case Env.DEV:
                 case Env.PROD:
-                    FCM.getFCMToken().then(token => {
-                        this._makeRequestLogin(
-                            emailAddress,
-                            password,
-                            CONSTANTS.uniqueID,
-                            token,
-                            Platform.OS
-                        );
-                    });
+                    this.props.setVisible(true);
+
+                    FCM.getFCMToken()
+                        .then(token => {
+                            this._makeRequestLogin(
+                                emailAddress,
+                                password,
+                                CONSTANTS.uniqueID,
+                                token,
+                                Platform.OS
+                            );
+                        })
+                        .catch((error) => {
+                            this.props.setVisible(false);
+                            console.error(error);
+                        });
                     break;
             }
         }
@@ -405,6 +462,11 @@ class LoginTab extends Component {
     }
 }
 
+LoginTab.propTypes = {
+    navigation: PropTypes.object.isRequired,
+    setVisible: PropTypes.func.isRequired,
+};
+
 class RegisterTab extends Component {
     constructor(props) {
         super(props);
@@ -472,6 +534,10 @@ class RegisterTab extends Component {
         );
     }
 }
+
+RegisterTab.propTypes = {
+    navigation: PropTypes.object.isRequired,
+};
 
 const styles = StyleSheet.create({
     containerBottom: {
