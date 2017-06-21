@@ -2,34 +2,72 @@
  * Created by michael on 4/13/2017.
  */
 import React, {Component} from "react";
-import {StyleSheet, TextInput} from "react-native";
+import {StyleSheet, Text, TextInput, View} from "react-native";
+import PropTypes from "prop-types";
 import SIZE from "../styles/Size";
 
 export default class WelcomeTextInput extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            error: false,
+            errorMessage: '',
+        }
+    }
+
+    setError = (error, errorMessage?) => {
+        this.setState({
+            error: error,
+            errorMessage: errorMessage,
+        });
+    };
+
     render() {
+        let errorView = null;
+        if (this.state.error) {
+            errorView =
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'flex-end',
+                    alignItems: 'flex-end',
+                }}>
+                    <Text style={{
+                        color: 'red',
+                    }}>
+                        {this.state.errorMessage}
+                    </Text>
+                </View>;
+        }
         return (
-            <TextInput
-                style={ styles.welcomeTextInput }
-                onChangeText={ this.props.onChangeText }
-                value={ this.props.value }
-                placeholder={ this.props.placeholder }
-                keyboardType={ this.props.keyboardType }
-                secureTextEntry={ this.props.secureTextEntry }
-                clearButtonMode='while-editing'
-                underlineColorAndroid='transparent'
-                onSubmitEditing={ this.props.onSubmitEditing }
-                returnKeyType={ this.props.returnKeyType }
-            />
+            <View>
+                <TextInput
+                    style={[
+                        styles.welcomeTextInput,
+                        this.state.error && styles.error
+                    ]}
+                    onChangeText={ this.props.onChangeText }
+                    value={ this.props.value }
+                    placeholder={ this.props.placeholder }
+                    keyboardType={ this.props.keyboardType }
+                    secureTextEntry={ this.props.secureTextEntry }
+                    clearButtonMode='while-editing'
+                    underlineColorAndroid='transparent'
+                    onSubmitEditing={ this.props.onSubmitEditing }
+                    returnKeyType={ this.props.returnKeyType }
+                />
+                {errorView}
+            </View>
         );
     }
 }
 
 WelcomeTextInput.propTypes = {
-    onChangeText: React.PropTypes.func,
-    placeholder: React.PropTypes.string,
-    keyboardType: React.PropTypes.string,
-    onSubmitEditing: React.PropTypes.func,
-    returnKeyType: React.PropTypes.string,
+    onChangeText: PropTypes.func.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    keyboardType: PropTypes.string,
+    onSubmitEditing: PropTypes.func,
+    returnKeyType: PropTypes.string.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -38,6 +76,11 @@ const styles = StyleSheet.create({
         paddingRight: 5,
         height: SIZE.WELCOME_BUTTON_HEIGHT,
         backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: 'transparent',
         fontSize: 18,
+    },
+    error: {
+        borderColor: 'red',
     },
 });

@@ -3,6 +3,29 @@
  */
 import COLOR from './Color';
 
+export const Ecquaria = {
+    welcomeTheme: new WelcomeTheme(
+        'transparent',
+        'white',
+        COLOR.GREEN,
+        COLOR.GREEN,
+        COLOR.GREEN,
+        'white',
+        'white',
+    ),
+    mainTheme: new MainTheme(
+        COLOR.BLUE,
+        'white',
+        COLOR.BLUE,
+        'white',
+        COLOR.BLUE,
+        COLOR.GREEN,
+        'white',
+        'lightgray',
+        'COLOR.BLUE',
+    ),
+};
+
 function WelcomeTheme(tabBar_welcome_backgroundColor,
                       tabBar_welcome_tintColor,
                       tabBar_welcome_indicatorColor,
@@ -37,29 +60,6 @@ function MainTheme(navBar_backgroundColor,
     this.normal_backgroundColor = normal_backgroundColor;
     this.underlayColor = underlayColor;
     this.line = line;
-};
-
-export const Ecquaria = {
-    welcomeTheme: new WelcomeTheme(
-        'transparent',
-        'white',
-        COLOR.GREEN,
-        COLOR.GREEN,
-        COLOR.GREEN,
-        'white',
-        'white',
-    ),
-    mainTheme: new MainTheme(
-        COLOR.BLUE,
-        'white',
-        COLOR.BLUE,
-        'white',
-        COLOR.BLUE,
-        COLOR.GREEN,
-        'white',
-        'lightgray',
-        'COLOR.BLUE',
-    ),
 };
 
 // export const EcquariaTheme = {

@@ -2,10 +2,10 @@
  * Created by michael on 4/13/2017.
  */
 import React, {Component} from "react";
-import {Image, StyleSheet, TouchableHighlight, View} from "react-native";
+import {Image, StyleSheet, TouchableOpacity, View} from "react-native";
 import PropTypes from "prop-types";
 import Spinner from 'react-native-loading-spinner-overlay';
-import {MainTheme} from "../Constants";
+import {WelcomeTheme} from "../Constants";
 import ASSET_HELPER from "../utils/AssetHelper";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -36,11 +36,12 @@ export default class WelcomeContainer extends Component {
         const isBackButtonShowed = this.props.isBackButtonShowed;
         let backButton = null;
         if (isBackButtonShowed) {
-            backButton = <TouchableHighlight
-                style={{marginTop: 10, marginLeft: 20, position: 'absolute'}}
-                onPress={this._onBackPressed}>
-                <Icon name="angle-left" size={50} color={MainTheme.button_welcome_backgroundColor}/>
-            </TouchableHighlight>;
+            backButton =
+                <TouchableOpacity
+                    style={{marginTop: 10, marginLeft: 20, position: 'absolute'}}
+                    onPress={this._onBackPressed}>
+                    <Icon name="angle-left" size={50} color={WelcomeTheme.button_welcome_backgroundColor}/>
+                </TouchableOpacity>;
         }
 
         return (
@@ -74,8 +75,8 @@ export default class WelcomeContainer extends Component {
 
 WelcomeContainer.propTypes = {
     navigation: PropTypes.object.isRequired,
-    goBack: PropTypes.func.isRequired,
     isBackButtonShowed: PropTypes.bool.isRequired,
+    bottomContainer: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({

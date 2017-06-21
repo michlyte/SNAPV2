@@ -27,6 +27,7 @@ import STRING_HELPER from "../../utils/StringHelper";
 import SCREEN_HELPER from "../../utils/ScreenHelper";
 import DUMMY_HELPER from "../../utils/DummyHelper";
 import PARAM_HELPER from "../../utils/ParamHelper";
+import {isValidEmail, isValidPassword} from "../../utils/ValidationHelper";
 import {Env} from "../../utils/EnumHelper";
 
 import WelcomeTextInput from "../../components/WelcomeTextInput";
@@ -257,6 +258,8 @@ class LoginTab extends Component {
     constructor(props) {
         super(props);
 
+        this._emailTextField = null;
+        this._passwordTextField = null;
         this.onFacebookPressed = onFacebookPressed.bind(this);
         this.onTwitterPressed = onTwitterPressed.bind(this);
 
@@ -266,8 +269,11 @@ class LoginTab extends Component {
         switch (CONSTANTS.Env) {
             case Env.DEV_DUMMY:
             case Env.DEV:
-                tempEmailAddress = DUMMY_HELPER.emailAddress;
-                tempPassword = DUMMY_HELPER.password;
+                // tempEmailAddress = DUMMY_HELPER.emailAddress;
+                // tempPassword = DUMMY_HELPER.password;
+
+                tempEmailAddress = 'Michael@';
+                tempPassword = '1234';
                 break;
             default:
                 break;
@@ -320,8 +326,7 @@ class LoginTab extends Component {
                         let userJson = JSON.parse(result);
 
                         if (userJson.login) {
-                            console.log("Login berhasil.");
-                            // this._navigateToMainScreen();
+                            this._navigateToMainScreen();
                         }
                     })
                 });
@@ -338,18 +343,20 @@ class LoginTab extends Component {
     };
 
     _onLoginPressed = () => {
+        this._emailTextField.setError(false, '');
+        this._passwordTextField.setError(false, '');
+
         const emailAddress = this.state.emailAddress;
         const password = this.state.password;
-        let cancel = false;
 
         if (!emailAddress || emailAddress.length === 0) {
-            cancel = true;
+            this._emailTextField.setError(true, STRING_HELPER.errorMsgEmailAddressRequired);
+        } else if (!isValidEmail(emailAddress)) {
+            this._emailTextField.setError(true, STRING_HELPER.errorMsgEmailAddressInvalid);
         } else if (!password || password.length === 0) {
-            cancel = true;
-        }
-
-        if (cancel) {
-            console.log("Cancel is true");
+            this._passwordTextField.setError(true, STRING_HELPER.errorMsgPasswordRequired);
+        } else if (!isValidPassword(password)) {
+            this._passwordTextField.setError(true, STRING_HELPER.errorMsgPasswordTooShort);
         } else {
             switch (CONSTANTS.Env) {
                 case Env.DEV_DUMMY:
@@ -396,6 +403,9 @@ class LoginTab extends Component {
             <View style={ styles.page }>
                 <View>
                     <WelcomeTextInput
+                        ref={(component) => {
+                            this._emailTextField = component;
+                        }}
                         onChangeText={(text) => this.setState({emailAddress: text})}
                         value={ this.state.emailAddress }
                         placeholder={ STRING_HELPER.placeHolderEmailAddress }
@@ -404,6 +414,9 @@ class LoginTab extends Component {
                     />
                     <View style={ styles.space }/>
                     <WelcomeTextInput
+                        ref={(component) => {
+                            this._passwordTextField = component;
+                        }}
                         onChangeText={(text) => this.setState({password: text})}
                         value={ this.state.password }
                         placeholder={ STRING_HELPER.placeHolderPassword }

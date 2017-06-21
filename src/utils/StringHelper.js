@@ -35,6 +35,10 @@ export default class StringHelper {
     static shareTo = 'Share to';
 
     static errorMsgEmailAddress = 'Insert a valid email';
+    static errorMsgEmailAddressRequired = 'Email is required';
+    static errorMsgEmailAddressInvalid = 'Email is invalid';
+    static errorMsgPasswordRequired = 'Password is required';
+    static errorMsgPasswordTooShort = 'Password is too short';
 
     static TITLE_WARNING = 'Warning';
 
