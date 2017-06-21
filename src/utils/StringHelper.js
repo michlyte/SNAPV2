@@ -39,6 +39,7 @@ export default class StringHelper {
     static errorMsgEmailAddressInvalid = 'Email is invalid';
     static errorMsgPasswordRequired = 'Password is required';
     static errorMsgPasswordTooShort = 'Password is too short';
+    static errorMsgPasswordDontMatch = 'Password do not match';
 
     static TITLE_WARNING = 'Warning';
 

@@ -269,11 +269,8 @@ class LoginTab extends Component {
         switch (CONSTANTS.Env) {
             case Env.DEV_DUMMY:
             case Env.DEV:
-                // tempEmailAddress = DUMMY_HELPER.emailAddress;
-                // tempPassword = DUMMY_HELPER.password;
-
-                tempEmailAddress = 'Michael@';
-                tempPassword = '1234';
+                tempEmailAddress = DUMMY_HELPER.emailAddress;
+                tempPassword = DUMMY_HELPER.password;
                 break;
             default:
                 break;
@@ -297,6 +294,7 @@ class LoginTab extends Component {
     };
 
     _makeRequestLogin = async (email, password, imei, pushRegId, deviceType) => {
+        this.props.setVisible(true);
         const loginRequest = new LoginRequestClass(email, password, imei, pushRegId, deviceType);
         try {
             let response = await fetch(CONSTANTS.baseUrl + RestAPI.login.url, {
@@ -304,38 +302,11 @@ class LoginTab extends Component {
                 headers: RestAPI.login.headers,
                 body: JSON.stringify(loginRequest),
             });
-            this.props.setVisible(false);
 
+            this.props.setVisible(false);
             console.log(response);
 
-            let responseJson = await response.json();
-
-            if (responseJson.meta.status === RestAPI.CODE_200) {
-                let user = new User(
-                    responseJson.data.userId,
-                    email,
-                    responseJson.data.displayName,
-                    responseJson.data.authKey,
-                    responseJson.data.maxAttachment,
-                    responseJson.data.deviceUserId,
-                    true
-                );
-
-                AsyncStorage.setItem(PARAM_HELPER.user, JSON.stringify(user), () => {
-                    AsyncStorage.getItem(PARAM_HELPER.user, (err, result) => {
-                        let userJson = JSON.parse(result);
-
-                        if (userJson.login) {
-                            this._navigateToMainScreen();
-                        }
-                    })
-                });
-            } else {
-                Alert.alert(
-                    STRING_HELPER.TITLE_WARNING,
-                    responseJson.meta.message
-                )
-            }
+            return await response.json();
         } catch (error) {
             this.props.setVisible(false);
             console.error(error);
@@ -372,8 +343,6 @@ class LoginTab extends Component {
                     break;
                 case Env.DEV:
                 case Env.PROD:
-                    this.props.setVisible(true);
-
                     FCM.getFCMToken()
                         .then(token => {
                             this._makeRequestLogin(
@@ -382,7 +351,39 @@ class LoginTab extends Component {
                                 CONSTANTS.uniqueID,
                                 token,
                                 Platform.OS
-                            );
+                            )
+                                .then((responseJson) => {
+                                    console.log(responseJson);
+                                    if (responseJson.meta.status === RestAPI.CODE_200) {
+                                        let user = new User(
+                                            responseJson.data.userId,
+                                            email,
+                                            responseJson.data.displayName,
+                                            responseJson.data.authKey,
+                                            responseJson.data.maxAttachment,
+                                            responseJson.data.deviceUserId,
+                                            true
+                                        );
+
+                                        AsyncStorage.setItem(PARAM_HELPER.user, JSON.stringify(user), () => {
+                                            AsyncStorage.getItem(PARAM_HELPER.user, (err, result) => {
+                                                let userJson = JSON.parse(result);
+
+                                                if (userJson.login) {
+                                                    this._navigateToMainScreen();
+                                                }
+                                            })
+                                        });
+                                    } else {
+                                        Alert.alert(
+                                            STRING_HELPER.TITLE_WARNING,
+                                            responseJson.meta.message
+                                        )
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error(error);
+                                })
                         })
                         .catch((error) => {
                             this.props.setVisible(false);
@@ -398,6 +399,10 @@ class LoginTab extends Component {
         navigate(SCREEN_HELPER.FORGOT);
     };
 
+    onEmailSubmitEditing = () => {
+        this._passwordTextField.focus();
+    };
+
     render() {
         return (
             <View style={ styles.page }>
@@ -411,6 +416,7 @@ class LoginTab extends Component {
                         placeholder={ STRING_HELPER.placeHolderEmailAddress }
                         keyboardType='email-address'
                         returnKeyType='next'
+                        onSubmitEditing={this.onEmailSubmitEditing}
                     />
                     <View style={ styles.space }/>
                     <WelcomeTextInput
@@ -422,6 +428,7 @@ class LoginTab extends Component {
                         placeholder={ STRING_HELPER.placeHolderPassword }
                         secureTextEntry={ true }
                         returnKeyType='done'
+                        onSubmitEditing={this._onLoginPressed}
                     />
                     <View style={ styles.space }/>
                     <WelcomeButton

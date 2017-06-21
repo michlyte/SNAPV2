@@ -8,3 +8,7 @@ export function isValidEmail(email: string) {
 export function isValidPassword(password: string) {
     return password.length > 4 ? true : false;
 }
+
+export function matchPassword(password, confirmPassword) {
+    return password === confirmPassword;
+}

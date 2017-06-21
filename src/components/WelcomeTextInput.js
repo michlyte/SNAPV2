@@ -10,6 +10,8 @@ export default class WelcomeTextInput extends Component {
     constructor(props) {
         super(props);
 
+        this.textInput = null;
+
         this.state = {
             error: false,
             errorMessage: '',
@@ -23,6 +25,16 @@ export default class WelcomeTextInput extends Component {
         });
     };
 
+    focus = () => {
+        this.textInput.focus();
+    };
+
+    onFocus = () => {
+        this.setState({
+            errorMessage: '',
+        });
+    };
+
     render() {
         let errorView = null;
         if (this.state.error) {
@@ -31,10 +43,13 @@ export default class WelcomeTextInput extends Component {
                     flex: 1,
                     justifyContent: 'flex-end',
                     alignItems: 'flex-end',
+                    paddingRight: 5,
                 }}>
-                    <Text style={{
-                        color: 'red',
-                    }}>
+                    <Text
+                        style={{
+                            color: 'red',
+                        }}
+                    >
                         {this.state.errorMessage}
                     </Text>
                 </View>;
@@ -42,6 +57,9 @@ export default class WelcomeTextInput extends Component {
         return (
             <View>
                 <TextInput
+                    ref={(component) => {
+                        this.textInput = component
+                    }}
                     style={[
                         styles.welcomeTextInput,
                         this.state.error && styles.error
@@ -55,6 +73,7 @@ export default class WelcomeTextInput extends Component {
                     underlineColorAndroid='transparent'
                     onSubmitEditing={ this.props.onSubmitEditing }
                     returnKeyType={ this.props.returnKeyType }
+                    onFocus={this.onFocus}
                 />
                 {errorView}
             </View>
