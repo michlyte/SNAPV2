@@ -40,8 +40,12 @@ export default class StringHelper {
     static errorMsgPasswordRequired = 'Password is required';
     static errorMsgPasswordTooShort = 'Password is too short';
     static errorMsgPasswordDontMatch = 'Password do not match';
+    static errorMsgVerificationCodeRequired = 'Verification code is required';
 
     static TITLE_WARNING = 'Warning';
+    static TITLE_NOTICE = 'Notice';
+
+    static msgResendVerificationCodeSuccess = 'New verification code has been sent to your email. Please check your email.';
 
     static sceneLocationDetail = 'Location Details';
     static sceneCaseLogged = 'Case Logged!';

@@ -14,7 +14,7 @@ export default class WelcomeContainer extends Component {
         super(props);
 
         this.state = {
-            visible: false,
+            loading: false,
         }
     }
 
@@ -22,14 +22,14 @@ export default class WelcomeContainer extends Component {
         this.props.navigation.goBack();
     };
 
-    setVisible = (visible) => {
+    setLoading = (loading) => {
         this.setState({
-            visible: visible,
+            loading: loading,
         });
     };
 
-    getVisible = () => {
-        return this.state.visible;
+    isLoading = () => {
+        return this.state.loading;
     };
 
     render() {
@@ -67,7 +67,7 @@ export default class WelcomeContainer extends Component {
                     { this.props.bottomContainer }
 
                 </Image>
-                <Spinner visible={this.state.visible} textStyle={{color: '#FFF'}}/>
+                <Spinner visible={this.state.loading} textStyle={{color: '#FFF'}}/>
             </View>
         );
     }

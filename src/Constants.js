@@ -27,7 +27,7 @@ export default class Constants {
     static isLoggedIn = false;
     static numberOfListItemPerPage = 10;
     static numberOfGridItemPerPage = 20;
-    static Env = Env.DEV;
+    static Env = Env.DEV_DUMMY;
 }
 
 export const WelcomeTheme = Ecquaria.welcomeTheme;

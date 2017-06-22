@@ -28,8 +28,8 @@ export default class WelcomeRegisterViaEmailScreen extends Component {
         this._welcomeContainer = null;
     }
 
-    setVisible = (visible) => {
-        this._welcomeContainer.setVisible(visible);
+    setLoading = (loading) => {
+        this._welcomeContainer.setLoading(loading);
     };
 
     render() {
@@ -42,7 +42,7 @@ export default class WelcomeRegisterViaEmailScreen extends Component {
                 bottomContainer={
                     <WelcomeRegisterViaEmailBottomContainer
                         navigation={navigation}
-                        setVisible={this.setVisible}
+                        setLoading={this.setLoading}
                     />
                 }
                 navigation={navigation}
@@ -91,7 +91,7 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
     };
 
     _makeRequestPreRegister = async (email, password) => {
-        this.props.setVisible(true);
+        this.props.setLoading(true);
         const preRegisterRequest = new PreRegisterRequestClass(email, password);
         try {
             let response = await fetch(CONSTANTS.baseUrl + RestAPI.preRegister.url, {
@@ -100,12 +100,12 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
                 body: JSON.stringify(preRegisterRequest),
             });
 
-            this.props.setVisible(false);
+            this.props.setLoading(false);
             console.log(response);
 
             return await response.json();
         } catch (error) {
-            this.props.setVisible(false);
+            this.props.setLoading(false);
             console.error(error);
         }
     };
@@ -216,5 +216,5 @@ class WelcomeRegisterViaEmailBottomContainer extends Component {
 
 WelcomeRegisterViaEmailBottomContainer.propTypes = {
     navigation: PropTypes.object.isRequired,
-    setVisible: PropTypes.func.isRequired,
+    setLoading: PropTypes.func.isRequired,
 };

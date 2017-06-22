@@ -4,6 +4,7 @@
 export default class DummyHelper {
     static emailAddress = "mikefla10@gmail.com";
     static password = "password$2";
+    static verificationCode = '7777';
 
     static user = {
         userId: 'DqlKbj74wyXd',

@@ -67,8 +67,8 @@ export default class WelcomeScreen extends Component {
         }
     }
 
-    setVisible = (visible) => {
-        this._welcomeContainer.setVisible(visible);
+    setLoading = (loading) => {
+        this._welcomeContainer.setLoading(loading);
     };
 
     render() {
@@ -81,7 +81,7 @@ export default class WelcomeScreen extends Component {
                 bottomContainer={
                     <WelcomeBottomContainer
                         navigation={navigation}
-                        setVisible={this.setVisible}
+                        setLoading={this.setLoading}
                     />
                 }
                 navigation={navigation}
@@ -126,7 +126,7 @@ class WelcomeBottomContainer extends Component {
             case '2':
                 return <LoginTab
                     navigation={this.props.navigation}
-                    setVisible={this.props.setVisible}
+                    setLoading={this.props.setLoading}
                 />;
             default:
                 return null;
@@ -148,7 +148,7 @@ class WelcomeBottomContainer extends Component {
 
 WelcomeBottomContainer.propTypes = {
     navigation: PropTypes.object.isRequired,
-    setVisible: PropTypes.func.isRequired,
+    setLoading: PropTypes.func.isRequired,
 };
 
 class SocialContainer extends Component {
@@ -294,7 +294,7 @@ class LoginTab extends Component {
     };
 
     _makeRequestLogin = async (email, password, imei, pushRegId, deviceType) => {
-        this.props.setVisible(true);
+        this.props.setLoading(true);
         const loginRequest = new LoginRequestClass(email, password, imei, pushRegId, deviceType);
         try {
             let response = await fetch(CONSTANTS.baseUrl + RestAPI.login.url, {
@@ -303,12 +303,12 @@ class LoginTab extends Component {
                 body: JSON.stringify(loginRequest),
             });
 
-            this.props.setVisible(false);
+            this.props.setLoading(false);
             console.log(response);
 
             return await response.json();
         } catch (error) {
-            this.props.setVisible(false);
+            this.props.setLoading(false);
             console.error(error);
         }
     };
@@ -386,7 +386,7 @@ class LoginTab extends Component {
                                 })
                         })
                         .catch((error) => {
-                            this.props.setVisible(false);
+                            this.props.setLoading(false);
                             console.error(error);
                         });
                     break;
@@ -484,7 +484,7 @@ class LoginTab extends Component {
 
 LoginTab.propTypes = {
     navigation: PropTypes.object.isRequired,
-    setVisible: PropTypes.func.isRequired,
+    setLoading: PropTypes.func.isRequired,
 };
 
 class RegisterTab extends Component {
