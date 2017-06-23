@@ -165,8 +165,8 @@ class WelcomeVerificationCodeBottomContainer extends Component {
                 case Env.DEV_DUMMY:
                     const {navigate} = this.props.navigation;
                     navigate(SCREEN_HELPER.ACKNOWLEDGEMENT, {
-                        email: DUMMY_HELPER.email,
-                        password: DUMMY_HELPER.password
+                        email: DUMMY_HELPER.emailAddress,
+                        password: DUMMY_HELPER.password,
                     });
                     break;
                 case Env.DEV:

@@ -60,7 +60,113 @@ export const MainScreenNavigator = TabNavigator({
 });
 
 // SNAP : If you change any screen name please do the same in the ScreenHelper.js file.
-export const SNAPWelcomeNavigator = StackNavigator({
+// export const SNAPWelcomeNavigator = StackNavigator({
+//         Welcome: {
+//             screen: WelcomeScreen,
+//             navigationOptions: {
+//                 title: SCREEN_HELPER.WELCOME,
+//                 header: null,
+//             },
+//         },
+//         RegisterEmail: {
+//             screen: WelcomeRegisterViaEmailScreen,
+//             navigationOptions: {
+//                 title: SCREEN_HELPER.REGISTER_EMAIL,
+//                 header: null,
+//             },
+//         },
+//         VerificationCode: {
+//             screen: WelcomeVerificationCodeScreen,
+//             navigationOptions: {
+//                 title: SCREEN_HELPER.VERIFICATION_CODE,
+//                 header: null,
+//             },
+//         },
+//         Acknowledgement: {
+//             screen: WelcomeAcknowledgementScreen,
+//             navigationOptions: {
+//                 title: SCREEN_HELPER.ACKNOWLEDGEMENT,
+//                 header: null,
+//             },
+//         },
+//         Forgot: {
+//             screen: Forgot,
+//             navigationOptions: {
+//                 title: SCREEN_HELPER.FORGOT,
+//                 header: null,
+//             },
+//         },
+//         ForgotAcknowledgment: {
+//             screen: ForgotAcknowledgment,
+//             navigationOptions: {
+//                 title: SCREEN_HELPER.FORGOT_ACKNOWLEDGMENT,
+//                 header: null,
+//             },
+//         },
+//
+//         // Main screens
+//         Main: {
+//             screen: MainScreenNavigator,
+//         },
+//
+//         // Add a new case screens
+//         CameraAndCameraRoll: {
+//             screen: CameraAndCameraRollNew,
+//             navigationOptions: {
+//                 header: null,
+//             },
+//         },
+//         Preview: {
+//             screen: Preview,
+//             navigationOptions: {
+//                 header: null,
+//             }
+//         },
+//         LocationDetail: {
+//             screen: LocationDetail,
+//             navigationOptions: {
+//                 headerTitle: STRING_HELPER.sceneLocationDetail,
+//                 headerTitleStyle: {
+//                     color: MainTheme.navBar_tintColor,
+//                 },
+//                 headerStyle: {
+//                     backgroundColor: MainTheme.navBar_backgroundColor,
+//                 },
+//             },
+//         },
+//         CaseLogged: {
+//             screen: CaseLogged,
+//             navigationOptions: {
+//                 headerTitle: STRING_HELPER.sceneCaseLogged,
+//                 headerTitleStyle: {
+//                     color: MainTheme.navBar_tintColor,
+//                 },
+//                 headerStyle: {
+//                     backgroundColor: MainTheme.navBar_backgroundColor,
+//                 },
+//             },
+//         },
+//
+//         // Setting screens
+//         Profile: {
+//             screen: ProfileScreen,
+//             navigationOptions: {
+//                 title: SCREEN_HELPER.PROFILE,
+//             }
+//         },
+//         Notifications: {
+//             screen: NotificationsScreen,
+//             navigationOptions: {
+//                 title: SCREEN_HELPER.NOTIFICATIONS,
+//             }
+//         },
+//     },
+//     {
+//         initialRouteName: 'Main',
+//     }
+// );
+
+const WelcomeRoutes = StackNavigator({
     Welcome: {
         screen: WelcomeScreen,
         navigationOptions: {
@@ -103,7 +209,9 @@ export const SNAPWelcomeNavigator = StackNavigator({
             header: null,
         },
     },
+});
 
+const MainRoutes = StackNavigator({
     // Main screens
     Main: {
         screen: MainScreenNavigator,
@@ -161,3 +269,18 @@ export const SNAPWelcomeNavigator = StackNavigator({
         }
     },
 });
+
+export const SNAPRoutes = StackNavigator(
+    {
+        login: {
+            // Memberikan parameter rootNavigation(SNAPRoutes) kepada WelcomeRoutes
+            screen: ({navigation}) => <WelcomeRoutes screenProps={{rootNavigation: navigation}}/>
+        },
+        home: {
+            screen: ({navigation}) => <MainRoutes screenProps={{rootNavigation: navigation}}/>
+        }
+    }, {
+        initialRouteName: 'login',
+        headerMode: 'none',
+    }
+);

@@ -48,7 +48,9 @@ export default class WelcomeAcknowledgementScreen extends Component {
                     <WelcomeAcknowledgementBottomContainer
                         navigation={navigation}
                         email={params.email}
-                        onNavigateToRootView={this._onNavigateToRootView}/> }
+                        rootNavigation={this.props.screenProps.rootNavigation}
+                    />
+                }
                 navigation={navigation}
                 isBackButtonShowed={ false }
             />
@@ -62,7 +64,13 @@ class WelcomeAcknowledgementBottomContainer extends Component {
     }
 
     _onNextPressed = () => {
-        this.props.onNavigateToRootView();
+        const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({routeName: SCREEN_HELPER.HOME})
+            ]
+        });
+        this.props.rootNavigation.dispatch(resetAction)
     };
 
     render() {
@@ -86,5 +94,5 @@ class WelcomeAcknowledgementBottomContainer extends Component {
 
 WelcomeAcknowledgementBottomContainer.propTypes = {
     email: PropTypes.string.isRequired,
-    onNavigateToRootView: PropTypes.func.isRequired,
+    rootNavigation: PropTypes.object.isRequired,
 };

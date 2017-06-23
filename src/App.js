@@ -4,7 +4,7 @@
 
 import React, {Component} from "react";
 import {Platform} from "react-native";
-import {SNAPExampleNavigator, SNAPWelcomeNavigator} from "./Router";
+import {SNAPExampleNavigator, SNAPWelcomeNavigator, SNAPRoutes} from "./Router";
 import FCM, {
     FCMEvent,
     NotificationType,
@@ -86,7 +86,7 @@ export default class SampleApp extends Component {
 
     render() {
         return (
-            <SNAPWelcomeNavigator />
+            <SNAPRoutes />
         );
     }
 }

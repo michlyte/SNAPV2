@@ -60,10 +60,10 @@ export default class WelcomeScreen extends Component {
             const resetAction = NavigationActions.reset({
                 index: 0,
                 actions: [
-                    NavigationActions.navigate({routeName: SCREEN_HELPER.MAIN})
+                    NavigationActions.navigate({routeName: SCREEN_HELPER.HOME})
                 ]
             });
-            this.props.navigation.dispatch(resetAction)
+            this.props.screenProps.rootNavigation.dispatch(resetAction)
         }
     }
 
@@ -81,6 +81,7 @@ export default class WelcomeScreen extends Component {
                 bottomContainer={
                     <WelcomeBottomContainer
                         navigation={navigation}
+                        rootNavigation={this.props.screenProps.rootNavigation}
                         setLoading={this.setLoading}
                     />
                 }
@@ -126,7 +127,8 @@ class WelcomeBottomContainer extends Component {
             case '2':
                 return <LoginTab
                     navigation={this.props.navigation}
-                    setLoading={this.props.setLoading}
+                    rootNavigation={this.props.rootNavigation}
+                    setVisible={this.props.setLoading}
                 />;
             default:
                 return null;
@@ -148,6 +150,7 @@ class WelcomeBottomContainer extends Component {
 
 WelcomeBottomContainer.propTypes = {
     navigation: PropTypes.object.isRequired,
+    rootNavigation: PropTypes.object.isRequired,
     setLoading: PropTypes.func.isRequired,
 };
 
@@ -286,15 +289,15 @@ class LoginTab extends Component {
         const resetAction = NavigationActions.reset({
             index: 0,
             actions: [
-                NavigationActions.navigate({routeName: SCREEN_HELPER.MAIN})
+                NavigationActions.navigate({routeName: SCREEN_HELPER.HOME})
             ]
         });
-        this.props.navigation.dispatch(resetAction);
+        this.props.rootNavigation.dispatch(resetAction);
         return true;
     };
 
     _makeRequestLogin = async (email, password, imei, pushRegId, deviceType) => {
-        this.props.setLoading(true);
+        this.props.setVisible(true);
         const loginRequest = new LoginRequestClass(email, password, imei, pushRegId, deviceType);
         try {
             let response = await fetch(CONSTANTS.baseUrl + RestAPI.login.url, {
@@ -303,12 +306,12 @@ class LoginTab extends Component {
                 body: JSON.stringify(loginRequest),
             });
 
-            this.props.setLoading(false);
+            this.props.setVisible(false);
             console.log(response);
 
             return await response.json();
         } catch (error) {
-            this.props.setLoading(false);
+            this.props.setVisible(false);
             console.error(error);
         }
     };
@@ -386,7 +389,7 @@ class LoginTab extends Component {
                                 })
                         })
                         .catch((error) => {
-                            this.props.setLoading(false);
+                            this.props.setVisible(false);
                             console.error(error);
                         });
                     break;
@@ -484,7 +487,8 @@ class LoginTab extends Component {
 
 LoginTab.propTypes = {
     navigation: PropTypes.object.isRequired,
-    setLoading: PropTypes.func.isRequired,
+    rootNavigation: PropTypes.object.isRequired,
+    setVisible: PropTypes.func.isRequired,
 };
 
 class RegisterTab extends Component {
