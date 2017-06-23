@@ -59,5 +59,13 @@ export class RestAPI {
         headers: {
             'Content-Type': 'application/json',
         }
+    };
+
+    static categories = {
+        url: 'egp/eparticrestapi/lookup/case_category',
+    };
+
+    static status = {
+        url: 'egp/eparticrestapi/lookup/case_status',
     }
 }

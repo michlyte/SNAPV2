@@ -280,7 +280,7 @@ export const SNAPRoutes = StackNavigator(
             screen: ({navigation}) => <MainRoutes screenProps={{rootNavigation: navigation}}/>
         }
     }, {
-        initialRouteName: 'home',
+        initialRouteName: 'login',
         headerMode: 'none',
     }
 );

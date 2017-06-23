@@ -3,7 +3,6 @@
  */
 export default class ParamHelper {
     static user = "user";
-    static userId = "userId";
-    static email = "email";
-    static isLoggedIn = "isLoggedIn";
+    static categories = "categories";
+    static status = "status =";
 }

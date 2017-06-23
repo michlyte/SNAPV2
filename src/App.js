@@ -3,8 +3,10 @@
  */
 
 import React, {Component} from "react";
-import {Platform} from "react-native";
-import {SNAPExampleNavigator, SNAPWelcomeNavigator, SNAPRoutes} from "./Router";
+import {AsyncStorage, Platform} from "react-native";
+import CONSTANTS, {RestAPI} from "./Constants";
+import PARAM_HELPER from "./utils/ParamHelper";
+import {SNAPRoutes, SNAPWelcomeNavigator} from "./Router";
 import FCM, {
     FCMEvent,
     NotificationType,
@@ -66,6 +68,43 @@ export default class SampleApp extends Component {
             console.log("TOKEN (refreshUnsubscribe)", token);
             this.setState({token: token});
         });
+
+        // Michael Halim request to SNAP server.
+        this._makeRequestGetCategories()
+            .then((responseJson) => {
+                if (responseJson.meta.status === RestAPI.CODE_200) {
+                    AsyncStorage.setItem(PARAM_HELPER.categories, JSON.stringify(responseJson.data.entities), () => {
+                        AsyncStorage.getItem(PARAM_HELPER.categories, (err, result) => {
+                            let categoriesJson = JSON.parse(result);
+                            console.log('===== CATEGORY =====');
+                            categoriesJson.map((item) => {
+                                console.log(item);
+                            });
+                        })
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error(error)
+            });
+
+        this._makeRequestGetStatus()
+            .then((responseJson) => {
+                if (responseJson.meta.status === RestAPI.CODE_200) {
+                    AsyncStorage.setItem(PARAM_HELPER.status, JSON.stringify(responseJson.data.entities), () => {
+                        AsyncStorage.getItem(PARAM_HELPER.status, (err, result) => {
+                            let statusJson = JSON.parse(result);
+                            console.log('===== STATUS =====');
+                            statusJson.map((item) => {
+                                console.log(item);
+                            });
+                        })
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     showLocalNotification(notif) {
@@ -89,4 +128,24 @@ export default class SampleApp extends Component {
             <SNAPRoutes />
         );
     }
+
+    _makeRequestGetCategories = async () => {
+        try {
+            let response = await fetch(CONSTANTS.baseUrl + RestAPI.categories.url);
+            console.log(response);
+            return response.json();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    _makeRequestGetStatus = async () => {
+        try {
+            let response = await fetch(CONSTANTS.baseUrl + RestAPI.status.url);
+            console.log(response);
+            return response.json();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 }
