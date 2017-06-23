@@ -42,11 +42,11 @@ export const SNAPExampleNavigator = StackNavigator({
 
 // Main Tabs
 export const MainScreenNavigator = TabNavigator({
-    // List: {screen: HomeList},
-    // Grid: {screen: HomeGrid},
-    // Map: {screen: HomeMap},
+    List: {screen: HomeList},
+    Grid: {screen: HomeGrid},
+    Map: {screen: HomeMap},
     Notif: {screen: HomeNotif},
-    // Setting: {screen: HomeSetting},
+    Setting: {screen: HomeSetting},
 }, {
     tabBarOptions: {
         style: {
@@ -280,7 +280,7 @@ export const SNAPRoutes = StackNavigator(
             screen: ({navigation}) => <MainRoutes screenProps={{rootNavigation: navigation}}/>
         }
     }, {
-        initialRouteName: 'login',
+        initialRouteName: 'home',
         headerMode: 'none',
     }
 );

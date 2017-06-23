@@ -3,6 +3,7 @@
  */
 import React, {Component} from "react";
 import {FlatList, Text, View, TouchableHighlight, Alert} from "react-native";
+import {NavigationActions} from "react-navigation";
 import CONSTANTS, {MainTheme} from "../../Constants";
 
 import SCREEN_HELPER from "../../utils/ScreenHelper";
@@ -76,7 +77,18 @@ export default class HomeSetting extends Component {
                     'Are you sure you want to log out?',
                     [
                         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                        {text: 'OK', onPress: () => console.log('OK Pressed')},
+                        {
+                            text: 'OK', onPress: () => {
+                            const resetAction = NavigationActions.reset({
+                                index: 0,
+                                actions: [
+                                    NavigationActions.navigate({routeName: SCREEN_HELPER.LOGIN})
+                                ]
+                            });
+                            this.props.screenProps.rootNavigation.dispatch(resetAction);
+                            return true;
+                        }
+                        },
                     ],
                     {cancelable: false}
                 );
