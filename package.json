@@ -7,8 +7,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "react": "^16.0.0-alpha.12",
-    "react-native": "^0.45.0-rc.0",
+    "react": "16.0.0-alpha.12",
+    "react-native": "0.45.1",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-device-info": "^0.10.2",
     "react-native-elements": "^0.12.1",
@@ -23,13 +23,15 @@
     "react-native-maps": "^0.15.0",
     "react-native-parallax-view": "^2.0.6",
     "react-native-segmented-control-tab": "^3.0.2",
+    "react-native-sha256": "^1.0.1",
     "react-native-snap-carousel": "^2.1.1",
     "react-native-tab-view": "0.0.58",
     "react-native-twitter-signin": "0.0.1",
     "react-native-vector-icons": "^4.0.1",
     "react-navigation": "^1.0.0-beta.11",
     "react-string-replace": "^0.4.0",
-    "react-test-renderer": "^16.0.0-alpha.6"
+    "react-test-renderer": "^16.0.0-alpha.6",
+    "tcomb-form-native": "^0.6.9"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",

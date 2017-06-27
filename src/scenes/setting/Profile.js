@@ -1,8 +1,9 @@
 /**
  * Created by michael on 5/19/2017.
  */
-import React, {Component, PropTypes} from "react";
+import React, {Component} from "react";
 import {Animated, Button, Image, ScrollView, Text, View} from "react-native";
+import PropTypes from "prop-types";
 import ImagePicker from "react-native-image-picker";
 import ImageCropPicker from "react-native-image-crop-picker";
 

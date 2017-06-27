@@ -3,6 +3,7 @@
  */
 import React, {Component} from "react";
 import {StyleSheet, Text, TouchableOpacity} from "react-native";
+import PropTypes from "prop-types";
 import {WelcomeTheme} from "../Constants";
 import SIZE from "../styles/Size";
 
@@ -22,8 +23,8 @@ export default class WelcomeButton extends Component {
 }
 
 WelcomeButton.propTypes = {
-    onPress: React.PropTypes.func,
-    text: React.PropTypes.string,
+    onPress: PropTypes.func.isRequired,
+    text: PropTypes.string.isRequired,
 };
 
 const styles = StyleSheet.create({
