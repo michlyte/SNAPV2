@@ -6,6 +6,7 @@ import React, {Component} from "react";
 import {AsyncStorage, Platform} from "react-native";
 import CONSTANTS, {RestAPI} from "./Constants";
 import PARAM_HELPER from "./utils/ParamHelper";
+import {Env} from "./utils/EnumHelper";
 import {SNAPRoutes, SNAPWelcomeNavigator} from "./Router";
 import FCM, {
     FCMEvent,
@@ -69,42 +70,50 @@ export default class SampleApp extends Component {
             this.setState({token: token});
         });
 
-        // Michael Halim request to SNAP server.
-        this._makeRequestGetCategories()
-            .then((responseJson) => {
-                if (responseJson.meta.status === RestAPI.CODE_200) {
-                    AsyncStorage.setItem(PARAM_HELPER.categories, JSON.stringify(responseJson.data.entities), () => {
-                        AsyncStorage.getItem(PARAM_HELPER.categories, (err, result) => {
-                            let categoriesJson = JSON.parse(result);
-                            console.log('===== CATEGORY =====');
-                            categoriesJson.map((item) => {
-                                console.log(item);
+        switch (CONSTANTS.Env) {
+            case Env.DEV_DUMMY:
+                RestAPI.encryptedSignature();
+                break;
+            case Env.DEV:
+            case Env.PROD:
+                // Michael Halim request to SNAP server.
+                this._makeRequestGetCategories()
+                    .then((responseJson) => {
+                        if (responseJson.meta.status === RestAPI.CODE_200) {
+                            AsyncStorage.setItem(PARAM_HELPER.categories, JSON.stringify(responseJson.data.entities), () => {
+                                AsyncStorage.getItem(PARAM_HELPER.categories, (err, result) => {
+                                    let categoriesJson = JSON.parse(result);
+                                    console.log('===== CATEGORY =====');
+                                    categoriesJson.map((item) => {
+                                        console.log(item);
+                                    });
+                                })
                             });
-                        })
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error)
                     });
-                }
-            })
-            .catch((error) => {
-                console.error(error)
-            });
 
-        this._makeRequestGetStatus()
-            .then((responseJson) => {
-                if (responseJson.meta.status === RestAPI.CODE_200) {
-                    AsyncStorage.setItem(PARAM_HELPER.status, JSON.stringify(responseJson.data.entities), () => {
-                        AsyncStorage.getItem(PARAM_HELPER.status, (err, result) => {
-                            let statusJson = JSON.parse(result);
-                            console.log('===== STATUS =====');
-                            statusJson.map((item) => {
-                                console.log(item);
+                this._makeRequestGetStatus()
+                    .then((responseJson) => {
+                        if (responseJson.meta.status === RestAPI.CODE_200) {
+                            AsyncStorage.setItem(PARAM_HELPER.status, JSON.stringify(responseJson.data.entities), () => {
+                                AsyncStorage.getItem(PARAM_HELPER.status, (err, result) => {
+                                    let statusJson = JSON.parse(result);
+                                    console.log('===== STATUS =====');
+                                    statusJson.map((item) => {
+                                        console.log(item);
+                                    });
+                                })
                             });
-                        })
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
                     });
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+                break;
+        }
     }
 
     showLocalNotification(notif) {
@@ -148,38 +157,4 @@ export default class SampleApp extends Component {
             console.log(error);
         }
     };
-
-    encryptedSignature = () => {
-        const method = 'GET';
-        const uriPath = 'egp/eparticrestapi/case/maps/download/1473928055000';
-        const timestamp = '1498204811635';
-        const selectedHeader = '';
-        const queryString = '';
-        const postBody = '';
-        const reconstructedMessage =
-            method + '\n'
-            + selectedHeader + '\n'
-            + uriPath + '\n'
-            + timestamp + '\n'
-            + queryString + '\n'
-            + postBody + '\n';
-
-        console.log('ecryptedSignature, Message:(' + reconstructedMessage + ')');
-        // Sring signContent =
-    };
 }
-
-// 06-23 15:00:11.636 26518-26897/sg.ecquaria.e_participation D/encryptedSignature: Message: (GET
-//
-// egp/eparticrestapi/case/maps/download/1473928055000
-// 1498204811635
-//
-//
-// )
-// 06-23 15:00:11.638 26518-26897/sg.ecquaria.e_participation D/signatureContent: SHA256 : (10963080fe12d4a970f8808c053e0b6ad1c6bf48ca8a826370faa52a13a11e28)
-// 06-23 15:00:11.666 26518-26897/sg.ecquaria.e_participation D/encryptedSignature: Authkey: b4pfo7w4t4hrrwdi3q2cj0bs39qzt5p8kmfl95yygpu7tee8hqxuqga5hsbm7434
-// 06-23 15:00:11.667 26518-26897/sg.ecquaria.e_participation D/encryptedSignature: dateFormatted: 2017/06/23
-// 06-23 15:00:11.668 26518-26897/sg.ecquaria.e_participation D/encryptedSignature: 8399b423db27204408d36005e4494385af1c58e8b3bbea3ee409e8052632c706
-// 06-23 15:00:11.680 26518-26897/sg.ecquaria.e_participation D/OkHttp: --> GET http://192.168.0.19:8080/egp/eparticrestapi/case/maps/download/1473928055000 http/1.1
-//     06-23 15:00:11.681 26518-26897/sg.ecquaria.e_participation D/OkHttp: User-Agent: SNAP retrofit
-// 06-23 15:00:11.681 26518-26897/sg.ecquaria.e_participation D/OkHttp: Signature: 135:8399b423db27204408d36005e4494385af1c58e8b3bbea3ee409e8052632c706
