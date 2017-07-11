@@ -19,7 +19,10 @@ export default class WelcomeForgotScreen extends Component {
         return (
             <WelcomeContainer
                 bottomContainer={
-                    <WelcomeForgotBottomContainer navigation={navigation}/> }
+                    <WelcomeForgotBottomContainer
+                        navigation={navigation}
+                    />
+                }
                 navigation={navigation}
                 isBackButtonShowed={ true }
             />

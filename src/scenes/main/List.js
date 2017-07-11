@@ -1,9 +1,12 @@
 import React, {PureComponent} from "react";
-import {FlatList, InteractionManager, View} from "react-native";
+import {AsyncStorage, FlatList, InteractionManager, View} from "react-native";
 import CONSTANTS from "../../Constants";
 import {DataType, Env} from "../../utils/EnumHelper";
+import PARAM_HELPER from "../../utils/ParamHelper";
 import ListLoadMoreView from "../../components/ListLoadMoreView";
 import NotifInListItem from "../../components/CaseInListItem";
+import {UserJson} from "../../models/User";
+import {CasePageFilter} from "../../models/RequestAPI";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 //Header
 import {mainStyle} from "../../styles/Style";
@@ -69,6 +72,36 @@ export default class HomeList extends PureComponent {
             this._onRefresh);
     };
 
+    _makeRequestList = async (userId) => {
+        const categories = {
+            categoryId: [0, 1, 2, 3, 4, 5, 6, 7, 7, 8, 9],
+        };
+        const statuses = {
+            statusId: [10, 11, 12, 13, 14, 15, 16],
+        };
+        const casePageFilter = new CasePageFilter(
+            '', categories, 0, 10, statuses, userId);
+        // try {
+        //     let response = await fetch(CONSTANTS.baseUrl + RestAPI.login.url, {
+        //         method: RestAPI.login.method,
+        //         headers: RestAPI.login.headers,
+        //         body: JSON.stringify(loginRequest),
+        //     });
+        //
+        //     this.props.setVisible(false);
+        //     console.log(response);
+        //
+        //     return await response.json();
+        // } catch (error) {
+        //     this.props.setVisible(false);
+        //     console.error(error);
+        // }
+        this.setState({
+            data: [],
+            refreshing: false,
+        });
+    };
+
     _keyExtractor = (item, index) => item.caseId;
 
     _onRefresh = () => {
@@ -90,6 +123,10 @@ export default class HomeList extends PureComponent {
                         break;
                     case Env.DEV:
                     case Env.PROD:
+                        AsyncStorage.getItem(PARAM_HELPER.user, (err, result) => {
+                            const userJson = new UserJson(JSON.parse(result));
+                            this._makeRequestList(userJson.userId);
+                        });
                         break;
                 }
             });

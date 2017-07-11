@@ -46,7 +46,7 @@ export default class WelcomeRegisterViaEmailScreen extends Component {
                     />
                 }
                 navigation={navigation}
-                isBackButtonShowed={ true }
+                isBackButtonShowed={true}
             />
         );
     }

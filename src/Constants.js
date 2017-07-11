@@ -27,7 +27,7 @@ export default class Constants {
 
     static baseUrl = 'http://192.168.0.19:8080/';
 
-    static isLoggedIn = false;
+    static isLoggedIn = true;
     static numberOfListItemPerPage = 10;
     static numberOfGridItemPerPage = 20;
     static Env = Env.DEV_DUMMY;
@@ -39,6 +39,8 @@ export const MainTheme = Ecquaria.mainTheme;
 export class RestAPI {
     static CODE_200 = '200';
     static CODE_400 = '400';
+    headerSignature = "Signature";
+    headerRequestTime = "Request-Time";
 
     static login = {
         url: 'egp/eparticrestapi/user/login/a/a',
@@ -72,8 +74,16 @@ export class RestAPI {
         url: 'egp/eparticrestapi/lookup/case_status',
     };
 
-    static encryptedSignature = (method, uriPath, timestamp, postBody, autyKey, currentDate) => {
-        const authKey = 'b4pfo7w4t4hrrwdi3q2cj0bs39qzt5p8kmfl95yygpu7tee8hqxuqga5hsbm7434';
+    static pageFilterV2 = {
+        url: 'egp/eparticrestapi/case/page-filter-v2',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    static encryptedSignature = (method, uriPath, timestamp, postBody, authKey) => {
+        // const authKey = 'b4pfo7w4t4hrrwdi3q2cj0bs39qzt5p8kmfl95yygpu7tee8hqxuqga5hsbm7434';
 
         // const method = 'POST';
         // const uriPath = 'egp/eparticrestapi/case/page-filter-v2/';

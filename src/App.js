@@ -72,7 +72,7 @@ export default class SampleApp extends Component {
 
         switch (CONSTANTS.Env) {
             case Env.DEV_DUMMY:
-                RestAPI.encryptedSignature();
+                // RestAPI.encryptedSignature();
                 break;
             case Env.DEV:
             case Env.PROD:
@@ -112,6 +112,12 @@ export default class SampleApp extends Component {
                     .catch((error) => {
                         console.error(error);
                     });
+
+                AsyncStorage.getItem(PARAM_HELPER.user, (err, result) => {
+                    const userJson = JSON.parse(result);
+                    console.log("===== User =====");
+                    console.log(userJson);
+                });
                 break;
         }
     }

@@ -11,12 +11,12 @@ export function User(userId, email, displayName, authKey, maxAttachment, deviceU
     this.login = login;
 }
 
-export function UserJson(userJson, login: true) {
+export function UserJson(userJson) {
     this.userId = userJson.userId;
     this.email = userJson.email;
     this.displayName = userJson.displayName;
     this.authKey = userJson.authKey;
     this.maxAttachment = userJson.maxAttachment;
     this.deviceUserId = userJson.deviceUserId;
-    this.login = login;
+    this.login = userJson.login;
 }
